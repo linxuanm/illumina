@@ -13,6 +13,8 @@ typedef struct TypeObject {
         unsigned int reachable; \
         TypeObject *type;
 
+#define INIT_OBJ(type) 0, type;
+
 #define OBJECT_PROPERTY_SIZE \
         sizeof(unsigned int) + sizeof(TypeObject)
 

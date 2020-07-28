@@ -5,6 +5,6 @@
 #ifndef ILLUMINA_OPCODE_H
 #define ILLUMINA_OPCODE_H
 
-#define ALOAD 1
+#define INT_ADD 3
 
 #endif //ILLUMINA_OPCODE_H
