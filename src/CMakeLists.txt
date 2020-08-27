@@ -1,1 +1,1 @@
-add_executable(Illumina main.c)
+add_executable(Illumina main.c primitives.c frame.c)

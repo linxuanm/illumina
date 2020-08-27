@@ -16,13 +16,42 @@
  * Boolean is treated as an IntType whose value is
  * 0 or 1.
  */
-extern TypeObject IntType;
+
+/*extern TypeObject IntType;
 extern TypeObject FloatType;
 extern TypeObject CharType;
+extern TypeObject ByteType;
 
 typedef struct IntObject {
     OBJECT_PROPERTY
     int64_t intValue;
 } IntObject;
+
+typedef struct FloatObject {
+    OBJECT_PROPERTY
+    double floatValue;
+} FloatObject;
+
+typedef struct CharObject {
+    OBJECT_PROPERTY
+    uint16_t charValue;
+} CharObject;
+
+typedef struct ByteObject {
+    OBJECT_PROPERTY
+    uint8_t byteValue;
+} ByteObject;*/
+
+/*
+ * Primitive types all default to 0,
+ * which is NULL in the case of reference
+ * object.
+ */
+typedef int64_t IntObject;
+typedef double FloatObject;
+typedef uint16_t CharObject;
+typedef uint8_t BoolObject;
+typedef uint8_t ByteObject;
+typedef uint16_t ReferenceObject;
 
 #endif //ILLUMINA_PRIMITIVES_H
