@@ -2,5 +2,6 @@
 #define ILLUMINA_ARGS_H
 
 #define LOCAL_POOL_SIZE 512
+#define STACK_SIZE 512
 
 #endif //ILLUMINA_ARGS_H
