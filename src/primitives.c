@@ -15,3 +15,6 @@ TypeObject CharType = {
 TypeObject ByteType = {
     sizeof(uint8_t)
 };*/
+
+ByteObject TrueBool = 1;
+ByteObject FalseBool = 0;

@@ -50,8 +50,13 @@ typedef struct ByteObject {
 typedef int64_t IntObject;
 typedef double FloatObject;
 typedef uint16_t CharObject;
-typedef uint8_t BoolObject;
 typedef uint8_t ByteObject;
 typedef uint16_t ReferenceObject;
+
+extern ByteObject TrueBool;
+extern ByteObject FalseBool;
+
+#define TRUE &TrueBool;
+#define FALSE &FalseBool;
 
 #endif //ILLUMINA_PRIMITIVES_H
