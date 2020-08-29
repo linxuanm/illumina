@@ -1,19 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "primitives.h"
+#include "stackfuncs.h"
 #include "frame.h"
 
 int main() {
-    void *objs[64];
+    IntObject a = 10;
+    IntObject b = 20;
 
-    uint64_t a = 64;
-    int b = 12;
+    IntObject *result = addInt(&a, &b);
 
-    objs[0] = &a;
-    objs[1] = &b;
-
-    printf("%d", *(int *) objs[1]);
+    printf("%lld", *result);
 
     return 0;
 }

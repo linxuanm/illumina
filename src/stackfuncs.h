@@ -4,14 +4,13 @@
 #include "frame.h"
 #include "primitives.h"
 
-void intAdd(RuntimeFrame *frame) {
-    IntObject *a = popStack(frame);
-    IntObject *b = popStack(frame);
+static void biFunc(RuntimeFrame *frame, void (*func)(void *, void *, void **));
 
-    IntObject result = *a + *b;
+void intAdd(RuntimeFrame *frame);
+void intSub(RuntimeFrame *frame);
 
-    addTempVar(frame, &result);
-    pushStack(frame, &result);
-}
+static void _addInt(IntObject *a, IntObject *b, IntObject **result);
+
+void addInt(RuntimeFrame *frame);
 
 #endif //ILLUMINA_STACKFUNCS_H
