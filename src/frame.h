@@ -5,22 +5,31 @@
 
 typedef struct RuntimeFrame {
     void *localVars[LOCAL_POOL_SIZE];
-    int allocatedIndex;
+    int varIndex;
 
     void *operandStack[STACK_SIZE];
     int stackIndex;
+
+    /*
+     * A rather hacky way to ease the
+     * garbage collection of partial results
+     * created in the operand stack.
+     */
+    void *tempPool[TEMP_POOL_SIZE];
+    int tempIndex;
 } RuntimeFrame;
 
-extern void initFrame(RuntimeFrame *frame);
-extern void destroyFrame(RuntimeFrame *frame);
+void initFrame(RuntimeFrame *frame);
+void destroyFrame(RuntimeFrame *frame);
 
 /*
  * Returns the index assigned to the newly
  * allocated variable.
  */
-extern int addLocalVar(RuntimeFrame *frame, void *object);
+int addLocalVar(RuntimeFrame *frame, void *object);
+void addTempVar(RuntimeFrame *frame, void *object);
 
-extern void pushStack(RuntimeFrame *frame, void *object);
-extern void *popStack(RuntimeFrame *frame);
+void pushStack(RuntimeFrame *frame, void *object);
+void *popStack(RuntimeFrame *frame);
 
 #endif //ILLUMINA_FRAME_H

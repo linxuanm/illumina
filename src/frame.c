@@ -7,41 +7,48 @@ void initFrame(RuntimeFrame *frame) {
 }
 
 void destroyFrame(RuntimeFrame *frame) {
-    for (int i = 0; i < frame->allocatedIndex; ++i) {
+    for (int i = 0; i < frame->varIndex; ++i) {
         free(frame->localVars[i]);
+    }
+
+    for (int i = 0; i < frame->tempIndex; ++i) {
+        free(frame->tempPool[i]);
     }
 }
 
 int addLocalVar(RuntimeFrame *frame, void *object) {
-    int currIndex = frame->allocatedIndex;
+    int currIndex = frame->varIndex;
 
     if (currIndex >= LOCAL_POOL_SIZE) {
         // TODO: raise pool overflow error
     }
 
     frame->localVars[currIndex] = object;
-    ++frame->allocatedIndex;
+    ++frame->varIndex;
 
     return currIndex;
 }
 
-void pushStack(RuntimeFrame *frame, void *object) {
-    int stackIndex = frame->stackIndex;
+void addTempVar(RuntimeFrame *frame, void *object) {
+    if (frame->tempIndex >= TEMP_POOL_SIZE) {
+        // TODO: raise pool overflow error
+    }
 
-    if (stackIndex >= STACK_SIZE) {
+    frame->tempPool[frame->tempIndex++] = object;
+}
+
+void pushStack(RuntimeFrame *frame, void *object) {
+    if (frame->stackIndex >= STACK_SIZE) {
         // TODO: raise stack overflow error
     }
 
-    frame->operandStack[stackIndex] = object;
-    ++frame->stackIndex;
+    frame->operandStack[frame->stackIndex++] = object;
 }
 
 void *popStack(RuntimeFrame *frame) {
-    int stackIndex = frame->stackIndex;
-
-    if (stackIndex <= 0) {
+    if (frame->stackIndex <= 0) {
         // TODO: raise empty stack error
     }
 
-    return frame->operandStack[--stackIndex];
+    return frame->operandStack[--frame->stackIndex];
 }
