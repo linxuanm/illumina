@@ -1,35 +1,24 @@
 #ifndef ILLUMINA_FRAME_H
 #define ILLUMINA_FRAME_H
 
-#include "args.h"
+#include <stdint.h>
+#include "specs.h"
 
 typedef struct RuntimeFrame {
-    void *localVars[LOCAL_POOL_SIZE];
-    int varIndex;
-
-    void *operandStack[STACK_SIZE];
-    int stackIndex;
-
-    /*
-     * A rather hacky way to ease the
-     * garbage collection of partial results
-     * created in the operand stack.
-     */
-    void *tempPool[TEMP_POOL_SIZE];
-    int tempIndex;
+    PRIM_TYPE *locals;
 } RuntimeFrame;
 
-void initFrame(RuntimeFrame *frame);
-void destroyFrame(RuntimeFrame *frame);
+RuntimeFrame *makeFrame();
+void destroyFrame(RuntimeFrame *);
+
+PRIM_TYPE frameRead(RuntimeFrame *, int);
+void frameWrite(RuntimeFrame *, int, PRIM_TYPE);
 
 /*
- * Returns the index assigned to the newly
- * allocated variable.
+ * Compiler keeps track of double-length primitives.
+ * Note this when writing bytecode; there is no safe checks.
  */
-int addLocalVar(RuntimeFrame *frame, void *object);
-void addTempVar(RuntimeFrame *frame, void *object);
-
-void pushStack(RuntimeFrame *frame, void *object);
-void *popStack(RuntimeFrame *frame);
+DOUBLE_PRIM_TYPE frameReadDouble(RuntimeFrame *, int);
+void frameWriteDouble(RuntimeFrame *, int, DOUBLE_PRIM_TYPE);
 
 #endif //ILLUMINA_FRAME_H

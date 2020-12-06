@@ -2,53 +2,33 @@
 
 #include <stdlib.h>
 
-void initFrame(RuntimeFrame *frame) {
+RuntimeFrame *makeFrame() {
+    RuntimeFrame *frame = malloc(sizeof(RuntimeFrame));
+    frame->locals = malloc(sizeof(uint32_t) * LOCAL_POOL_SIZE);
 
+    return frame;
 }
 
 void destroyFrame(RuntimeFrame *frame) {
-    for (int i = 0; i < frame->varIndex; ++i) {
-        free(frame->localVars[i]);
-    }
-
-    for (int i = 0; i < frame->tempIndex; ++i) {
-        free(frame->tempPool[i]);
-    }
+    free(frame->locals);
+    free(frame);
 }
 
-int addLocalVar(RuntimeFrame *frame, void *object) {
-    int currIndex = frame->varIndex;
-
-    if (currIndex >= LOCAL_POOL_SIZE) {
-        // TODO: raise pool overflow error
-    }
-
-    frame->localVars[currIndex] = object;
-    ++frame->varIndex;
-
-    return currIndex;
+PRIM_TYPE frameRead(RuntimeFrame *frame, int index) {
+    return frame->locals[index];
 }
 
-void addTempVar(RuntimeFrame *frame, void *object) {
-    if (frame->tempIndex >= TEMP_POOL_SIZE) {
-        // TODO: raise pool overflow error
-    }
-
-    frame->tempPool[frame->tempIndex++] = object;
+void frameWrite(RuntimeFrame *frame, int index, PRIM_TYPE value) {
+    frame->locals[index] = value;
 }
 
-void pushStack(RuntimeFrame *frame, void *object) {
-    if (frame->stackIndex >= STACK_SIZE) {
-        // TODO: raise stack overflow error
-    }
-
-    frame->operandStack[frame->stackIndex++] = object;
+DOUBLE_PRIM_TYPE frameReadDouble(RuntimeFrame *frame, int index) {
+    return
+        ((DOUBLE_PRIM_TYPE) frame->locals[index] << PRIM_SIZE) |
+        (frame->locals[index + 1]);
 }
 
-void *popStack(RuntimeFrame *frame) {
-    if (frame->stackIndex <= 0) {
-        // TODO: raise empty stack error
-    }
-
-    return frame->operandStack[--frame->stackIndex];
+void frameWriteDouble(RuntimeFrame *frame, int index, DOUBLE_PRIM_TYPE value) {
+    frame->locals[index] = (PRIM_TYPE) (value >> PRIM_SIZE);
+    frame->locals[index + 1] = (PRIM_TYPE) value;
 }

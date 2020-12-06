@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "type.h"
+#include "specs.h"
 
 /*
  * Declaration of references of primitive types
@@ -49,12 +50,11 @@ typedef struct ByteObject {
  */
 typedef int64_t IntObject;
 typedef double FloatObject;
-typedef uint16_t CharObject;
-typedef uint8_t ByteObject;
-typedef uint16_t ReferenceObject;
+typedef uint32_t CharObject;
+typedef uint32_t ReferenceObject;
 
-extern ByteObject TrueBool;
-extern ByteObject FalseBool;
+extern IntObject TrueBool;
+extern IntObject FalseBool;
 
 #define TRUE &TrueBool;
 #define FALSE &FalseBool;

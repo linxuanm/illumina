@@ -6,7 +6,7 @@
 #include "primitives.h"
 
 /*
- * Since integer allocations occurs very often
+ * WIP: Since integer allocations occurs very often
  * and therefore needs to be fast, here is a
  * custom implementation of its allocation.
  */
