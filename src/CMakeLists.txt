@@ -1,1 +1,8 @@
-add_executable(Illumina main.c primitives.c frame.c stackfuncs.c)
+add_executable(
+        Illumina
+        main.c
+
+        runtime/struct/frame.c
+        runtime/object/primitives.c
+        runtime/bytecode/bytefuncs.c
+)

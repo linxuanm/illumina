@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 #include "type.h"
-#include "specs.h"
+#include "../reference/specs.h"
 
 /*
  * Declaration of references of primitive types

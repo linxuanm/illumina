@@ -1,8 +1,8 @@
 #ifndef ILLUMINA_STACKFUNCS_H
 #define ILLUMINA_STACKFUNCS_H
 
-#include "frame.h"
-#include "primitives.h"
+#include "../struct/frame.h"
+#include "../object/primitives.h"
 
 
 

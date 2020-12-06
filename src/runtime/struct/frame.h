@@ -2,7 +2,8 @@
 #define ILLUMINA_FRAME_H
 
 #include <stdint.h>
-#include "specs.h"
+
+#include "../reference/specs.h"
 
 typedef struct RuntimeFrame {
     PRIM_TYPE *locals;
