@@ -1,8 +1,6 @@
 #ifndef ILLUMINA_FRAME_H
 #define ILLUMINA_FRAME_H
 
-#include <stdint.h>
-
 #include "../reference/specs.h"
 
 typedef struct RuntimeFrame {

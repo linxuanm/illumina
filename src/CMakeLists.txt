@@ -5,4 +5,4 @@ add_executable(
         runtime/struct/frame.c
         runtime/object/primitives.c
         runtime/bytecode/bytefuncs.c
-)
+        runtime/struct/thread.c)

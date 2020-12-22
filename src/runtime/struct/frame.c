@@ -4,7 +4,7 @@
 
 RuntimeFrame *makeFrame() {
     RuntimeFrame *frame = malloc(sizeof(RuntimeFrame));
-    frame->locals = malloc(sizeof(uint32_t) * LOCAL_POOL_SIZE);
+    frame->locals = malloc(sizeof(PRIM_TYPE) * LOCAL_POOL_SIZE);
 
     return frame;
 }

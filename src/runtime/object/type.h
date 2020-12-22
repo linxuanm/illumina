@@ -11,13 +11,4 @@ typedef struct TypeObject {
     uint16_t size;
 } TypeObject;
 
-#define OBJECT_PROPERTY \
-        uint8_t reachable; \
-        TypeObject *type;
-
-#define INIT_OBJ(type) 0, type;
-
-#define OBJECT_PROPERTY_SIZE \
-        sizeof(uint8_t) + sizeof(TypeObject)
-
 #endif //ILLUMINA_TYPE_H
