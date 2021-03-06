@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "runtime/bytecode/bytefuncs.h"
-#include "runtime/struct/frame.h"
-
 void printBits(int const size, void const * const ptr) {
     unsigned char *b = (unsigned char *) ptr;
     unsigned char byte;
@@ -19,13 +16,5 @@ void printBits(int const size, void const * const ptr) {
 }
 
 int main() {
-    RuntimeFrame *frame = makeFrame();
-    int32_t a = -65536;
-    int32_t b;
-    frameWriteDouble(frame, 0, a);
-    b = frameReadDouble(frame, 0);
 
-    printf("%d", b);
-
-    return 0;
 }
