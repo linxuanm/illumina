@@ -1,5 +1,9 @@
+#define DEBUG_MODE 1
+
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "common/debug.h"
 
 void printBits(int const size, void const * const ptr) {
     unsigned char *b = (unsigned char *) ptr;
@@ -16,5 +20,5 @@ void printBits(int const size, void const * const ptr) {
 }
 
 int main() {
-
+    DEBUG("Hello");
 }
