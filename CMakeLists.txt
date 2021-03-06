@@ -11,25 +11,43 @@ set(CMAKE_C_STANDARD 11)
 option(INCLUDE_RUNTIME "Include the Illumina runtime" ON)
 option(INCLUDE_COMPILER "Include the Illumina compiler" ON)
 
+include_directories(src)
+
 set(RUNTIME_DIR src/runtime)
 set(COMPILER_DIR src/compiler)
 
-set(ILLUMINA_HEADERS src/common/debug.h)
+set(ILLUMINA_HEADERS)
 set(ILLUMINA_SOURCES)
 
-add_executable(Illumina src/main.c ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
+set(COMMON_HEADERS src/common/debug.h)
+set(COMMON_SOURCES)
 
-include_directories(src)
+message("\nIncluded Common Library")
+
+message("Common Headers:")
+foreach(header IN LISTS COMMON_HEADERS)
+    message("\t- ${header}")
+endforeach()
+
+message("Common Sources:")
+foreach(header IN LISTS COMMON_Sources)
+    message("\t- ${header}")
+endforeach()
+
+list(APPEND ILLUMINA_HEADERS ${COMMON_HEADERS})
+list(APPEND ILLUMINA_SOURCES ${COMMON_SOURCES})
 
 if(INCLUDE_RUNTIME)
+    message("\nIncluded Illumina Runtime")
     include(${RUNTIME_DIR}/CMakeLists.txt)
-    message("Runtime included")
 endif()
 
 if(INCLUDE_COMPILER)
+    message("\nIncluded Illumina Compiler")
     include(${COMPILER_DIR}/CMakeLists.txt)
-    message("Compiler included")
 endif()
+
+add_executable(Illumina src/main.c ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
 
 unset(INCLUDE_RUNTIME CACHE)
 unset(INCLUDE_COMPILER CACHE)
