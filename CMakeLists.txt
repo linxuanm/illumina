@@ -11,21 +11,23 @@ set(CMAKE_C_STANDARD 11)
 option(INCLUDE_RUNTIME "Include the Illumina runtime" ON)
 option(INCLUDE_COMPILER "Include the Illumina compiler" ON)
 
-set(COMMON_HEADERS src/common/debug.h)
-set(COMMON_SOURCES)
-
 set(RUNTIME_DIR src/runtime)
 set(COMPILER_DIR src/compiler)
 
-add_executable(Illumina src/main.c ${COMMON_HEADERS} ${COMMON_SOURCES})
+set(ILLUMINA_HEADERS src/common/debug.h)
+set(ILLUMINA_SOURCES)
+
+add_executable(Illumina src/main.c ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
+
+include_directories(src)
 
 if(INCLUDE_RUNTIME)
-    include_directories(RUNTIME_DIR)
+    include(${RUNTIME_DIR}/CMakeLists.txt)
     message("Runtime included")
 endif()
 
 if(INCLUDE_COMPILER)
-    include_directories(COMPILER_DIR)
+    include(${COMPILER_DIR}/CMakeLists.txt)
     message("Compiler included")
 endif()
 

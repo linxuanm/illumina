@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "common/debug.h"
+#include "runtime/loader/fileloader.h"
 
 void printBits(int const size, void const * const ptr) {
     unsigned char *b = (unsigned char *) ptr;
@@ -20,5 +21,5 @@ void printBits(int const size, void const * const ptr) {
 }
 
 int main() {
-    DEBUG("Hello");
+
 }
