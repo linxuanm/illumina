@@ -1,0 +1,11 @@
+set(COMPILER_HEADERS)
+set(COMPILER_SOURCES)
+
+message("Compiler Headers:")
+log_list(COMPILER_HEADERS)
+
+message("Compiler Sources:")
+log_list(COMPILER_SOURCES)
+
+list(APPEND ILLUMINA_HEADERS ${COMPILER_HEADERS})
+list(APPEND ILLUMINA_SOURCES ${COMPILER_SOURCES})

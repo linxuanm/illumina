@@ -11,7 +11,15 @@ set(CMAKE_C_STANDARD 11)
 option(INCLUDE_RUNTIME "Include the Illumina runtime" ON)
 option(INCLUDE_COMPILER "Include the Illumina compiler" ON)
 
+function(log_list LIST)
+    foreach(element IN LISTS ${LIST})
+        message("\t- ${element}")
+    endforeach()
+endfunction()
+
 include_directories(src)
+
+message("Building Illumina ${CMAKE_PROJECT_VERSION}")
 
 set(RUNTIME_DIR src/runtime)
 set(COMPILER_DIR src/compiler)
@@ -25,14 +33,10 @@ set(COMMON_SOURCES)
 message("\nIncluded Common Library")
 
 message("Common Headers:")
-foreach(header IN LISTS COMMON_HEADERS)
-    message("\t- ${header}")
-endforeach()
+log_list(COMMON_HEADERS)
 
 message("Common Sources:")
-foreach(header IN LISTS COMMON_Sources)
-    message("\t- ${header}")
-endforeach()
+log_list(COMMON_SOURCES)
 
 list(APPEND ILLUMINA_HEADERS ${COMMON_HEADERS})
 list(APPEND ILLUMINA_SOURCES ${COMMON_SOURCES})
@@ -48,6 +52,8 @@ if(INCLUDE_COMPILER)
 endif()
 
 add_executable(Illumina src/main.c ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
+
+message("\nDone")
 
 unset(INCLUDE_RUNTIME CACHE)
 unset(INCLUDE_COMPILER CACHE)
