@@ -1,5 +1,13 @@
-set(RUNTIME_HEADERS src/runtime/loader/fileloader.h)
-set(RUNTIME_SOURCES src/runtime/loader/fileloader.c)
+set(RUNTIME_HEADERS
+        src/runtime/specs.h
+        src/runtime/loader/fileloader.h
+        src/runtime/vm.h
+)
+
+set(RUNTIME_SOURCES
+        src/runtime/loader/fileloader.c
+        src/runtime/vm.c
+)
 
 message("Runtime Headers:")
 log_list(RUNTIME_HEADERS)

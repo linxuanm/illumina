@@ -1,5 +1,8 @@
-set(COMPILER_HEADERS)
-set(COMPILER_SOURCES)
+set(COMPILER_HEADERS
+)
+
+set(COMPILER_SOURCES
+)
 
 message("Compiler Headers:")
 log_list(COMPILER_HEADERS)
