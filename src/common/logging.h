@@ -1,5 +1,5 @@
-#ifndef ILLUMINA_DEBUG_H
-#define ILLUMINA_DEBUG_H
+#ifndef ILLUMINA_LOGGING_H
+#define ILLUMINA_LOGGING_H
 
 #include <string.h>
 
@@ -16,4 +16,9 @@
 
 #endif //DEBUG_MODE
 
-#endif //ILLUMINA_DEBUG_H
+#define WARN(fmt, args...) do {printf("[WARNING] " fmt, ##args);} while (0)
+#define ERROR(fmt, args...) do {\
+    fprintf(stderr, "[ERROR] " fmt, ##args);\
+    } while (0)
+
+#endif //ILLUMINA_LOGGING_H

@@ -27,8 +27,14 @@ set(COMPILER_DIR src/compiler)
 set(ILLUMINA_HEADERS)
 set(ILLUMINA_SOURCES)
 
-set(COMMON_HEADERS src/common/debug.h)
-set(COMMON_SOURCES)
+set(COMMON_HEADERS
+        src/common/logging.h
+        src/common/util/stream.h
+    )
+
+set(COMMON_SOURCES
+        src/common/util/stream.c
+)
 
 message("\nIncluded Common Library")
 

@@ -1,12 +1,13 @@
 #define DEBUG_MODE 1
+#define VM_64_BIT_HEAP 1
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "common/debug.h"
+#include "common/logging.h"
 #include "runtime/loader/fileloader.h"
 
-void printBits(int const size, void const * const ptr) {
+void print_bits(int const size, void const * const ptr) {
     unsigned char *b = (unsigned char *) ptr;
     unsigned char byte;
     int i, j;
@@ -21,5 +22,5 @@ void printBits(int const size, void const * const ptr) {
 }
 
 int main() {
-
+    
 }
