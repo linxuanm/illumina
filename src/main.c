@@ -23,6 +23,5 @@ void print_bits(int const size, void const * const ptr) {
 }
 
 int main() {
-    
-    printf("%d", vm_thread_errno);
+
 }

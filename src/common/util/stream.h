@@ -13,7 +13,7 @@ typedef struct stream_t {
 } stream_t;
 
 #define STREAM_CHECK_EOF(s, x) \
-    if (s->pc + x > s->end) {\
+    if ((s)->pc + (x) > (s)->end) {\
         ERROR("EOF while reading from byte stream");\
         VM_SET_THREAD_ERRNO(VM_ERRNO_EOF);\
         return 0;\

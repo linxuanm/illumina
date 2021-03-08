@@ -10,7 +10,7 @@
 #define DEBUG(fmt, args...) \
     do {\
         printf("[%s:%d:%s] " fmt "\n", \
-            __FILENAME__, __LINE__, __func__, ##args);\
+               __FILENAME__, __LINE__, __func__, ##args);\
     } while (0)
 
 #else
