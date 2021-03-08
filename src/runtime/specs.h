@@ -17,4 +17,6 @@
 
 #endif // VM_64_BIT_HEAP
 
+#define FILE_SIZE_T uint32_t
+
 #endif //ILLUMINA_SPECS_H

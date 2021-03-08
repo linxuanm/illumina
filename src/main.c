@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "common/logging.h"
+#include "common/util/stream.h"
 #include "runtime/loader/fileloader.h"
 
 void print_bits(int const size, void const * const ptr) {
@@ -23,4 +24,5 @@ void print_bits(int const size, void const * const ptr) {
 
 int main() {
     
+    printf("%d", vm_thread_errno);
 }
