@@ -2,13 +2,13 @@ set(RUNTIME_HEADERS
         src/runtime/specs.h
         src/runtime/vm_error.h
         src/runtime/vm.h
-        src/runtime/loader/fileloader.h
+        src/runtime/loader/file_loader.h
 )
 
 set(RUNTIME_SOURCES
         src/runtime/vm.c
         src/runtime/vm_error.c
-        src/runtime/loader/fileloader.c
+        src/runtime/loader/file_loader.c
 )
 
 message("Runtime Headers:")
