@@ -16,6 +16,10 @@
  * and VM objects)
  */
 
+#define SYM_TYPE_SINGLE_DATA 1
+#define SYM_TYPE_DOUBLE_DATA 2
+#define SYM_TYPE_TABLE_PTR 3
+
 typedef struct sym_ref_t {
 
     // the type of the symbolic reference
