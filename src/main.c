@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "common/logging.h"
+#include "common/util/assert.h"
 #include "common/util/stream.h"
 #include "runtime/loader/file_loader.h"
 
@@ -23,5 +24,5 @@ void print_bits(int const size, void const * const ptr) {
 }
 
 int main() {
-
+    ASSERT_MALLOC(NULL);
 }

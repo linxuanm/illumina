@@ -20,11 +20,17 @@ typedef struct sym_ref_t {
 
     // the type of the symbolic reference
     uint8_t tag;
+
+    uint32_t value;
+    uint32_t extra;
 } sym_ref_t;
 
 typedef struct sym_table_t {
     SYM_TABLE_SIZE_T size;
-    sym_ref_t sym_references;
+    sym_ref_t *sym_references;
 } sym_table_t;
+
+sym_table_t *sym_table_init(SYM_TABLE_SIZE_T);
+void sym_table_release(sym_table_t *);
 
 #endif //ILLUMINA_SYMBOL_TABLE_H

@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#define __FILENAME__ strrchr("/" __FILE__, '/') + 1
+
 #ifdef DEBUG_MODE
 
-#define __FILENAME__ strrchr("/" __FILE__, '/') + 1
 #define DEBUG(fmt, args...) \
     do {\
         printf("[%s:%d:%s] " fmt "\n", \

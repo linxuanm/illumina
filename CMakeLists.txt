@@ -30,6 +30,7 @@ set(ILLUMINA_SOURCES)
 set(COMMON_HEADERS
         src/common/logging.h
         src/common/util/stream.h
+        src/common/util/assert.h
     )
 
 set(COMMON_SOURCES
