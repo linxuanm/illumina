@@ -1,3 +1,6 @@
+# drop kick this file into the styles subdirectory
+# of your pygments distribution
+
 import pygments
 from pygments import token
 
