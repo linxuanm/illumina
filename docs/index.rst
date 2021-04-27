@@ -5,6 +5,8 @@ Illumina Language
    :maxdepth: 2
    :caption: Contents:
 
+.. highlight:: console
+
 Illumina is a strong-typed programming language with simple, clear logistics and elegant syntax. Apart from providing high-level abstractions, it allows metaprogramming and flexible modifications by providing a native interface.
 
 Installation

@@ -46,8 +46,9 @@ class IlluminaLexer(pygments.lexer.RegexLexer):
 
     tokens = {
         'root': [
-            (union(keywords), token.Name),
-            (union(types), token.Generic)
+            (union(keywords), token.Keyword),
+            (union(types), token.Name.Class),
+            (r'"[^"]*"', token.String)
         ]
     }
 
