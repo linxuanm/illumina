@@ -31,6 +31,24 @@ A runnable Illumina code that resembles the logic of the above code would be::
 
 The following sections will provide a more detailed illustration of each concept and syntactic construct mentioned above.
 
-Declaration
------------
+Variable Declaration
+--------------------
+
+Variable must be declared before being used or being assigned. A declaration of a variable consists of its name and type, in a format similar to that of `Paamayim Nekudotayim <https://en.wikipedia.org/wiki/Scope_resolution_operator>`_. Like demonstrated above::
+
+    foo :: int; // declares variable 'foo' of type int
+
+The declaration can also include an initial value for the variable::
+
+    foo :: int = 42; // declares variable 'foo' of type int with value of 42
+
+A variable can be specified as a constant by adding :code:`const` in its attribute list. An attribute list is a list surronded by parenthesis :code:`()` located before the name of the variable::
+
+    (const) bar :: String = "Hello";
+
+The attribute list is a recurring syntactic construct that  will later appear in declarations for functions and classes; each of them have a separate set of available attributes.
+
+.. note::
+
+    The :code:`const` attribute on a variable is automatically inferred by the compiler if the variable's value never changes before going out of scope. There are currently no VM level optimizations regarding the invariability of local variables, but some may be introduced in the future.
 

@@ -24,7 +24,8 @@ keywords = [
     'func',
     'return',
     'true',
-    'false'
+    'false',
+    'const'
 ]
 
 types = [
@@ -48,6 +49,7 @@ class IlluminaLexer(pygments.lexer.RegexLexer):
 
     tokens = {
         'root': [
+            (r'\/\/.*\n', token.Comment),
             (union(keywords), token.Keyword),
             (union(types), token.Keyword.Type),
             (r'"[^"]*"', token.String),
