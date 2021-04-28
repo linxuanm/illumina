@@ -9,3 +9,12 @@ Illumina Language
     Introduction <introduction>
     Install <installation>
     Contributing <contributing>
+
+.. toctree::
+    :titlesonly:
+    :caption: Tutorial
+    :maxdepth: 2
+
+    Basic Syntax <tutorial/basic>
+    Functions <tutorial/functions>
+    Control Flow <tutorial/control>

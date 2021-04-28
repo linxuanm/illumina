@@ -16,14 +16,14 @@ To check your installation::
     illumina -v
 
 With Brew
-----
+---------
 
 Installing via Brew is preferred::
 
     brew install illumina
 
 With an Installer
----------
+-----------------
 
 Select a release on Illumina's `releases page <https://github.com/davidmaamoaix/Illumina/releases>`_ and download the installer for your operating system.
 

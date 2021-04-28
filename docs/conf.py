@@ -22,7 +22,9 @@ html_static_path = ['_static']
 keywords = [
     'include',
     'func',
-    'return'
+    'return',
+    'true',
+    'false'
 ]
 
 types = [
@@ -51,10 +53,10 @@ class IlluminaLexer(pygments.lexer.RegexLexer):
             (r'"[^"]*"', token.String),
             (r'\s', token.Text.Whitespace),
             (r'[_a-zA-Z][_a-zA-Z0-9]*', token.Name),
-            (r'[-!$%^&*()_+|~=`{}\[\]:;<>?,.\/]', token.Text)
+            (r'[-!$%^&*()_+|~=`{}\[\]:;<>?,.\/]', token.Text),
+            (r'-?[0-9]+(\.[0-9]+)?', token.Literal.Number)
         ]
     }
-
 
 pygments_style = 'friendly'
 lexers['illumina'] = IlluminaLexer()
