@@ -47,11 +47,14 @@ class IlluminaLexer(pygments.lexer.RegexLexer):
     tokens = {
         'root': [
             (union(keywords), token.Keyword),
-            (union(types), token.Name.Class),
-            (r'"[^"]*"', token.String)
+            (union(types), token.Keyword.Type),
+            (r'"[^"]*"', token.String),
+            (r'\s', token.Text.Whitespace),
+            (r'[_a-zA-Z][_a-zA-Z0-9]*', token.Name),
+            (r'[-!$%^&*()_+|~=`{}\[\]:;<>?,.\/]', token.Text)
         ]
     }
 
 
-pygments_style = 'illumina'
+pygments_style = 'friendly'
 lexers['illumina'] = IlluminaLexer()
