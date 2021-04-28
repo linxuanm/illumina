@@ -8,6 +8,13 @@ on:
     branches:
       - master
 
+  pull_request:
+    paths:
+      - 'docs/**'
+
+    branches:
+      - master
+
 jobs:
   deploy_docs:
     runs-on: ubuntu-latest
