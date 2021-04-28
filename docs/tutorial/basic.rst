@@ -16,7 +16,7 @@ Each code block in Illumina consists of a series of statements with the same ind
     bar = "hello";
     baz = true;
 
-However, there are two problems with the above snippet.
+However, there are two problems with the above snippet if it is the entire content of an Illumina code file.
 
 Firstly, the variables :code:`foo`, :code:`bar` and :code:`baz` are not defined. Illumina enforces explicit declaration of variables, and the above code will throw an :code:`undefined variable` error.
 
@@ -52,3 +52,86 @@ The attribute list is a recurring syntactic construct that  will later appear in
 
     The :code:`const` attribute on a variable is automatically inferred by the compiler if the variable's value never changes before going out of scope. There are currently no VM level optimizations regarding the invariability of local variables, but some may be introduced in the future.
 
+Variables can also be defined globally when declared in the outmost scope (directly inside the code file).
+
+Types
+-----
+
+Primitive types are the most fundamental types in Illumina. Primitive implies immutability. In the scope of Illumina's source language (as opposed to type representation in the VM after compilation), there are 5 primitive types:
+
+* :code:`int`, a 64-bit signed integer
+* :code:`float`, a double-precision float
+* :code:`char`, a 32-bit int representing a unicode character
+* :code:`bool`, a boolean value of either :code:`true` or :code:`false`
+* :code:`byte`, a single byte
+
+.. note::
+    
+    All primitives whose size is less than a 32-bit int is treated in a 32-bit int container in the VM to eliminate byte padding and other unnecessary fuss.
+
+Notably, :code:`void` do count as a type, but cannot be used as the type of a variable, and only exist to denote the return type of a function.
+
+Meanwhile, despite looking like a primitive type, :code:`String` is not a primitive. The :code:`String` class, like many other default classes, belongs to the :code:`default` module, which is automatically included by the compiler.
+
+Non-primitive types are defined by classes, and are usually named with a capital letter at the start (e.g. :code:`String`). All non-primitives are subclasses (see `OOP <https://en.wikipedia.org/wiki/Object-oriented_programming>`_) of the base object class :code:`Obj`.
+
+Casting
+-------
+
+Casting is the process of changing a variable's type to its subclass or super class. Since the concept of variable type does not exist after compilation (note that this is not object type), casting only affects the compiler. The following code casts an object from :code:`MySuperClass` to :code:`MySubClass`::
+
+    a :: MySuperClass = myObject;
+    b :: MySubClass;
+
+    b = (MySubClass) myObject;
+
+.. note::
+
+    Unlike languages like Java, the casting operator has a very high precedence.
+
+In assignments where the assigned object's type does not match that of the variable's, auto-casting is performed, making the following code equivalent to the one above::
+
+    a :: MySuperClass = myObject;
+    b :: MySubClass;
+
+    b = myObject;
+
+To avoid unintended casting, this can be disabled by passing :code:`--disableAutoCast` to the compiler when compiling.
+
+An exception to the casting rule is when casting across primitive types. Instead of changing the compile-time object type, values might be altered to accommodate the other type::
+
+    // float -> int drops the tail
+    floatVar :: float = 15.5;
+    intVar :: int = floatVar; // note the auto-casting
+
+    println(intVar); // 15
+
+    // any number type -> bool is false if 0, true otherwise
+    boolVar :: bool = floatVar;
+
+    println(boolVar); // true
+
+Include
+-------
+
+The :code:`include` keyword is used to use variables, functions and classes from another code file. Consider the following file :code:`someData.lux` with a few variables::
+
+    // this is the entire content of the file
+    mysteryNumber :: int = 69;
+    mysteryAnimal :: String = "Alpaca";
+
+In another file :code:`otherFile.lux`, the members of :code:`someData.lux` can be accessed by::
+
+    include io
+    include otherFile
+
+    func main :: void ():
+        println(mysteryNumber); // 69
+        println(mysteryAnimal); // Alpaca
+
+To avoid namespace pollution, a qualified import can be performed by specifying the desired name in a parenthesis directly after the module name::
+
+    include io(myIO)
+
+    func main :: void ():
+        myIO.println("Hello");

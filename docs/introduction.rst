@@ -22,7 +22,7 @@ Create a program file :code:`hello.lux` with the following code:
     include io
 
     func main :: void ():
-        io.println("Hello World");
+        println("Hello World");
 
 Compile the program with the following command::
     
