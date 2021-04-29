@@ -40,7 +40,7 @@ types = [
 
 
 def union(strs):
-    return r'\b' + '|'.join(f'{i}' for i in strs) + r'\b'
+    return r'\b(' + '|'.join(f'{i}' for i in strs) + r')\b'
 
 
 class IlluminaLexer(pygments.lexer.RegexLexer):

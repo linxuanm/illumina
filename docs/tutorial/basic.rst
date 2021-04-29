@@ -135,3 +135,30 @@ To avoid namespace pollution, a qualified import can be performed by specifying 
 
     func main :: void ():
         myIO.println("Hello");
+
+Alternatively, a list of members to include can be specified::
+
+    include io{println} // only 'println' is included
+
+    func main :: void ():
+        println("Hello");
+
+List
+----
+
+A list is an ordered, variable-size collection. In Illumina, a list can only contain objects of a single type. The type of a list of type :code:`T` is writting as::
+    
+    [T]
+
+An example declaration and assignment of an integer list::
+
+    intList :: [int] = {1, 3, 5, 7, 9};
+
+Lists support retrieving and assigning with an index. Like most programming languages, the list index starts at 0::
+
+    println(intList)[1]; // 3
+    intList[3] = 255; // changes the original 7 to 255
+
+More operations can be found in the :ref:`docs_default_list` documentation.
+
+As expected, lists are not primitive objects; in fact, they are implemented non-natively in the :code:`default` module.
