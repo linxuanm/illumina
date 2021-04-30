@@ -25,7 +25,8 @@ keywords = [
     'return',
     'true',
     'false',
-    'const'
+    'const',
+    'instanceof'
 ]
 
 types = [
