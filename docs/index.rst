@@ -16,5 +16,14 @@ Illumina Language
     :maxdepth: 2
 
     Basic Syntax <tutorial/basic>
-    Functions <tutorial/functions>
     Control Flow <tutorial/control>
+    Functions <tutorial/functions>
+    Classes <tutorial/classes>
+    Generics <tutorial/generics>
+
+.. toctree::
+    :titlesonly:
+    :caption: Back End
+    :maxdepth: 2
+
+    Byte Code Format <backend/asm_format>
