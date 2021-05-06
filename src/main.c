@@ -24,5 +24,6 @@ void print_bits(int const size, void const * const ptr) {
 }
 
 int main() {
-    ASSERT_MALLOC(NULL);
+
+    return 0;
 }
