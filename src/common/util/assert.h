@@ -9,10 +9,4 @@
         exit(EXIT_FAILURE);\
     }
 
-#define CATCH_MALLOC(ptr, label) \
-    if (ptr == NULL) {\
-        ERROR("malloc failed at [%s:%d:%s]", __FILENAME__, __LINE__, __func__);\
-        goto label;\
-    }
-
 #endif //ILLUMINA_ASSERT_H

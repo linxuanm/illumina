@@ -4,6 +4,7 @@
 #include <inttypes.h>
 
 #define VM_ERRNO_EOF 1
+#define VM_ERRNO_BAD_FILE_FORMAT 2
 
 extern __thread uint8_t vm_thread_errno;
 

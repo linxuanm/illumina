@@ -1,7 +1,7 @@
 #ifndef ILLUMINA_STREAM_H
 #define ILLUMINA_STREAM_H
 
-#include "runtime/specs.h"
+#include "common/specs.h"
 #include "runtime/vm_error.h"
 
 typedef FILE_SIZE_T stream_size_t;
@@ -23,5 +23,8 @@ uint8_t stream_read_1(stream_t *);
 uint16_t stream_read_2(stream_t *);
 uint32_t stream_read_4(stream_t *);
 uint64_t stream_read_8(stream_t *);
+
+// load stream from file
+void stream_from_file(stream_t *, const char *);
 
 #endif //ILLUMINA_STREAM_H

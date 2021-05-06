@@ -1,5 +1,7 @@
 #include "stream.h"
 
+#include <stdlib.h>
+
 #include "common/logging.h"
 
 uint8_t stream_read_1(stream_t *stream) {
@@ -35,4 +37,18 @@ uint64_t stream_read_8(stream_t *stream) {
     }
 
     return data;
+}
+
+void stream_from_file(stream_t *stream, const char *path) {
+    FILE *file_ptr = fopen(path, "rb");
+    fseek(file_ptr, 0, SEEK_END);
+
+    stream->end = (unsigned long) ftell(file_ptr);
+
+    fseek(file_ptr, 0, SEEK_SET);
+    stream->bytes = malloc((stream->end + 1) * sizeof(uint8_t));
+    fread(stream->bytes, sizeof(uint8_t), stream->end, file_ptr);
+    fclose(file_ptr);
+
+    stream->bytes[stream->end] = '\0';
 }

@@ -1,7 +1,7 @@
 #ifndef ILLUMINA_CONST_POOL_H
 #define ILLUMINA_CONST_POOL_H
 
-#include "runtime/specs.h"
+#include "common/specs.h"
 
 /*
  * Each object code file has a dedicated constant pool

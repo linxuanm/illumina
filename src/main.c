@@ -24,6 +24,10 @@ void print_bits(int const size, void const * const ptr) {
 }
 
 int main() {
+    stream_t stream;
+    stream_from_file(&stream, "test.iasm");
+
+    file_rep_t file = load_file_rep(&stream);
 
     return 0;
 }
