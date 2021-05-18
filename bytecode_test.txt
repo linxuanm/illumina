@@ -1,0 +1,6 @@
+// this file is a text bytecode file for the VM
+// it should be converted with hexbuilder (search pypi)
+
+// header file
+ABCD DCBA 0000 0000 0000 0000 0000 0000
+
