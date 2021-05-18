@@ -10,7 +10,7 @@
  */
 typedef struct name_table_t {
     NAME_TABLE_SIZE_T size;
-    char **names;
+    uint8_t **names;
 } name_table_t;
 
 name_table_t *name_table_init(NAME_TABLE_SIZE_T);

@@ -4,7 +4,7 @@
 #include "runtime/structure/name_table.h"
 
 file_rep_t load_file_rep(stream_t *stream) {
-    file_rep_t object_file;
+    file_rep_t object_file = {NULL};
 
     // header
     if (stream_read_4(stream) != 0xABCDDCBA) {
@@ -25,6 +25,8 @@ file_rep_t load_file_rep(stream_t *stream) {
 
         name_table->names[i] = stream_read_str(stream, name_length);
     }
+
+    object_file.name_table = name_table;
 
     return object_file;
 }

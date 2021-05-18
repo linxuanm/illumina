@@ -29,5 +29,8 @@ int main() {
 
     file_rep_t file = load_file_rep(&stream);
 
+    printf("%s\n", file.name_table->names[0]);
+    printf("%s\n", file.name_table->names[1]);
+
     return 0;
 }
