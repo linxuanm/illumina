@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "common/logging.h"
+#include "common/util/assert.h"
 
 uint8_t stream_read_1(stream_t *stream) {
     STREAM_CHECK_EOF(stream, 1);
@@ -37,6 +38,18 @@ uint64_t stream_read_8(stream_t *stream) {
     }
 
     return data;
+}
+
+uint8_t *stream_read_str(stream_t *stream, uint16_t size) {
+    uint8_t *string = malloc((size + 1) * sizeof(uint8_t));
+    ASSERT_MALLOC(string);
+
+    for (int i = 0; i < size; ++i) {
+        string[i] = stream_read_1(stream);
+    }
+
+    string[size] = '\0';
+    return string;
 }
 
 void stream_from_file(stream_t *stream, const char *path) {

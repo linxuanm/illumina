@@ -24,6 +24,8 @@ uint16_t stream_read_2(stream_t *);
 uint32_t stream_read_4(stream_t *);
 uint64_t stream_read_8(stream_t *);
 
+uint8_t *stream_read_str(stream_t *, uint16_t);
+
 // load stream from file
 void stream_from_file(stream_t *, const char *);
 
