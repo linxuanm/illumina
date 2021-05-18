@@ -8,7 +8,10 @@
 
 extern __thread uint8_t vm_thread_errno;
 
-#define VM_SET_THREAD_ERRNO(x) vm_thread_errno = (x)
+#define VM_SET_THREAD_ERRNO(x) \
+    do {\
+        if (vm_thread_errno == 0) vm_thread_errno = (x);\
+    } while (0)
 #define VM_THREAD_ERRNO vm_thread_errno
 
 #endif //ILLUMINA_VM_ERROR_H

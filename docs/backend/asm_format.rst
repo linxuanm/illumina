@@ -27,7 +27,9 @@ Since symbolic names are discarded during compilation, name table is introduced 
 The name table structure is described below::
 
     struct name_table {
+
         uint16_t size;
+
         struct {
             uint8_t length;
             char *name;
