@@ -13,7 +13,7 @@ typedef struct name_table_t {
     uint8_t **names;
 } name_table_t;
 
-name_table_t *name_table_init(NAME_TABLE_SIZE_T);
+void name_table_init(NAME_TABLE_SIZE_T, name_table_t *);
 void name_table_release(name_table_t *);
 
 #endif //ILLUMINA_NAME_TABLE_H

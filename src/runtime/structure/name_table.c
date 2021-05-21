@@ -4,13 +4,15 @@
 
 #include "common/util/assert.h"
 
-name_table_t *name_table_init(NAME_TABLE_SIZE_T size) {
-    name_table_t *name_table = malloc(sizeof(name_table_t));
-    ASSERT_MALLOC(name_table);
-
+void name_table_init(NAME_TABLE_SIZE_T size, name_table_t *name_table) {
     name_table->size = size;
     name_table->names = malloc(size * sizeof(char *));
-    ASSERT_MALLOC(name_table->names);
+}
 
-    return name_table;
+void name_table_release(name_table_t *name_table) {
+    for (int i = 0; i < name_table->size; ++i) {
+        free(name_table->names[i]);
+    }
+
+    free(name_table->names);
 }

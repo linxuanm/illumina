@@ -27,10 +27,10 @@ int main() {
     stream_t stream;
     stream_from_file(&stream, "test.iasm");
 
-    file_rep_t file = load_file_rep(&stream);
+    file_rep_t *file = load_file_rep(&stream);
 
-    printf("%s\n", file.name_table->names[0]);
-    printf("%s\n", file.name_table->names[1]);
+    printf("%s\n", file->name_table.names[0]);
+    printf("%s\n", file->name_table.names[1]);
 
     return 0;
 }

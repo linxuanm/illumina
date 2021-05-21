@@ -30,7 +30,7 @@ typedef struct const_pool_t {
     const_pool_ref_t *const_references;
 } const_pool_t;
 
-const_pool_t *const_pool_init(CONST_POOL_SIZE_T);
+void const_pool_init(CONST_POOL_SIZE_T, const_pool_t *);
 void const_pool_release(const_pool_t *);
 
 #endif //ILLUMINA_CONST_POOl_H
