@@ -24,6 +24,8 @@ void print_bits(int const size, void const * const ptr) {
 }
 
 int main() {
+    printf("%d", -27 & 1);
+
     stream_t stream;
     stream_from_file(&stream, "test.iasm");
 
