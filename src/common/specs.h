@@ -16,7 +16,7 @@
 #endif // VM_64_BIT_HEAP
 
 #define FILE_SIZE_T uint64_t
-#define NAME_TABLE_SIZE_T uint16_t
-#define CONST_POOL_SIZE_T uint16_t
+#define NAME_TABLE_SIZE_T uint32_t
+#define LINK_TABLE_SIZE_T uint16_t
 
 #endif //ILLUMINA_SPECS_H

@@ -1,4 +1,4 @@
-#include "const_pool.h"
+#include "link_table.h"
 
 #include <stdlib.h>
 

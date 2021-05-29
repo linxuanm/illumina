@@ -4,9 +4,10 @@
 #include "common/specs.h"
 
 /*
- * A table used to reference the pre-compiled name
- * of functions, variables and classes to ease debugging,
- * as names are not retained at the VM level.
+ * A table used to reference the name of functions,
+ * variables and classes to allow symbolic linking
+ * during the loading phrase. Separated from the
+ * symbol table for flexibility purposes.
  */
 typedef struct name_table_t {
     NAME_TABLE_SIZE_T size;
