@@ -31,7 +31,7 @@ typedef struct link_table_ref_t {
     uint32_t value;
     uint32_t extra;
 
-    // used for referencing other tables
+    // used for referencing other tables (dynamically generated later)
     uint32_t link;
 } link_table_ref_t;
 

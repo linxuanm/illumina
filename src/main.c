@@ -31,6 +31,8 @@ int main() {
 
     printf("%s\n", file->name_table.names[0]);
     printf("%s\n", file->name_table.names[1]);
+    printf("%s\n", file->name_table.names[2]);
+    printf("%s\n", file->name_table.names[3]);
 
     return 0;
 }
