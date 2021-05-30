@@ -12,6 +12,12 @@ extern __thread uint8_t vm_thread_errno;
     do {\
         if (vm_thread_errno == 0) vm_thread_errno = (x);\
     } while (0)
+
+#define VM_RETURN_IF_ERROR(x) \
+    do {\
+        if (vm_thread_errno == 0) return x;\
+    } while (0)
+
 #define VM_THREAD_ERRNO vm_thread_errno
 
 #endif //ILLUMINA_VM_ERROR_H

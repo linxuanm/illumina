@@ -36,5 +36,12 @@ file_rep_t *load_file_rep(stream_t *stream) {
         link_table_load_entry(&object_file->link_table.links[i], stream);
     }
 
+    VM_RETURN_IF_ERROR(object_file);
+
+    // end of structure setup
+
+    // classes
+
+
     return object_file;
 }
