@@ -49,6 +49,7 @@ uint8_t *stream_read_str(stream_t *stream, uint16_t size) {
     }
 
     string[size] = '\0';
+    
     return string;
 }
 

@@ -15,7 +15,13 @@
  * don't take up 2 entries).
  */
 
-//#define LINK_TYPE_
+#define LINK_TYPE_INT 1
+#define LINK_TYPE_FLOAT 2
+#define LINK_TYPE_STRING 3
+#define LINK_TYPE_GLOBAL_VAR 4
+#define LINK_TYPE_FIELD_REF 5
+#define LINK_TYPE_FUNCTION 6
+#define LINK_TYPE_CLASS 7
 
 typedef struct link_table_ref_t {
 
@@ -24,6 +30,9 @@ typedef struct link_table_ref_t {
 
     uint32_t value;
     uint32_t extra;
+
+    // used for referencing other tables
+    uint32_t link;
 } link_table_ref_t;
 
 typedef struct link_table_t {

@@ -1,8 +1,24 @@
 // this file is a text bytecode file for the VM
 // it should be converted with hexbuilder (search pypi)
 
+
 // header file
 ABCD DCBA 0000 0000 0000 0000 0000 0000
 
+
 // name table
-0002 0001 4100 0242 4200
+
+// size
+0000 0002
+
+// 'main' function name
+0004 6D61 696E
+
+// 'test_global_var' global var name
+000E 666F 6F5F 676C 6F62 616C 5F76 616C
+
+
+// link table
+
+// size
+0000 0002

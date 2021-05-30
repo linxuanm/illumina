@@ -19,7 +19,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
     stream_read_8(stream);
 
     // name table
-    uint16_t name_table_size = stream_read_2(stream);
+    NAME_TABLE_SIZE_T name_table_size = stream_read_4(stream);
     name_table_init(name_table_size, &object_file->name_table);
 
     for (int i = 0; i < name_table_size; ++i) {
@@ -27,6 +27,9 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
         object_file->name_table.names[i] = stream_read_str(stream, name_length);
     }
+
+    // link table
+    LINK_TABLE_SIZE_T link_table_size = stream_read_4(stream);
 
     return object_file;
 }
