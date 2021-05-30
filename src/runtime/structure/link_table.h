@@ -24,25 +24,4 @@
 #define LINK_TYPE_FUNCTION 6
 #define LINK_TYPE_CLASS 7
 
-typedef struct link_table_ref_t {
-
-    // the type of the reference
-    uint8_t tag;
-
-    uint32_t value;
-    uint32_t extra;
-
-    // used for referencing other tables (dynamically generated later)
-    uint32_t link;
-} link_table_ref_t;
-
-typedef struct link_table_t {
-    LINK_TABLE_SIZE_T size;
-    link_table_ref_t *links;
-} link_table_t;
-
-void link_table_init(LINK_TABLE_SIZE_T, link_table_t *);
-void link_table_release(link_table_t *);
-void link_table_load_entry(link_table_ref_t *, stream_t *);
-
 #endif //ILLUMINA_LINK_TABLE_H

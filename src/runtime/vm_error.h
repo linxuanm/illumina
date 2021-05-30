@@ -15,7 +15,7 @@ extern __thread uint8_t vm_thread_errno;
 
 #define VM_RETURN_IF_ERROR(x) \
     do {\
-        if (vm_thread_errno == 0) return x;\
+        if (vm_thread_errno != 0) return x;\
     } while (0)
 
 #define VM_THREAD_ERRNO vm_thread_errno
