@@ -30,6 +30,11 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
     // link table
     LINK_TABLE_SIZE_T link_table_size = stream_read_4(stream);
+    link_table_init(link_table_size, &object_file->link_table);
+
+    for (int i = 0; i < link_table_size; ++i) {
+        link_table_load_entry(&object_file->link_table.links[i], stream);
+    }
 
     return object_file;
 }

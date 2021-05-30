@@ -1,6 +1,7 @@
 #ifndef ILLUMINA_LINK_TABLE_H
 #define ILLUMINA_LINK_TABLE_H
 
+#include <common/util/stream.h>
 #include "common/specs.h"
 
 /*
@@ -37,10 +38,11 @@ typedef struct link_table_ref_t {
 
 typedef struct link_table_t {
     LINK_TABLE_SIZE_T size;
-    link_table_ref_t *const_references;
+    link_table_ref_t *links;
 } link_table_t;
 
 void link_table_init(LINK_TABLE_SIZE_T, link_table_t *);
-void const_pool_release(link_table_t *);
+void link_table_release(link_table_t *);
+void link_table_load_entry(link_table_ref_t *, stream_t *);
 
 #endif //ILLUMINA_LINK_TABLE_H

@@ -37,8 +37,7 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 
 // function reference to 'main.main' function
 06 // LINK_TYPE_FUNCTION
-0000 0000 // name reference (name table)
-0000 0001 // signature reference (name table)
+0000 0000 // signature reference (function table)
 
 // global var reference to 'main.foo_global_var' global var
 04 // LINK_TYPE_GLOBAL_VAR
