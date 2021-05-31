@@ -42,3 +42,9 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // global var reference to 'main.foo_global_var' global var
 04 // LINK_TYPE_GLOBAL_VAR
 0000 0000 // first entry of global var table
+
+
+// classes
+
+// size
+0000 0001

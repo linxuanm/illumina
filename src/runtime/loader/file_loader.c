@@ -18,7 +18,7 @@ void file_name_table_release(file_name_table_t *table) {
     free(table->names);
 }
 
-void file_linker_init(LINKER_SIZE_T size, file_linker_t *linker) {
+void file_linker_init(POOL_SIZE_T size, file_linker_t *linker) {
     linker->size = size;
     linker->links = malloc(size * sizeof(file_linker_ref_t));
 }
@@ -51,6 +51,19 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
     }
 }
 
+void file_class_pool_init(POOL_SIZE_T size, file_class_pool_t *pool) {
+    pool->size = size;
+    pool->classes = malloc(size * sizeof(file_class_pool_t));
+}
+
+void file_class_pool_release(file_class_pool_t * pool) {
+    free(pool->classes);
+}
+
+void file_class_pool_load_entry(file_class_pool_t *pool, stream_t *stream) {
+
+}
+
 file_rep_t *load_file_rep(stream_t *stream) {
     file_rep_t *object_file = malloc(sizeof(file_rep_t));
 
@@ -75,19 +88,34 @@ file_rep_t *load_file_rep(stream_t *stream) {
     }
 
     // link table
-    LINKER_SIZE_T link_table_size = stream_read_4(stream);
+    POOL_SIZE_T link_table_size = stream_read_4(stream);
     file_linker_init(link_table_size, &object_file->link_table);
 
     for (int i = 0; i < link_table_size; ++i) {
         file_linker_load_entry(&object_file->link_table.links[i], stream);
     }
 
-    VM_RETURN_IF_ERROR(object_file);
+    VM_GOTO_IF_ERROR(error);
 
     // end of structure setup
 
     // classes
+    POOL_SIZE_T class_pool_size = stream_read_4(stream);
+    file_class_pool_init(class_pool_size, &object_file->class_pool);
 
+    if (stream->pc != stream->end) {
+        VM_SET_THREAD_ERRNO(VM_ERRNO_BAD_FILE_FORMAT);
+    }
+
+    VM_GOTO_IF_ERROR(error);
 
     return object_file;
+
+    error:
+    file_name_table_release(&object_file->name_table);
+    file_linker_release(&object_file->link_table);
+    file_class_pool_release(&object_file->class_pool);
+
+    free(object_file);
+    return NULL;
 }

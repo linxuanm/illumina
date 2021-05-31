@@ -18,6 +18,11 @@ extern __thread uint8_t vm_thread_errno;
         if (vm_thread_errno != 0) return x;\
     } while (0)
 
+#define VM_GOTO_IF_ERROR(x) \
+    do {\
+        if (vm_thread_errno != 0) goto x;\
+    } while (0)
+
 #define VM_THREAD_ERRNO vm_thread_errno
 
 #endif //ILLUMINA_VM_ERROR_H
