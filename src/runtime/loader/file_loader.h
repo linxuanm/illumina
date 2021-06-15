@@ -46,7 +46,7 @@ typedef struct file_class_pool_t {
 
 void file_class_pool_init(POOL_SIZE_T, file_class_pool_t *);
 void file_class_pool_release(file_class_pool_t *);
-void file_class_pool_load_entry(file_class_pool_t *, stream_t *);
+void file_class_pool_load_entry(file_class_t *, stream_t *);
 
 /*
  * Represents the content of a 'iasm' file.
