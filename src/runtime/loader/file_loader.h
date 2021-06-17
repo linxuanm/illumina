@@ -36,6 +36,7 @@ void file_linker_release(file_linker_t *);
 void file_linker_load_entry(file_linker_ref_t *, stream_t *);
 
 typedef struct file_class_t {
+    uint8_t *class_path;
 
 } file_class_t;
 

@@ -33,13 +33,13 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
     switch (entry->tag) {
         case LINK_TYPE_INT:
         case LINK_TYPE_FLOAT:
+        case LINK_TYPE_GLOBAL_VAR:
         case LINK_TYPE_FIELD_REF:
             entry->value = stream_read_4(stream);
             entry->extra = stream_read_4(stream);
             break;
 
         case LINK_TYPE_STRING:
-        case LINK_TYPE_GLOBAL_VAR:
         case LINK_TYPE_FUNCTION:
         case LINK_TYPE_CLASS:
             entry->value = stream_read_4(stream);

@@ -1,0 +1,10 @@
+#ifndef ILLUMINA_TYPES_H
+#define ILLUMINA_TYPES_H
+
+#define TYPES_INT 1
+#define TYPES_FLOAT 2
+#define TYPES_CHAR 3
+#define TYPES_CLASS 4
+#define TYPES_RAW 5
+
+#endif //ILLUMINA_TYPES_H

@@ -1,6 +1,7 @@
 set(RUNTIME_HEADERS
         src/runtime/vm_error.h
         src/runtime/vm.h
+        src/runtime/types.h
         src/runtime/loader/file_loader.h
         src/runtime/structure/link_table.h
 )
