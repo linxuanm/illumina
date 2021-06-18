@@ -3,6 +3,8 @@
 
 #include "common/util/stream.h"
 
+#include "runtime/types.h"
+
 /*
  * A table used to reference the name of functions,
  * variables and classes to allow symbolic linking
@@ -35,9 +37,29 @@ void file_linker_init(POOL_SIZE_T, file_linker_t *);
 void file_linker_release(file_linker_t *);
 void file_linker_load_entry(file_linker_ref_t *, stream_t *);
 
+typedef struct file_global_var_t {
+
+} file_global_var_t;
+
+typedef struct file_var_pool_t {
+    POOL_SIZE_T size;
+    file_global_var_t* vars;
+} file_var_pool_t;
+
+void file_var_pool_init(POOL_SIZE_T, file_var_pool_t *);
+void file_var_pool_release(file_var_pool_t *);
+
+typedef struct file_field_t {
+    uint8_t *field_name;
+    type_t type;
+    uint8_t flag;
+} file_field_t;
+
 typedef struct file_class_t {
     uint8_t *class_path;
-
+    POOL_SIZE_T super_class; // ref to link table
+    file_field_t *fields;
+    POOL_SIZE_T *methods;  // ref to link table
 } file_class_t;
 
 typedef struct file_class_pool_t {
@@ -60,6 +82,7 @@ void file_class_pool_load_entry(file_class_t *, stream_t *);
 typedef struct file_rep_t {
     file_name_table_t name_table;
     file_linker_t link_table;
+    file_var_pool_t global_var_pool;
     file_class_pool_t class_pool;
 } file_rep_t;
 

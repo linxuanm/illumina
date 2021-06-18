@@ -30,17 +30,11 @@
 #define LINK_TYPE_FLOAT 2
 
 /*
- * A LINK_TYPE_STRING takes up 1 unit, and points to
- * an entry in the name table.
+ * A LINK_TYPE_GLOBAL_VAR takes up 1 unit, pointing
+ * to a name reference in the name table for symbolic
+ * linking.
  */
-#define LINK_TYPE_STRING 3
-
-/*
- * A LINK_TYPE_GLOBAL_VAR takes up 2 units, pointing
- * to a name reference in the name table and a global
- * variable table entry respectively.
- */
-#define LINK_TYPE_GLOBAL_VAR
+#define LINK_TYPE_GLOBAL_VAR 4
 
 /*
  * A LINK_TYPE_FIELD_REF takes up 2 units, pointing

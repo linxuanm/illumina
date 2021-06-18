@@ -33,13 +33,12 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
     switch (entry->tag) {
         case LINK_TYPE_INT:
         case LINK_TYPE_FLOAT:
-        case LINK_TYPE_GLOBAL_VAR:
         case LINK_TYPE_FIELD_REF:
             entry->value = stream_read_4(stream);
             entry->extra = stream_read_4(stream);
             break;
 
-        case LINK_TYPE_STRING:
+        case LINK_TYPE_GLOBAL_VAR:
         case LINK_TYPE_FUNCTION:
         case LINK_TYPE_CLASS:
             entry->value = stream_read_4(stream);
@@ -49,6 +48,15 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
             VM_SET_THREAD_ERRNO(VM_ERRNO_BAD_FILE_FORMAT);
             return;
     }
+}
+
+void file_var_pool_init(POOL_SIZE_T size, file_var_pool_t *pool) {
+    pool->size = size;
+    pool->vars = malloc(size * sizeof(file_class_pool_t));
+}
+
+void file_var_pool_release(file_var_pool_t *pool) {
+    free(pool->vars);
 }
 
 void file_class_pool_init(POOL_SIZE_T size, file_class_pool_t *pool) {
@@ -101,20 +109,30 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
     // end of structure setup
 
+    // global vars
+    POOL_SIZE_T global_var_size = stream_read_4(stream);
+    file_var_pool_init(global_var_size, &object_file->global_var_pool);
+
+    VM_GOTO_IF_ERROR(error_global_var_pool);
+
     // classes
     POOL_SIZE_T class_pool_size = stream_read_4(stream);
     file_class_pool_init(class_pool_size, &object_file->class_pool);
 
+    VM_GOTO_IF_ERROR(error_class_pool);
+
+    // EOF
     if (stream->pc != stream->end) {
         VM_SET_THREAD_ERRNO(VM_ERRNO_BAD_FILE_FORMAT);
     }
-
-    VM_GOTO_IF_ERROR(error_class_pool);
 
     return object_file;
 
     error_class_pool:
     file_class_pool_release(&object_file->class_pool);
+
+    error_global_var_pool:
+    file_var_pool_release(&object_file->global_var_pool);
 
     error_linker:
     file_linker_release(&object_file->link_table);
