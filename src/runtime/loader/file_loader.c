@@ -75,6 +75,8 @@ void file_class_pool_load_entry(file_class_t *entry, stream_t *stream) {
 file_rep_t *load_file_rep(stream_t *stream) {
     file_rep_t *object_file = malloc(sizeof(file_rep_t));
 
+    DEBUG("[Loader] Reading header");
+
     // header
     if (stream_read_4(stream) != 0xABCDDCBA) {
         ERROR("Invalid object file signature (expected 0xABCDDCBA)");
@@ -86,7 +88,10 @@ file_rep_t *load_file_rep(stream_t *stream) {
     stream_read_8(stream);
 
     // name table
+    DEBUG("[Loader] Reading name table");
+
     NAME_TABLE_SIZE_T name_table_size = stream_read_4(stream);
+    DEBUG("[Loader] Name table entries: %d", name_table_size);
     file_name_table_init(name_table_size, &object_file->name_table);
 
     for (int i = 0; i < name_table_size; ++i) {
@@ -98,7 +103,10 @@ file_rep_t *load_file_rep(stream_t *stream) {
     VM_GOTO_IF_ERROR(error_name_table);
 
     // link table
+    DEBUG("[Loader] Reading link table");
+
     POOL_SIZE_T link_table_size = stream_read_4(stream);
+    DEBUG("[Loader] Link table entries: %d", link_table_size);
     file_linker_init(link_table_size, &object_file->link_table);
 
     for (int i = 0; i < link_table_size; ++i) {
@@ -110,13 +118,19 @@ file_rep_t *load_file_rep(stream_t *stream) {
     // end of structure setup
 
     // global vars
+    DEBUG("[Loader] Reading global variable pool");
+
     POOL_SIZE_T global_var_size = stream_read_4(stream);
+    DEBUG("[Loader] Global variable entries: %d", global_var_size);
     file_var_pool_init(global_var_size, &object_file->global_var_pool);
 
     VM_GOTO_IF_ERROR(error_global_var_pool);
 
     // classes
+    DEBUG("[Loader] Reading classes");
+
     POOL_SIZE_T class_pool_size = stream_read_4(stream);
+    DEBUG("[Loader] Class entries: %d", class_pool_size);
     file_class_pool_init(class_pool_size, &object_file->class_pool);
 
     VM_GOTO_IF_ERROR(error_class_pool);

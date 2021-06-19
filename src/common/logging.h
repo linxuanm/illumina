@@ -17,7 +17,7 @@
 #define ERROR(fmt, args...)\
     do {\
         fprintf(stderr, "[ERROR] " fmt "\n", ##args);\
-        DEBUG("[ERROR] " fmt "\n", ##args);\
+        DEBUG("[ERROR] " fmt, ##args);\
     } while (0)
 
 #else
