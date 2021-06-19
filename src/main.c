@@ -1,6 +1,3 @@
-#define DEBUG_MODE 1
-#define VM_64_BIT_HEAP 1
-
 #include <stdio.h>
 #include <stdlib.h>
 

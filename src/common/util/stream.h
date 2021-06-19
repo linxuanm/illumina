@@ -1,6 +1,7 @@
 #ifndef ILLUMINA_STREAM_H
 #define ILLUMINA_STREAM_H
 
+#include "common/logging.h"
 #include "common/specs.h"
 #include "runtime/vm_error.h"
 

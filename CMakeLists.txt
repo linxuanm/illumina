@@ -61,6 +61,8 @@ endif()
 
 add_executable(Illumina src/main.c ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
 
+add_compile_definitions(DEBUG_MODE)
+
 message("\nDone")
 
 unset(INCLUDE_RUNTIME CACHE)

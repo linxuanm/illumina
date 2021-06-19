@@ -14,16 +14,22 @@
                __FILENAME__, __LINE__, __func__, ##args);\
     } while (0)
 
+#define ERROR(fmt, args...)\
+    do {\
+        fprintf(stderr, "[ERROR] " fmt "\n", ##args);\
+        DEBUG("[ERROR] " fmt "\n", ##args);\
+    } while (0)
+
 #else
 
 #define DEBUG(...)
-
-#endif //DEBUG_MODE
 
 #define WARN(fmt, args...) do {printf("[WARNING] " fmt "\n", ##args);} while (0)
 #define ERROR(fmt, args...)\
     do {\
         fprintf(stderr, "[ERROR] " fmt "\n", ##args);\
     } while (0)
+
+#endif //DEBUG_MODE
 
 #endif //ILLUMINA_LOGGING_H
