@@ -52,16 +52,24 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
 
 void file_var_pool_init(POOL_SIZE_T size, file_var_pool_t *pool) {
     pool->size = size;
-    pool->vars = malloc(size * sizeof(file_class_pool_t));
+    pool->vars = malloc(size * sizeof(file_global_var_t));
 }
 
 void file_var_pool_release(file_var_pool_t *pool) {
     free(pool->vars);
 }
 
+void file_func_pool_init(POOL_SIZE_T size, file_func_pool_t *pool) {
+
+}
+
+void file_func_pool_release(file_func_pool_t *pool) {
+
+}
+
 void file_class_pool_init(POOL_SIZE_T size, file_class_pool_t *pool) {
     pool->size = size;
-    pool->classes = malloc(size * sizeof(file_class_pool_t));
+    pool->classes = malloc(size * sizeof(file_class_t));
 }
 
 void file_class_pool_release(file_class_pool_t * pool) {
@@ -124,7 +132,26 @@ file_rep_t *load_file_rep(stream_t *stream) {
     DEBUG("[Loader] Global variable entries: %d", global_var_size);
     file_var_pool_init(global_var_size, &object_file->global_var_pool);
 
+    for (int i = 0; i < global_var_size; ++i) {
+        file_global_var_t *entry = &object_file->global_var_pool.vars[i];
+        entry->name_entry = stream_read_1(stream);
+        entry->var_type.type_tag = stream_read_1(stream);
+
+        if (entry->var_type.type_tag == TYPES_REF) {
+            entry->var_type.ref_class = stream_read_4(stream); // class path
+        }
+    }
+
     VM_GOTO_IF_ERROR(error_global_var_pool);
+
+    // functions
+    DEBUG("[Loader] Reading functions");
+
+    POOL_SIZE_T func_pool_size = stream_read_4(stream);
+    DEBUG("[Loader] Function entries: %d", func_pool_size);
+    file_func_pool_init(func_pool_size, &object_file->func_pool);
+
+    VM_GOTO_IF_ERROR(error_func_pool);
 
     // classes
     DEBUG("[Loader] Reading classes");
@@ -144,6 +171,9 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
     error_class_pool:
     file_class_pool_release(&object_file->class_pool);
+
+    error_func_pool:
+    file_func_pool_release(&object_file->func_pool);
 
     error_global_var_pool:
     file_var_pool_release(&object_file->global_var_pool);

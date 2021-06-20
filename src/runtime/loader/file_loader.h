@@ -38,16 +38,24 @@ void file_linker_release(file_linker_t *);
 void file_linker_load_entry(file_linker_ref_t *, stream_t *);
 
 typedef struct file_global_var_t {
-
+    POOL_SIZE_T name_entry; // ref to name table
+    type_t var_type;
 } file_global_var_t;
 
 typedef struct file_var_pool_t {
     POOL_SIZE_T size;
-    file_global_var_t* vars;
+    file_global_var_t *vars;
 } file_var_pool_t;
 
 void file_var_pool_init(POOL_SIZE_T, file_var_pool_t *);
 void file_var_pool_release(file_var_pool_t *);
+
+typedef struct file_func_pool_t {
+
+} file_func_pool_t;
+
+void file_func_pool_init(POOL_SIZE_T, file_func_pool_t *);
+void file_func_pool_release(file_func_pool_t *);
 
 typedef struct file_field_t {
     uint8_t *field_name;
@@ -83,6 +91,7 @@ typedef struct file_rep_t {
     file_name_table_t name_table;
     file_linker_t link_table;
     file_var_pool_t global_var_pool;
+    file_func_pool_t func_pool;
     file_class_pool_t class_pool;
 } file_rep_t;
 
