@@ -1,0 +1,10 @@
+// test code for, well, testing
+
+include box
+
+foo :: int // main.foo (int)
+bar :: bool // main.bar (int)
+box :: Box // main.box (box.Box)
+
+func main :: void ():
+    test :: int = 1
