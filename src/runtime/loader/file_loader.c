@@ -135,7 +135,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
         entry->name_entry = stream_read_4(stream);
         entry->var_type.type_tag = stream_read_1(stream);
 
-        if (entry->var_type.type_tag == TYPES_REF) {
+        if (entry->var_type.type_tag == TYPES_TYPE_REF) {
             entry->var_type.ref_class = stream_read_4(stream); // class path
         }
     }
@@ -199,5 +199,56 @@ void print_file_rep(file_rep_t *file) {
 
     printf("\nLink Table (%d entries):\n", file->link_table.size);
 
+    for (int i = 0; i < file->link_table.size; ++i) {
+        file_linker_ref_t *entry = &file->link_table.links[i];
+
+        printf("\t%d: ", i);
+        switch (entry->tag) {
+            case LINK_TYPE_GLOBAL_VAR:
+                printf("LINK_TYPE_GLOBAL_VAR #%d", entry->value);
+                break;
+            case LINK_TYPE_FUNCTION:
+                printf("LINK_TYPE_FUNCTION #%d", entry->value);
+                break;
+            case LINK_TYPE_FIELD_REF:
+                printf(
+                    "LINK_TYPE_FIELD_REF "
+                    "#%d #%d", entry->value, entry->extra
+                    );
+                break;
+            case LINK_TYPE_CLASS:
+                printf("LINK_TYPE_CLASS #%d", entry->value);
+                break;
+            default:
+                ERROR("[Loader] Bad link type: %d", entry->tag);
+                return;
+        }
+
+        printf("\n");
+    }
+
     printf("\nGlobal Variables (%d entries):\n", file->global_var_pool.size);
+
+    for (int i = 0; i < file->global_var_pool.size; ++i) {
+        file_global_var_t *entry = &file->global_var_pool.vars[i];
+        printf("\t%d: %s :: ", i, file->name_table.names[entry->name_entry]);
+
+        if (entry->var_type.type_tag == TYPES_TYPE_REF) {
+            POOL_SIZE_T class_entry = entry->var_type.ref_class;
+            printf("%s", file->name_table.names[class_entry]);
+        } else {
+
+            if (entry->var_type.type_tag >= TYPES_COUNT) {
+                ERROR(
+                    "[Loader] Bad variable type: %d",
+                    entry->var_type.type_tag
+                    );
+                return;
+            }
+
+            printf("%s", TYPE_NAME[entry->var_type.type_tag]);
+        }
+
+        printf("\n");
+    }
 }

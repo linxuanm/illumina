@@ -9,6 +9,7 @@ set(RUNTIME_HEADERS
 set(RUNTIME_SOURCES
         src/runtime/vm.c
         src/runtime/vm_error.c
+        src/runtime/literal_def.c
         src/runtime/loader/file_loader.c
 )
 
