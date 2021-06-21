@@ -9,7 +9,7 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // name table
 
 // size
-0000 0004
+0000 0005
 
 // 'main.main()V' function signature
 0C 6D61 696E 2E6D 6169 6E28 2956
@@ -22,6 +22,9 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 
 // 'main.box' global var name
 08 6D61 696E 2E62 6F78
+
+// 'boxes.Box' class path
+09 626F 7865 732E 426F 78
 
 
 // link table
@@ -51,8 +54,24 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 04 // LINK_TYPE_GLOBAL_VAR
 0000 0003 // forth entry of name table
 
+// class reference to 'boxes.Box' class
+07 // LINK_TYPE_CLASS
+0000 0004
+
+
+// global vars
+
+// size
+0000 0000
+
+
+// functions
+
+// size
+0000 0000
+
 
 // classes
 
 // size
-0000 0001
+0000 0000

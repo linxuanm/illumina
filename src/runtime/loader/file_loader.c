@@ -29,7 +29,6 @@ void file_linker_release(file_linker_t *linker) {
 
 void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
     entry->tag = stream_read_1(stream);
-
     switch (entry->tag) {
         case LINK_TYPE_FIELD_REF:
             entry->value = stream_read_4(stream);
@@ -43,6 +42,7 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
             break;
 
         default:
+            ERROR("Bad link type: %d (@byte %llu)", entry->tag, stream->pc - 1);
             VM_SET_THREAD_ERRNO(VM_ERRNO_BAD_FILE_FORMAT);
             return;
     }
@@ -87,7 +87,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
     if (stream_read_4(stream) != 0xABCDDCBA) {
         ERROR("Invalid object file signature (expected 0xABCDDCBA)");
         VM_SET_THREAD_ERRNO(VM_ERRNO_BAD_FILE_FORMAT);
-        return object_file;
+        goto error_signature;
     }
 
     stream_read_4(stream);
@@ -182,6 +182,8 @@ file_rep_t *load_file_rep(stream_t *stream) {
     error_name_table:
     file_name_table_release(&object_file->name_table);
 
+    error_signature:
+    DEBUG("[Loader] Class loading failed");
     free(object_file);
     return NULL;
 }
