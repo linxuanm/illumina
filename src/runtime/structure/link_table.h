@@ -25,29 +25,47 @@
  */
 
 /*
+ * A LINK_TYPE_INT field takes up 2 units (8 bytes),
+ * storing the upper and lower byte representation
+ * of a 64-bit integer.
+ */
+#define LINK_TYPE_INT 0
+
+/*
+ * A LINK_TYPE_FLOAT field takes up 2 units (8 bytes),
+ * storing the first and second 32-bit of a double.
+ */
+#define LINK_TYPE_FLOAT 1
+
+/*
  * A LINK_TYPE_GLOBAL_VAR takes up 1 unit, pointing
  * to a name reference in the name table for symbolic
  * linking.
  */
-#define LINK_TYPE_GLOBAL_VAR 4
+#define LINK_TYPE_GLOBAL_VAR 2
 
 /*
  * A LINK_TYPE_FIELD_REF takes up 2 units, pointing
  * to a class reference and a name entry in name
  * table respectively.
  */
-#define LINK_TYPE_FIELD_REF 5
+#define LINK_TYPE_FIELD_REF 3
 
 /*
  * A LINK_TYPE_FUNCTION takes up 1 unit, to a function
  * signature in the name table.
  */
-#define LINK_TYPE_FUNCTION 6
+#define LINK_TYPE_FUNCTION 4
 
 /*
  * A LINK_TYPE_CLASS takes up 1 unit, to a class path
  * in the name table.
  */
-#define LINK_TYPE_CLASS 7
+#define LINK_TYPE_CLASS 5
+
+// for ease of conversion
+#define LINK_TYPE_COUNT 6
+
+extern char *LINK_NAME[];
 
 #endif //ILLUMINA_LINK_TABLE_H

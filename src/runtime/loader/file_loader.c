@@ -30,6 +30,8 @@ void file_linker_release(file_linker_t *linker) {
 void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
     entry->tag = stream_read_1(stream);
     switch (entry->tag) {
+        case LINK_TYPE_INT:
+        case LINK_TYPE_FLOAT:
         case LINK_TYPE_FIELD_REF:
             entry->value = stream_read_4(stream);
             entry->extra = stream_read_4(stream);
@@ -202,24 +204,25 @@ void print_file_rep(file_rep_t *file) {
     for (int i = 0; i < file->link_table.size; ++i) {
         file_linker_ref_t *entry = &file->link_table.links[i];
 
-        printf("\t%d: ", i);
+        if (entry->tag >= LINK_TYPE_COUNT) {
+            ERROR("[Loader] Bad link type: %d", entry->tag);
+            return;
+        }
+
+        printf("\t%d: %s ", i, LINK_NAME[entry->tag]);
         switch (entry->tag) {
-            case LINK_TYPE_GLOBAL_VAR:
-                printf("LINK_TYPE_GLOBAL_VAR #%d", entry->value);
-                break;
-            case LINK_TYPE_FUNCTION:
-                printf("LINK_TYPE_FUNCTION #%d", entry->value);
-                break;
+            case LINK_TYPE_INT:
+            case LINK_TYPE_FLOAT:
             case LINK_TYPE_FIELD_REF:
-                printf(
-                    "LINK_TYPE_FIELD_REF "
-                    "#%d #%d", entry->value, entry->extra
-                    );
+                printf("#%d #%d", entry->value, entry->extra);
                 break;
+            case LINK_TYPE_GLOBAL_VAR:
+            case LINK_TYPE_FUNCTION:
             case LINK_TYPE_CLASS:
-                printf("LINK_TYPE_CLASS #%d", entry->value);
+                printf("#%d", entry->value);
                 break;
             default:
+                // never reaches
                 ERROR("[Loader] Bad link type: %d", entry->tag);
                 return;
         }

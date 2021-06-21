@@ -9,6 +9,7 @@
 #define TYPES_TYPE_REF 3
 #define TYPES_TYPE_RAW 4
 
+// for ease of conversion
 #define TYPES_COUNT 5
 
 extern char *TYPE_NAME[];

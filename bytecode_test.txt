@@ -39,23 +39,23 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 0000 0005
 
 // function reference to 'main.main' function
-06 // LINK_TYPE_FUNCTION
+04 // LINK_TYPE_FUNCTION
 0000 0000 // signature reference (function table)
 
 // global var reference to 'main.foo' global var
-04 // LINK_TYPE_GLOBAL_VAR
+02 // LINK_TYPE_GLOBAL_VAR
 0000 0001 // second entry of name table
 
 // global var reference to 'main.bar' global var
-04 // LINK_TYPE_GLOBAL_VAR
+02 // LINK_TYPE_GLOBAL_VAR
 0000 0002 // third entry of name table
 
 // global var reference to 'main.box' global var
-04 // LINK_TYPE_GLOBAL_VAR
+02 // LINK_TYPE_GLOBAL_VAR
 0000 0003 // forth entry of name table
 
 // class reference to 'boxes.Box' class
-07 // LINK_TYPE_CLASS
+05 // LINK_TYPE_CLASS
 0000 0004
 
 
