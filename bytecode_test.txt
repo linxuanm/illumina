@@ -11,17 +11,17 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // size
 0000 0004
 
-// 'main.main' function name
-0009 6D61 696E 2E6D 6169 6E
-
 // 'main.main()V' function signature
-000C 6D61 696E 2E6D 6169 6E28 2956
+0C 6D61 696E 2E6D 6169 6E28 2956
 
-// 'main.foo_global_var' global var name
-0013 6D61 696E 2E66 6F6F 5F67 6C6F 6261 6C5F 7661 72
+// 'main.foo' global var name
+08 6D61 696E 2E66 6F6F
 
-// 'main.Animal' class name
-000B 6D61 696E 2E41 6E69 6D61 6C
+// 'main.bar' global var name
+08 6D61 696E 2E62 6172
+
+// 'main.box' global var name
+08 6D61 696E 2E62 6F78
 
 
 // link table
@@ -33,15 +33,23 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 */
 
 // size
-0000 0002
+0000 0005
 
 // function reference to 'main.main' function
 06 // LINK_TYPE_FUNCTION
 0000 0000 // signature reference (function table)
 
-// global var reference to 'main.foo_global_var' global var
+// global var reference to 'main.foo' global var
 04 // LINK_TYPE_GLOBAL_VAR
-0000 0000 // first entry of global var table
+0000 0001 // second entry of name table
+
+// global var reference to 'main.bar' global var
+04 // LINK_TYPE_GLOBAL_VAR
+0000 0002 // third entry of name table
+
+// global var reference to 'main.box' global var
+04 // LINK_TYPE_GLOBAL_VAR
+0000 0003 // forth entry of name table
 
 
 // classes

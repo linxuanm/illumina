@@ -11,23 +11,18 @@
  * determined numeric entry IDs), and prepares for
  * the future dynamic object code loading scenario.
  *
+ * Link table is mainly used for symbolic linking for
+ * dynamic object code, and processes the string links
+ * to function/class signatures during runtime. Since
+ * composite entries exists (such as LINK_TYPE_FIELD_REF),
+ * direct reference to the name table in the byte code
+ * is not allowed.
+ *
  * The link table is similar to JVM's constant
  * pool (but with a separate string table, and stuff
- * don't take up 2 entries).
+ * don't take up 2 entries). Most constants are also
+ * not included.
  */
-
-/*
- * A LINK_TYPE_INT field takes up 2 units (8 bytes),
- * storing the upper and lower byte representation
- * of a 64-bit integer.
- */
-#define LINK_TYPE_INT 1
-
-/*
- * A LINK_TYPE_FLOAT field takes up 2 units (8 bytes),
- * storing the first and second 32-bit of a double.
- */
-#define LINK_TYPE_FLOAT 2
 
 /*
  * A LINK_TYPE_GLOBAL_VAR takes up 1 unit, pointing

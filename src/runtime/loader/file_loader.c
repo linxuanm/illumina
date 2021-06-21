@@ -31,8 +31,6 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
     entry->tag = stream_read_1(stream);
 
     switch (entry->tag) {
-        case LINK_TYPE_INT:
-        case LINK_TYPE_FLOAT:
         case LINK_TYPE_FIELD_REF:
             entry->value = stream_read_4(stream);
             entry->extra = stream_read_4(stream);
@@ -103,7 +101,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
     file_name_table_init(name_table_size, &object_file->name_table);
 
     for (int i = 0; i < name_table_size; ++i) {
-        uint16_t name_length = stream_read_2(stream);
+        uint8_t name_length = stream_read_1(stream);
 
         object_file->name_table.names[i] = stream_read_str(stream, name_length);
     }

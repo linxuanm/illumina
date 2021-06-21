@@ -1,6 +1,6 @@
 // test code for, well, testing
 
-include box
+include boxes
 
 foo :: int // main.foo (int)
 bar :: bool // main.bar (int)

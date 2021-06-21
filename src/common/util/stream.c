@@ -40,7 +40,7 @@ uint64_t stream_read_8(stream_t *stream) {
     return data;
 }
 
-uint8_t *stream_read_str(stream_t *stream, uint16_t size) {
+uint8_t *stream_read_str(stream_t *stream, uint8_t size) {
     uint8_t *string = malloc((size + 1) * sizeof(uint8_t));
     ASSERT_MALLOC(string);
 
@@ -54,6 +54,9 @@ uint8_t *stream_read_str(stream_t *stream, uint16_t size) {
 }
 
 void stream_from_file(stream_t *stream, const char *path) {
+    stream->pc = 0;
+    stream->error = 0;
+
     FILE *file_ptr = fopen(path, "rb");
     fseek(file_ptr, 0, SEEK_END);
 
