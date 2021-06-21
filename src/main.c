@@ -26,12 +26,11 @@ int main() {
 
     file_rep_t *file = load_file_rep(&stream);
 
-    if (VM_THREAD_ERRNO == 0) {
-        printf("%s\n", file->name_table.names[0]);
-        printf("%s\n", file->name_table.names[1]);
-        printf("%s\n", file->name_table.names[2]);
-        printf("%s\n", file->name_table.names[3]);
+    if (VM_THREAD_ERRNO != 0) {
+        ERROR("VM ERROR");
     }
+
+    print_file_rep(file);
 
     return 0;
 }

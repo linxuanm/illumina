@@ -132,7 +132,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
     for (int i = 0; i < global_var_size; ++i) {
         file_global_var_t *entry = &object_file->global_var_pool.vars[i];
-        entry->name_entry = stream_read_1(stream);
+        entry->name_entry = stream_read_4(stream);
         entry->var_type.type_tag = stream_read_1(stream);
 
         if (entry->var_type.type_tag == TYPES_REF) {
@@ -186,4 +186,18 @@ file_rep_t *load_file_rep(stream_t *stream) {
     DEBUG("[Loader] Class loading failed");
     free(object_file);
     return NULL;
+}
+
+void print_file_rep(file_rep_t *file) {
+    printf("======= File Representation =======\n");
+
+    printf("\nName Table (%d entries):\n", file->name_table.size);
+
+    for (int i = 0; i < file->name_table.size; ++i) {
+        printf("\t%d: %s\n", i, file->name_table.names[i]);
+    }
+
+    printf("\nLink Table (%d entries):\n", file->link_table.size);
+
+    printf("\nGlobal Variables (%d entries):\n", file->global_var_pool.size);
 }

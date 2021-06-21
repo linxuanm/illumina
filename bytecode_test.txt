@@ -62,7 +62,20 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // global vars
 
 // size
-0000 0000
+0000 0003
+
+// 'main.foo'
+0000 0001 // name reference
+01 // TYPES_INT
+
+// 'main.bar'
+0000 0002 // name reference
+01 // TYPES_INT
+
+// 'main.box'
+0000 0003 // name reference
+04 // TYPES_REF
+0000 0004 // class ref to 'boxes.Box'
 
 
 // functions

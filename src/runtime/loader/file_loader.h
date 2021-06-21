@@ -96,5 +96,6 @@ typedef struct file_rep_t {
 } file_rep_t;
 
 file_rep_t *load_file_rep(stream_t *);
+void print_file_rep(file_rep_t *);
 
 #endif //ILLUMINA_FILE_LOADER_H
