@@ -28,6 +28,7 @@ int main() {
 
     if (VM_THREAD_ERRNO != 0) {
         ERROR("VM ERROR");
+        exit(1);
     }
 
     print_file_rep(file);

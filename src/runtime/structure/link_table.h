@@ -58,13 +58,20 @@
 #define LINK_TYPE_FUNCTION 4
 
 /*
+ * A LINK_TYPE_METHOD takes up 2 units, pointing
+ * to a class reference and a signature entry in name
+ * table respectively.
+ */
+#define LINK_TYPE_METHOD 5
+
+/*
  * A LINK_TYPE_CLASS takes up 1 unit, to a class path
  * in the name table.
  */
-#define LINK_TYPE_CLASS 5
+#define LINK_TYPE_CLASS 6
 
 // for ease of conversion
-#define LINK_TYPE_COUNT 6
+#define LINK_TYPE_COUNT 7
 
 extern char *LINK_NAME[];
 

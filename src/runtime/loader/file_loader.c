@@ -33,6 +33,7 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
         case LINK_TYPE_INT:
         case LINK_TYPE_FLOAT:
         case LINK_TYPE_FIELD_REF:
+        case LINK_TYPE_METHOD:
             entry->value = stream_read_4(stream);
             entry->extra = stream_read_4(stream);
             break;
@@ -164,6 +165,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
     // EOF
     if (stream->pc != stream->end) {
+        ERROR("[Loader] File stream not fully consumed");
         VM_SET_THREAD_ERRNO(VM_ERRNO_BAD_FILE_FORMAT);
     }
 
@@ -214,6 +216,7 @@ void print_file_rep(file_rep_t *file) {
             case LINK_TYPE_INT:
             case LINK_TYPE_FLOAT:
             case LINK_TYPE_FIELD_REF:
+            case LINK_TYPE_METHOD:
                 printf("#%d #%d", entry->value, entry->extra);
                 break;
             case LINK_TYPE_GLOBAL_VAR:

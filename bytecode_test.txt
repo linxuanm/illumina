@@ -55,7 +55,7 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 0000 0003 // forth entry of name table
 
 // class reference to 'boxes.Box' class
-05 // LINK_TYPE_CLASS
+06 // LINK_TYPE_CLASS
 0000 0004
 
 
