@@ -27,4 +27,12 @@
 
 #define GEN_ARRAY_RELEASE(array) free((array)->elem)
 
+#define GEN_ARRAY_RELEASE_PTR(array) \
+    do {\
+        for (int i = 0; i < (array)->size; ++i) {\
+            free((array)->elem[i]);\
+        }\
+        free((array)->elem);\
+    } while (0)
+
 #endif //ILLUMINA_GENERIC_ARRAY_H
