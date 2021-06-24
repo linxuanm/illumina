@@ -32,6 +32,12 @@ typedef struct file_func_t {
     // code
     GEN_ARRAY_T(uint8_t) code;
 
+    // maximum operation stack size (for frame allocation)
+    FUNC_SIZE_T max_stack;
+
+    // local variables count
+    FUNC_SIZE_T locals_count;
+
     /*
      * line table (byte index: source line number)
      * for traceback purposes
