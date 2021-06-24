@@ -6,15 +6,6 @@
 #include "common/logging.h"
 #include "runtime/structure/link_table.h"
 
-void file_linker_init(POOL_SIZE_T size, file_linker_t *linker) {
-    linker->size = size;
-    linker->links = malloc(size * sizeof(file_linker_ref_t));
-}
-
-void file_linker_release(file_linker_t *linker) {
-    free(linker->links);
-}
-
 void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
     entry->tag = stream_read_1(stream);
     switch (entry->tag) {
@@ -37,32 +28,6 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
             VM_SET_THREAD_ERRNO(VM_ERRNO_BAD_FILE_FORMAT);
             return;
     }
-}
-
-void file_var_pool_init(POOL_SIZE_T size, file_var_pool_t *pool) {
-    pool->size = size;
-    pool->vars = malloc(size * sizeof(file_global_var_t));
-}
-
-void file_var_pool_release(file_var_pool_t *pool) {
-    free(pool->vars);
-}
-
-void file_func_pool_init(POOL_SIZE_T size, file_func_pool_t *pool) {
-
-}
-
-void file_func_pool_release(file_func_pool_t *pool) {
-
-}
-
-void file_class_pool_init(POOL_SIZE_T size, file_class_pool_t *pool) {
-    pool->size = size;
-    pool->classes = malloc(size * sizeof(file_class_t));
-}
-
-void file_class_pool_release(file_class_pool_t * pool) {
-    free(pool->classes);
 }
 
 void file_class_pool_load_entry(file_class_t *entry, stream_t *stream) {
@@ -104,12 +69,14 @@ file_rep_t *load_file_rep(stream_t *stream) {
     // link table
     DEBUG("[Loader] Reading link table");
 
-    POOL_SIZE_T link_table_size = stream_read_4(stream);
-    DEBUG("[Loader] Link table entries: %d", link_table_size);
-    file_linker_init(link_table_size, &object_file->link_table);
+    POOL_SIZE_T linker_size = stream_read_4(stream);
+    DEBUG("[Loader] Link table entries: %d", linker_size);
+    GEN_ARRAY_INIT(&object_file->link_table, linker_size, file_linker_ref_t);
 
-    for (int i = 0; i < link_table_size; ++i) {
-        file_linker_load_entry(&object_file->link_table.links[i], stream);
+    for (int i = 0; i < linker_size; ++i) {
+        file_linker_load_entry(
+            &GEN_ARRAY_GET(&object_file->link_table, i), stream
+            );
     }
 
     VM_GOTO_IF_ERROR(error_linker);
@@ -121,10 +88,15 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
     POOL_SIZE_T global_var_size = stream_read_4(stream);
     DEBUG("[Loader] Global variable entries: %d", global_var_size);
-    file_var_pool_init(global_var_size, &object_file->global_var_pool);
+    GEN_ARRAY_INIT(
+        &object_file->global_var_pool, global_var_size, file_global_var_t
+        );
 
     for (int i = 0; i < global_var_size; ++i) {
-        file_global_var_t *entry = &object_file->global_var_pool.vars[i];
+        file_global_var_t *entry = &GEN_ARRAY_GET(
+            &object_file->global_var_pool, i
+            );
+
         entry->name_entry = stream_read_4(stream);
         entry->var_type.type_tag = stream_read_1(stream);
 
@@ -140,7 +112,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
     POOL_SIZE_T func_pool_size = stream_read_4(stream);
     DEBUG("[Loader] Function entries: %d", func_pool_size);
-    file_func_pool_init(func_pool_size, &object_file->func_pool);
+    GEN_ARRAY_INIT(&object_file->func_pool, func_pool_size, file_func_t);
 
     VM_GOTO_IF_ERROR(error_func_pool);
 
@@ -149,7 +121,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
     POOL_SIZE_T class_pool_size = stream_read_4(stream);
     DEBUG("[Loader] Class entries: %d", class_pool_size);
-    file_class_pool_init(class_pool_size, &object_file->class_pool);
+    GEN_ARRAY_INIT(&object_file->class_pool, class_pool_size, file_class_t);
 
     VM_GOTO_IF_ERROR(error_class_pool);
 
@@ -162,16 +134,16 @@ file_rep_t *load_file_rep(stream_t *stream) {
     return object_file;
 
     error_class_pool:
-    file_class_pool_release(&object_file->class_pool);
+    GEN_ARRAY_RELEASE(&object_file->class_pool);
 
     error_func_pool:
-    file_func_pool_release(&object_file->func_pool);
+    GEN_ARRAY_RELEASE(&object_file->func_pool);
 
     error_global_var_pool:
-    file_var_pool_release(&object_file->global_var_pool);
+    GEN_ARRAY_RELEASE(&object_file->global_var_pool);
 
     error_linker:
-    file_linker_release(&object_file->link_table);
+    GEN_ARRAY_RELEASE(&object_file->link_table);
 
     error_name_table:
     GEN_ARRAY_RELEASE_PTR(&object_file->name_table);
@@ -194,7 +166,7 @@ void print_file_rep(file_rep_t *file) {
     printf("\nLink Table (%d entries):\n", file->link_table.size);
 
     for (int i = 0; i < file->link_table.size; ++i) {
-        file_linker_ref_t *entry = &file->link_table.links[i];
+        file_linker_ref_t *entry = &GEN_ARRAY_GET(&file->link_table, i);
 
         if (entry->tag >= LINK_TYPE_COUNT) {
             ERROR("[Loader] Bad link type: %d", entry->tag);
@@ -226,7 +198,9 @@ void print_file_rep(file_rep_t *file) {
     printf("\nGlobal Variables (%d entries):\n", file->global_var_pool.size);
 
     for (int i = 0; i < file->global_var_pool.size; ++i) {
-        file_global_var_t *entry = &file->global_var_pool.vars[i];
+        file_global_var_t *entry = &GEN_ARRAY_GET(
+            &file->global_var_pool, i
+        );
 
         printf(
             "\t%d: %s :: ",

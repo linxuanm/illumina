@@ -15,13 +15,6 @@ typedef struct file_linker_ref_t {
     uint32_t extra;
 } file_linker_ref_t;
 
-typedef struct file_linker_t {
-    POOL_SIZE_T size;
-    file_linker_ref_t *links;
-} file_linker_t;
-
-void file_linker_init(POOL_SIZE_T, file_linker_t *);
-void file_linker_release(file_linker_t *);
 void file_linker_load_entry(file_linker_ref_t *, stream_t *);
 
 typedef struct file_global_var_t {
@@ -29,20 +22,9 @@ typedef struct file_global_var_t {
     type_t var_type;
 } file_global_var_t;
 
-typedef struct file_var_pool_t {
-    POOL_SIZE_T size;
-    file_global_var_t *vars;
-} file_var_pool_t;
+typedef struct file_func_t {
 
-void file_var_pool_init(POOL_SIZE_T, file_var_pool_t *);
-void file_var_pool_release(file_var_pool_t *);
-
-typedef struct file_func_pool_t {
-
-} file_func_pool_t;
-
-void file_func_pool_init(POOL_SIZE_T, file_func_pool_t *);
-void file_func_pool_release(file_func_pool_t *);
+} file_func_t;
 
 typedef struct file_field_t {
     uint8_t *field_name;
@@ -57,13 +39,6 @@ typedef struct file_class_t {
     POOL_SIZE_T *methods;  // ref to link table
 } file_class_t;
 
-typedef struct file_class_pool_t {
-    POOL_SIZE_T size;
-    file_class_t *classes;
-} file_class_pool_t;
-
-void file_class_pool_init(POOL_SIZE_T, file_class_pool_t *);
-void file_class_pool_release(file_class_pool_t *);
 void file_class_pool_load_entry(file_class_t *, stream_t *);
 
 /*
@@ -82,10 +57,29 @@ typedef struct file_rep_t {
      * linker for flexibility purposes.
      */
     GEN_ARRAY_T(uint8_t *) name_table;
-    file_linker_t link_table;
-    file_var_pool_t global_var_pool;
-    file_func_pool_t func_pool;
-    file_class_pool_t class_pool;
+
+    /*
+     * Link table (linker) is used for dynamic symbolic
+     * linking.
+     */
+    GEN_ARRAY_T(file_linker_ref_t) link_table;
+
+    /*
+     * Global var pool contains attributes of all variables
+     * declared in the global scope.
+     */
+    GEN_ARRAY_T(file_global_var_t) global_var_pool;
+
+    /*
+     * A pool of functions.
+     */
+    GEN_ARRAY_T(file_func_t) func_pool;
+
+    /*
+     * Class pool contains all class representations, including
+     * super class, methods and fields.
+     */
+    GEN_ARRAY_T(file_class_t) class_pool;
 } file_rep_t;
 
 file_rep_t *load_file_rep(stream_t *);
