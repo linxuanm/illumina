@@ -8,3 +8,10 @@ box :: Box // main.box (box.Box)
 
 func main :: void ():
     test :: int = 1
+
+class BetterBox :: Box:
+
+    func wrap :: int ():
+        foo :: int = 10
+        foo = foo + 10
+        return foo

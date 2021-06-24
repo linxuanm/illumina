@@ -30,7 +30,11 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
     }
 }
 
-void file_class_pool_load_entry(file_class_t *entry, stream_t *stream) {
+void file_load_func_entry(file_func_t *entry, stream_t *stream) {
+
+}
+
+void file_load_class_entry(file_class_t *entry, stream_t *stream) {
 
 }
 
@@ -56,7 +60,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
     DEBUG("[Loader] Name table entries: %d", name_table_size);
     GEN_ARRAY_INIT(&object_file->name_table, name_table_size, uint8_t *);
 
-    for (int i = 0; i < name_table_size; ++i) {
+    for (POOL_SIZE_T i = 0; i < name_table_size; ++i) {
         uint8_t name_length = stream_read_1(stream);
 
         GEN_ARRAY_SET(
@@ -73,7 +77,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
     DEBUG("[Loader] Link table entries: %d", linker_size);
     GEN_ARRAY_INIT(&object_file->link_table, linker_size, file_linker_ref_t);
 
-    for (int i = 0; i < linker_size; ++i) {
+    for (POOL_SIZE_T i = 0; i < linker_size; ++i) {
         file_linker_load_entry(
             &GEN_ARRAY_GET(&object_file->link_table, i), stream
             );
@@ -92,7 +96,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
         &object_file->global_var_pool, global_var_size, file_global_var_t
         );
 
-    for (int i = 0; i < global_var_size; ++i) {
+    for (POOL_SIZE_T i = 0; i < global_var_size; ++i) {
         file_global_var_t *entry = &GEN_ARRAY_GET(
             &object_file->global_var_pool, i
             );
@@ -114,6 +118,12 @@ file_rep_t *load_file_rep(stream_t *stream) {
     DEBUG("[Loader] Function entries: %d", func_pool_size);
     GEN_ARRAY_INIT(&object_file->func_pool, func_pool_size, file_func_t);
 
+    for (POOL_SIZE_T i = 0; i < func_pool_size; ++i) {
+        file_load_func_entry(
+            &GEN_ARRAY_GET(&object_file->func_pool, i), stream
+            );
+    }
+
     VM_GOTO_IF_ERROR(error_func_pool);
 
     // classes
@@ -122,6 +132,12 @@ file_rep_t *load_file_rep(stream_t *stream) {
     POOL_SIZE_T class_pool_size = stream_read_4(stream);
     DEBUG("[Loader] Class entries: %d", class_pool_size);
     GEN_ARRAY_INIT(&object_file->class_pool, class_pool_size, file_class_t);
+
+    for (POOL_SIZE_T i = 0; i < class_pool_size; ++i) {
+        file_load_class_entry(
+            &GEN_ARRAY_GET(&object_file->class_pool, i), stream
+            );
+    }
 
     VM_GOTO_IF_ERROR(error_class_pool);
 

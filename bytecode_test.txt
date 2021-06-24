@@ -9,7 +9,7 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // name table
 
 // size
-0000 0005
+0000 0006
 
 // 'main.main()V' function signature
 0C 6D61 696E 2E6D 6169 6E28 2956
@@ -26,6 +26,9 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // 'boxes.Box' class path
 09 626F 7865 732E 426F 78
 
+// 'main.BetterBox' class path
+0E 6D61 696E 2E42 6574 7465 7242 6F78
+
 
 // link table
 
@@ -36,7 +39,7 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 */
 
 // size
-0000 0005
+0000 0006
 
 // function reference to 'main.main' function
 04 // LINK_TYPE_FUNCTION
@@ -57,6 +60,10 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // class reference to 'boxes.Box' class
 06 // LINK_TYPE_CLASS
 0000 0004
+
+// class reference to 'main.BetterBox' class
+06 // LINK_TYPE_CLASS
+0000 0005
 
 
 // global vars
@@ -81,10 +88,10 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // functions
 
 // size
-0000 0000
+0000 0001
 
 
 // classes
 
 // size
-0000 0000
+0000 0001

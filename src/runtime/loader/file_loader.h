@@ -45,6 +45,8 @@ typedef struct file_func_t {
     GEN_ARRAY_T(GEN_PAIR_T(FUNC_SIZE_T, FUNC_SIZE_T)) lines;
 } file_func_t;
 
+void file_load_func_entry(file_func_t *, stream_t *);
+
 typedef struct file_field_t {
     uint8_t *field_name;
     type_t type;
@@ -58,7 +60,7 @@ typedef struct file_class_t {
     POOL_SIZE_T *methods;  // ref to link table
 } file_class_t;
 
-void file_class_pool_load_entry(file_class_t *, stream_t *);
+void file_load_class_entry(file_class_t *, stream_t *);
 
 /*
  * Represents the content of a 'iasm' file.
