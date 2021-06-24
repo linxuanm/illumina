@@ -16,6 +16,7 @@
 #endif // VM_64_BIT_HEAP
 
 #define FILE_SIZE_T uint64_t
+#define FUNC_SIZE_T uint16_t
 #define POOL_SIZE_T uint32_t
 
 #endif //ILLUMINA_SPECS_H

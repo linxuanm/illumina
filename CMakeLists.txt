@@ -32,7 +32,7 @@ set(COMMON_HEADERS
         src/common/specs.h
         src/common/util/stream.h
         src/common/util/assert.h
-        src/common/util/generic_array.h
+        src/common/util/generic_structs.h
     )
 
 set(COMMON_SOURCES

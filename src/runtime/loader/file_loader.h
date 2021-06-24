@@ -4,7 +4,7 @@
 #include <inttypes.h>
 
 #include "common/util/stream.h"
-#include "common/util/generic_array.h"
+#include "common/util/generic_structs.h"
 #include "runtime/types.h"
 
 typedef struct file_linker_ref_t {
@@ -23,7 +23,20 @@ typedef struct file_global_var_t {
 } file_global_var_t;
 
 typedef struct file_func_t {
+    // ref to name table
+    POOL_SIZE_T func_sign;
 
+    // params
+    GEN_ARRAY_T(type_t) params;
+
+    // code
+    GEN_ARRAY_T(uint8_t) code;
+
+    /*
+     * line table (byte index: source line number)
+     * for traceback purposes
+     */
+    GEN_ARRAY_T(GEN_PAIR_T(FUNC_SIZE_T, FUNC_SIZE_T)) lines;
 } file_func_t;
 
 typedef struct file_field_t {
