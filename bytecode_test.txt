@@ -90,6 +90,16 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // size
 0000 0001
 
+// 'main.main'
+0000 0000 // signature index in name table
+00 // param count
+0001 // max stack
+0001 // locals count
+0001 // code length
+08 // code: 'return'
+0001 // line table length
+0000 /* byte index (0) */ 000A /* line index (10) */
+
 
 // classes
 

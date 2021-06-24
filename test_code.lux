@@ -11,7 +11,7 @@ func main :: void ():
 
 class BetterBox :: Box:
 
-    func wrap :: int ():
+    func wrap :: int (hello :: float):
         foo :: int = 10
         foo = foo + 10
         return foo

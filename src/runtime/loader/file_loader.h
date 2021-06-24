@@ -22,15 +22,15 @@ typedef struct file_global_var_t {
     type_t var_type;
 } file_global_var_t;
 
+typedef GEN_PAIR_T(FUNC_SIZE_T, FUNC_SIZE_T) file_line_t;
+
 typedef struct file_func_t {
     // ref to name table
-    POOL_SIZE_T func_sign;
+    POOL_SIZE_T signature;
 
     // params
+    // length_t: uint8_t
     GEN_ARRAY_T(type_t) params;
-
-    // code
-    GEN_ARRAY_T(uint8_t) code;
 
     // maximum operation stack size (for frame allocation)
     FUNC_SIZE_T max_stack;
@@ -38,11 +38,16 @@ typedef struct file_func_t {
     // local variables count
     FUNC_SIZE_T locals_count;
 
+    // code
+    // length_t: uint16_t
+    GEN_ARRAY_T(uint8_t) code;
+
     /*
      * line table (byte index: source line number)
      * for traceback purposes
      */
-    GEN_ARRAY_T(GEN_PAIR_T(FUNC_SIZE_T, FUNC_SIZE_T)) lines;
+    // length_t: uint16_t
+    GEN_ARRAY_T(file_line_t) lines;
 } file_func_t;
 
 void file_load_func_entry(file_func_t *, stream_t *);

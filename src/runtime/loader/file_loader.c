@@ -31,7 +31,46 @@ void file_linker_load_entry(file_linker_ref_t *entry, stream_t *stream) {
 }
 
 void file_load_func_entry(file_func_t *entry, stream_t *stream) {
+    entry->signature = stream_read_4(stream);
+    DEBUG("[Loader] --- Function signature index: %d --- ", entry->signature);
 
+    uint8_t params_count = stream_read_1(stream);
+    GEN_ARRAY_INIT(&entry->params, params_count, type_t);
+    DEBUG("[Loader] Function parameter count: %d", params_count);
+
+    for (uint8_t i = 0; i < params_count; ++i) {
+        type_t *param = &GEN_ARRAY_GET(&entry->params, i);
+        param->type_tag = stream_read_1(stream);
+
+        if (param->type_tag == TYPES_TYPE_REF) {
+            param->ref_class = stream_read_4(stream);
+        }
+    }
+
+    entry->max_stack = stream_read_2(stream);
+    entry->locals_count = stream_read_2(stream);
+    DEBUG(
+        "[Loader] Stack size: %d; locals count: %d",
+        entry->max_stack, entry->locals_count
+        );
+
+    FUNC_SIZE_T code_length = stream_read_2(stream);
+    GEN_ARRAY_INIT(&entry->code, code_length, uint8_t);
+    DEBUG("[Loader] Code length: %d", code_length);
+
+    for (FUNC_SIZE_T i = 0; i < code_length; ++i) {
+        GEN_ARRAY_SET(&entry->code, i, stream_read_1(stream));
+    }
+
+    FUNC_SIZE_T line_length = stream_read_2(stream);
+    GEN_ARRAY_INIT(&entry->lines, line_length, file_line_t);
+    DEBUG("[Loader] Line table length: %d", line_length);
+
+    for (FUNC_SIZE_T i = 0; i < line_length; ++i) {
+        file_line_t *line = &GEN_ARRAY_GET(&entry->lines, i);
+        GEN_PAIR_SET_FST(line, stream_read_2(stream));
+        GEN_PAIR_SET_SND(line, stream_read_2(stream));
+    }
 }
 
 void file_load_class_entry(file_class_t *entry, stream_t *stream) {
