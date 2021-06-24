@@ -2,7 +2,7 @@
 #define ILLUMINA_FILE_LOADER_H
 
 #include "common/util/stream.h"
-
+#include "common/util/generic_array.h"
 #include "runtime/types.h"
 
 /*

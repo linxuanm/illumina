@@ -21,11 +21,10 @@
 
 #define GEN_ARRAY_SIZE(array) ((array)->size);
 
-#define GEN_ARRAY_GET(array, i) ((array)->elem[i])
+#define GEN_ARRAY_GET(array, i) ((array)->elem[(i)])
 
-#define GEN_ARRAY_SET(array, i, val) \
-    do {\
-        (array)->elem[(i)] = (val);\
-    } while (0)
+#define GEN_ARRAY_SET(array, i, val) (array)->elem[(i)] = (val)
+
+#define GEN_ARRAY_RELEASE(array) free((array)->elem)
 
 #endif //ILLUMINA_GENERIC_ARRAY_H
