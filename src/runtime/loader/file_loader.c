@@ -1,22 +1,10 @@
 #include "file_loader.h"
 
 #include <stdlib.h>
+#include <inttypes.h>
 
 #include "common/logging.h"
 #include "runtime/structure/link_table.h"
-
-void file_name_table_init(POOL_SIZE_T size, file_name_table_t *table) {
-    table->size = size;
-    table->names = malloc(size * sizeof(char *));
-}
-
-void file_name_table_release(file_name_table_t *table) {
-    for (int i = 0; i < table->size; ++i) {
-        free(table->names[i]);
-    }
-
-    free(table->names);
-}
 
 void file_linker_init(POOL_SIZE_T size, file_linker_t *linker) {
     linker->size = size;
@@ -101,12 +89,14 @@ file_rep_t *load_file_rep(stream_t *stream) {
 
     POOL_SIZE_T name_table_size = stream_read_4(stream);
     DEBUG("[Loader] Name table entries: %d", name_table_size);
-    file_name_table_init(name_table_size, &object_file->name_table);
+    GEN_ARRAY_INIT(&object_file->name_table, name_table_size, uint8_t *);
 
     for (int i = 0; i < name_table_size; ++i) {
         uint8_t name_length = stream_read_1(stream);
 
-        object_file->name_table.names[i] = stream_read_str(stream, name_length);
+        GEN_ARRAY_SET(
+            &object_file->name_table, i, stream_read_str(stream, name_length)
+            );
     }
 
     VM_GOTO_IF_ERROR(error_name_table);
@@ -184,7 +174,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
     file_linker_release(&object_file->link_table);
 
     error_name_table:
-    file_name_table_release(&object_file->name_table);
+    GEN_ARRAY_RELEASE_PTR(&object_file->name_table);
 
     error_signature:
     DEBUG("[Loader] Class loading failed");
@@ -195,10 +185,10 @@ file_rep_t *load_file_rep(stream_t *stream) {
 void print_file_rep(file_rep_t *file) {
     printf("======= File Representation =======\n");
 
-    printf("\nName Table (%d entries):\n", file->name_table.size);
+    printf("\nName Table (%d entries):\n", GEN_ARRAY_SIZE(&file->name_table));
 
-    for (int i = 0; i < file->name_table.size; ++i) {
-        printf("\t%d: %s\n", i, file->name_table.names[i]);
+    for (int i = 0; i < GEN_ARRAY_SIZE(&file->name_table); ++i) {
+        printf("\t%d: %s\n", i, GEN_ARRAY_GET(&file->name_table, i));
     }
 
     printf("\nLink Table (%d entries):\n", file->link_table.size);
@@ -237,11 +227,15 @@ void print_file_rep(file_rep_t *file) {
 
     for (int i = 0; i < file->global_var_pool.size; ++i) {
         file_global_var_t *entry = &file->global_var_pool.vars[i];
-        printf("\t%d: %s :: ", i, file->name_table.names[entry->name_entry]);
+
+        printf(
+            "\t%d: %s :: ",
+            i, GEN_ARRAY_GET(&file->name_table, entry->name_entry)
+            );
 
         if (entry->var_type.type_tag == TYPES_TYPE_REF) {
             POOL_SIZE_T class_entry = entry->var_type.ref_class;
-            printf("%s", file->name_table.names[class_entry]);
+            printf("%s", GEN_ARRAY_GET(&file->name_table, class_entry));
         } else {
 
             if (entry->var_type.type_tag >= TYPES_COUNT) {

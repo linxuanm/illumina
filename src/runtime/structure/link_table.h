@@ -1,7 +1,7 @@
 #ifndef ILLUMINA_LINK_TABLE_H
 #define ILLUMINA_LINK_TABLE_H
 
-#include <common/util/stream.h>
+#include "common/util/stream.h"
 #include "common/specs.h"
 
 /*

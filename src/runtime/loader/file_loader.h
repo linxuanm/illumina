@@ -1,26 +1,13 @@
 #ifndef ILLUMINA_FILE_LOADER_H
 #define ILLUMINA_FILE_LOADER_H
 
+#include <inttypes.h>
+
 #include "common/util/stream.h"
 #include "common/util/generic_array.h"
 #include "runtime/types.h"
 
-/*
- * A table used to reference the name of functions,
- * variables and classes to allow symbolic linking
- * during the loading phrase. Separated from the
- * linker for flexibility purposes.
- */
-typedef struct file_name_table_t {
-    POOL_SIZE_T size;
-    uint8_t **names;
-} file_name_table_t;
-
-void file_name_table_init(POOL_SIZE_T, file_name_table_t *);
-void file_name_table_release(file_name_table_t *);
-
 typedef struct file_linker_ref_t {
-
     // the type of the reference
     uint8_t tag;
 
@@ -88,7 +75,13 @@ void file_class_pool_load_entry(file_class_t *, stream_t *);
  * may greatly alter the content of each field.
  */
 typedef struct file_rep_t {
-    file_name_table_t name_table;
+    /*
+     * A table used to reference the name of functions,
+     * variables and classes to allow symbolic linking
+     * during the loading phrase. Separated from the
+     * linker for flexibility purposes.
+     */
+    GEN_ARRAY_T(uint8_t *) name_table;
     file_linker_t link_table;
     file_var_pool_t global_var_pool;
     file_func_pool_t func_pool;

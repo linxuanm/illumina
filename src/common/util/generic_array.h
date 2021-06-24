@@ -10,16 +10,16 @@
     struct {\
         POOL_SIZE_T size;\
         T *elem;\
-    };
+    }
 
-#define GEN_ARRAY_INIT(array, size, T) \
+#define GEN_ARRAY_INIT(array, size_in, T) \
     do {\
-        (array)->size = (size);\
-        (array)->elem = malloc((size) * sizeof(T));\
+        (array)->size = (size_in);\
+        (array)->elem = malloc((size_in) * sizeof(T));\
         ASSERT_MALLOC((array)->elem);\
     } while (0)
 
-#define GEN_ARRAY_SIZE(array) ((array)->size);
+#define GEN_ARRAY_SIZE(array) ((array)->size)
 
 #define GEN_ARRAY_GET(array, i) ((array)->elem[(i)])
 
