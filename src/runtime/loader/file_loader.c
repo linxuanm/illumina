@@ -5,7 +5,7 @@
 #include "common/logging.h"
 #include "runtime/structure/link_table.h"
 
-void file_name_table_init(NAME_TABLE_SIZE_T size, file_name_table_t *table) {
+void file_name_table_init(POOL_SIZE_T size, file_name_table_t *table) {
     table->size = size;
     table->names = malloc(size * sizeof(char *));
 }
@@ -99,7 +99,7 @@ file_rep_t *load_file_rep(stream_t *stream) {
     // name table
     DEBUG("[Loader] Reading name table");
 
-    NAME_TABLE_SIZE_T name_table_size = stream_read_4(stream);
+    POOL_SIZE_T name_table_size = stream_read_4(stream);
     DEBUG("[Loader] Name table entries: %d", name_table_size);
     file_name_table_init(name_table_size, &object_file->name_table);
 

@@ -29,9 +29,10 @@ set(ILLUMINA_SOURCES)
 
 set(COMMON_HEADERS
         src/common/logging.h
+        src/common/specs.h
         src/common/util/stream.h
         src/common/util/assert.h
-        src/common/specs.h
+        src/common/util/generic_array.h
     )
 
 set(COMMON_SOURCES

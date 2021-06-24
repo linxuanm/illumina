@@ -12,11 +12,11 @@
  * linker for flexibility purposes.
  */
 typedef struct file_name_table_t {
-    NAME_TABLE_SIZE_T size;
+    POOL_SIZE_T size;
     uint8_t **names;
 } file_name_table_t;
 
-void file_name_table_init(NAME_TABLE_SIZE_T, file_name_table_t *);
+void file_name_table_init(POOL_SIZE_T, file_name_table_t *);
 void file_name_table_release(file_name_table_t *);
 
 typedef struct file_linker_ref_t {
