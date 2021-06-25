@@ -9,7 +9,7 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // name table
 
 // size
-0000 0008
+0000 0009
 
 // 'main.main()V' function signature
 0C 6D61 696E 2E6D 6169 6E28 2956
@@ -35,6 +35,10 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // 'other_box' field
 09 6F74 6865 725F 626F 78
 
+// 'wrap(F)V' method
+08 7772 6170 2846 2956
+
+
 // link table
 
 /*
@@ -44,7 +48,7 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 */
 
 // size
-0000 0006
+0000 0007
 
 // function reference to 'main.main' function
 04 // LINK_TYPE_FUNCTION
@@ -69,6 +73,10 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // class reference to 'main.BetterBox' class
 06 // LINK_TYPE_CLASS
 0000 0005
+
+// method reference to 'wrap(F)V'
+05 // LINK_TYPE_METHOD
+0000 0005 /* 'main.BetterBox' linker entry */ 0000 0008 /* 'wrap(F)V' name table entry */
 
 
 // global vars
@@ -123,3 +131,5 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 03 // TYPES_TYPE_REF
 0000 0004 // 'boxes.Box' link table entry
 00 // flag
+0001 // method count
+0000 0006

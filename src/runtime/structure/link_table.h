@@ -59,8 +59,8 @@
 
 /*
  * A LINK_TYPE_METHOD takes up 2 units, pointing
- * to a class reference and a signature entry in name
- * table respectively.
+ * to a class reference in linker and a signature
+ * entry in name table respectively.
  */
 #define LINK_TYPE_METHOD 5
 

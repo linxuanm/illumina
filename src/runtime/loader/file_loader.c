@@ -94,6 +94,14 @@ void file_load_class_entry(file_class_t *entry, stream_t *stream) {
 
         field->flag = stream_read_1(stream);
     }
+
+    uint16_t methods_count = stream_read_2(stream);
+    DEBUG("[Loader] Class method count: %d", methods_count);
+    GEN_ARRAY_INIT(&entry->methods, methods_count, POOL_SIZE_T);
+
+    for (uint16_t i = 0; i < methods_count; ++i) {
+        GEN_ARRAY_SET(&entry->methods, i, stream_read_4(stream));
+    }
 }
 
 file_rep_t *load_file_rep(stream_t *stream) {
