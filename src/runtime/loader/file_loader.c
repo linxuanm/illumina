@@ -74,7 +74,26 @@ void file_load_func_entry(file_func_t *entry, stream_t *stream) {
 }
 
 void file_load_class_entry(file_class_t *entry, stream_t *stream) {
+    entry->class_path = stream_read_4(stream);
+    DEBUG("[Loader] --- Class path index: %d --- ", entry->class_path);
 
+    entry->super_class = stream_read_4(stream);
+
+    uint16_t fields_count = stream_read_2(stream);
+    DEBUG("[Loader] Class field count: %d", fields_count);
+    GEN_ARRAY_INIT(&entry->fields, fields_count, file_field_t);
+    for (uint16_t i = 0; i < fields_count; ++i) {
+        file_field_t *field = &GEN_ARRAY_GET(&entry->fields, i);
+
+        field->field_name = stream_read_4(stream);
+
+        field->type.type_tag = stream_read_1(stream);
+        if (field->type.type_tag == TYPES_TYPE_REF) {
+            field->type.ref_class = stream_read_4(stream);
+        }
+
+        field->flag = stream_read_1(stream);
+    }
 }
 
 file_rep_t *load_file_rep(stream_t *stream) {

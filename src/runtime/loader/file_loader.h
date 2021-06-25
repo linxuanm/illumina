@@ -53,16 +53,16 @@ typedef struct file_func_t {
 void file_load_func_entry(file_func_t *, stream_t *);
 
 typedef struct file_field_t {
-    uint8_t *field_name;
+    POOL_SIZE_T field_name;
     type_t type;
     uint8_t flag;
 } file_field_t;
 
 typedef struct file_class_t {
-    uint8_t *class_path;
+    POOL_SIZE_T class_path; // ref to name table
     POOL_SIZE_T super_class; // ref to link table
-    file_field_t *fields;
-    POOL_SIZE_T *methods;  // ref to link table
+    GEN_ARRAY_T(file_field_t) fields;
+    GEN_ARRAY_T(POOL_SIZE_T) methods;  // ref to link table
 } file_class_t;
 
 void file_load_class_entry(file_class_t *, stream_t *);

@@ -9,7 +9,7 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // name table
 
 // size
-0000 0006
+0000 0008
 
 // 'main.main()V' function signature
 0C 6D61 696E 2E6D 6169 6E28 2956
@@ -29,6 +29,11 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 // 'main.BetterBox' class path
 0E 6D61 696E 2E42 6574 7465 7242 6F78
 
+// 'my_field' field
+08 6D79 5F66 6965 6C64
+
+// 'other_box' field
+09 6F74 6865 725F 626F 78
 
 // link table
 
@@ -105,3 +110,16 @@ ABCD DCBA 0000 0000 0000 0000 0000 0000
 
 // size
 0000 0001
+
+// 'main.BetterBox'
+
+0000 0005 // class path (name table)
+0000 0004 // super class ('boxes.Box')
+0002 // field count
+0000 0006 // 'my_field' name table entry
+02 // TYPES_TYPE_CHAR
+00 // flag
+0000 0007 // 'other_box' name table entry
+03 // TYPES_TYPE_REF
+0000 0004 // 'boxes.Box' link table entry
+00 // flag

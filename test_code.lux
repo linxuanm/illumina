@@ -11,6 +11,9 @@ func main :: void ():
 
 class BetterBox :: Box:
 
+    my_field :: char = 'a'
+    other_box :: Box
+
     func wrap :: int (hello :: float):
         foo :: int = 10
         foo = foo + 10
