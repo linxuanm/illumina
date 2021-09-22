@@ -5,6 +5,7 @@
 
 #include "common/util/assert.h"
 
+// TODO: wchat_t and proper file error handling
 FILE_SIZE_T read_from_file(uint8_t *target, const char *path) {
     FILE *file_ptr = fopen(path, "rb");
 

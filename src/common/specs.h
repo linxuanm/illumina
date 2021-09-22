@@ -1,7 +1,7 @@
 #ifndef ILLUMINA_SPECS_H
 #define ILLUMINA_SPECS_H
 
-#include <inttypes.h>
+#include <stdlib.h>
 
 #ifdef VM_64_BIT_HEAP
 
@@ -15,7 +15,7 @@
 
 #endif // VM_64_BIT_HEAP
 
-#define FILE_SIZE_T uint64_t
+#define FILE_SIZE_T size_t
 #define FUNC_SIZE_T uint16_t
 #define POOL_SIZE_T uint32_t
 
