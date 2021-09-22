@@ -53,7 +53,8 @@ uint8_t *stream_read_str(stream_t *stream, uint8_t size) {
     return string;
 }
 
-void stream_from_file(stream_t *stream, const char *path) {
+stream_t *stream_from_file(const char *path) {
+    stream_t *stream = malloc(sizeof(stream_t));
     stream->pc = 0;
     stream->error = 0;
 
@@ -68,4 +69,6 @@ void stream_from_file(stream_t *stream, const char *path) {
     fclose(file_ptr);
 
     stream->bytes[stream->end] = '\0';
+
+    return stream;
 }

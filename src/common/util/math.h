@@ -1,0 +1,4 @@
+#ifndef ILLUMINA_MATH_H
+#define ILLUMINA_MATH_H
+
+#endif //ILLUMINA_MATH_H

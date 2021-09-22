@@ -4,7 +4,6 @@
 #include "common/logging.h"
 #include "common/util/assert.h"
 #include "common/util/stream.h"
-#include "runtime/loader/file_loader.h"
 
 void print_bits(int const size, void const * const ptr) {
     unsigned char *b = (unsigned char *) ptr;
@@ -21,8 +20,5 @@ void print_bits(int const size, void const * const ptr) {
 }
 
 int main() {
-    int a = -255;
-    unsigned int b = a;
-    printf("%u", b);
-    return 0;
+
 }

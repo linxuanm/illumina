@@ -35,6 +35,6 @@ uint64_t stream_read_8(stream_t *);
 uint8_t *stream_read_str(stream_t *, uint8_t);
 
 // load stream from file
-void stream_from_file(stream_t *, const char *);
+stream_t *stream_from_file(const char *);
 
 #endif //ILLUMINA_STREAM_H
