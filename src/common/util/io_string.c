@@ -7,6 +7,12 @@
 
 FILE_SIZE_T read_from_file(uint8_t *target, const char *path) {
     FILE *file_ptr = fopen(path, "rb");
+
+    if (!file_ptr) {
+        ERROR("Path %s does not exist", path);
+        return 0;
+    }
+
     fseek(file_ptr, 0, SEEK_END);
 
     FILE_SIZE_T length = (FILE_SIZE_T) ftell(file_ptr);

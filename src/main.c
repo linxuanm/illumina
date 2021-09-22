@@ -20,5 +20,5 @@ void print_bits(int const size, void const * const ptr) {
 }
 
 int main() {
-
+    stream_t *stream = stream_from_file("test.iasm");
 }
