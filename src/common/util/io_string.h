@@ -5,6 +5,6 @@
 
 #include "common/specs.h"
 
-FILE_SIZE_T read_from_file(uint8_t *, const char *);
+FILE_SIZE_T read_from_file(uint8_t **, const char *);
 
 #endif //ILLUMINA_IO_STRING_H

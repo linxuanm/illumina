@@ -61,7 +61,7 @@ stream_t *stream_from_file(const char *path) {
     stream->pc = 0;
     stream->error = 0;
 
-    stream->end = read_from_file(stream->bytes, path);
+    stream->end = read_from_file(&stream->bytes, path);
 
     return stream;
 }
