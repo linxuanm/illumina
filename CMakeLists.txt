@@ -33,10 +33,12 @@ set(COMMON_HEADERS
         src/common/util/stream.h
         src/common/util/assert.h
         src/common/util/generic_structs.h
+        src/common/util/io_string.h
     )
 
 set(COMMON_SOURCES
         src/common/util/stream.c
+        src/common/util/io_string.c
 )
 
 message("\nIncluded Common Library")

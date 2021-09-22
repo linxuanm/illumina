@@ -4,6 +4,7 @@
 
 #include "common/logging.h"
 #include "common/util/assert.h"
+#include "common/util/io_string.h"
 
 uint8_t stream_read_1(stream_t *stream) {
     STREAM_CHECK_EOF(stream, 1);
@@ -55,20 +56,12 @@ uint8_t *stream_read_str(stream_t *stream, uint8_t size) {
 
 stream_t *stream_from_file(const char *path) {
     stream_t *stream = malloc(sizeof(stream_t));
+    ASSERT_MALLOC(stream);
+
     stream->pc = 0;
     stream->error = 0;
 
-    FILE *file_ptr = fopen(path, "rb");
-    fseek(file_ptr, 0, SEEK_END);
-
-    stream->end = (unsigned long) ftell(file_ptr);
-
-    fseek(file_ptr, 0, SEEK_SET);
-    stream->bytes = malloc((stream->end + 1) * sizeof(uint8_t));
-    fread(stream->bytes, sizeof(uint8_t), stream->end, file_ptr);
-    fclose(file_ptr);
-
-    stream->bytes[stream->end] = '\0';
+    stream->end = read_from_file(stream->bytes, path);
 
     return stream;
 }
