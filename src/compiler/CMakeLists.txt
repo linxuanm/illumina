@@ -1,9 +1,7 @@
 set(COMPILER_HEADERS
-        src/compiler/parsing/preprocessing.h
 )
 
 set(COMPILER_SOURCES
-        src/compiler/parsing/preprocessing.c
 )
 
 message("Compiler Headers:")

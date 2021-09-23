@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "compiler/parsing/preprocessing.h"
-
 #include "common/util/io_string.h"
 #include "common/logging.h"
 #include "common/util/assert.h"
@@ -25,7 +23,5 @@ void print_bits(int const size, void const * const ptr) {
 int main() {
     uint8_t *code;
     FILE_SIZE_T length = read_from_file(&code, "test_code.lux");
-    //printf("%s", code);
-    uint8_t *new_code = preprocess_code(code);
-    printf("%d", new_code[0]);
+    printf("%s", code);
 }
