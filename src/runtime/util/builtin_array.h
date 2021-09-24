@@ -13,6 +13,8 @@ typedef struct {
     uint8_t *mem;
 } builtin_array_t;
 
-builtin_array_t *make_array(uint32_t, uint16_t);
+builtin_array_t *builtin_new_array(uint32_t, uint16_t);
+
+void builtin_free_array(builtin_array_t *);
 
 #endif //ILLUMINA_BUILTIN_ARRAY_H

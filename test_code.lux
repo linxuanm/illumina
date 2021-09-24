@@ -1,20 +1,23 @@
 // test code for, well, testing
 
-include boxes
+include boxes;
 
-foo :: int // main.foo (int)
-bar :: bool // main.bar (int)
-box :: Box // main.box (box.Box)
+foo: int; // main.foo (int)
+bar: bool; // main.bar (int)
+box: Box; // main.box (box.Box)
 
-func main :: void ():
-    test :: int = 1
+main: void () {
+    test: int = 1;
+}
 
-class BetterBox :: Box:
+class BetterBox: Box {
 
-    my_field :: char = 'a'
-    other_box :: Box
+    my_field: char = 'a';
+    other_box: Box;
 
-    func wrap :: int (hello :: float):
-        foo :: int = 10
-        foo = foo + 10
-        return foo
+    wrap: int (hello: float) {
+        foo: int = 10;
+        foo = foo + 10;
+        return foo;
+    }
+}
