@@ -4,23 +4,28 @@ token Iden (letter (letter | digit | '_')*);
 
 Prog. Program ::= [GlobDecl];
 
-[]. [GlobDecl] ::= ;
-(:). [GlobDecl] ::= GlobDecl [GlobDecl];
+GVarDecl. GlobDecl ::= MVarDef ";";
+separator GlobDecl "";
 
-(:[]). [VarDef] ::= VarDef;
-(:). [VarDef] ::= VarDef "," [VarDef];
-
-(:[]). [Type] ::= Type;
-(:). [Type] ::= Type "," [Type];
-
-GVarDecl. GlobDecl ::= [VarDef] ";";
+PName. Prop ::= Iden;
+separator nonempty Prop " ";
 
 VNoAsn. VarDef ::= VarSig;
 VAsn. VarDef ::= VarSig "=" Exp;
+
+separator nonempty VarDef ",";
+
+PProp. PropDecl ::= "[" [Prop] "]";
+PNil. PropDecl ::= ;
+
+MPropVar. MVarDef ::= PropDecl [VarDef];
 
 VSig. VarSig ::= Iden ":" Type;
 
 TSimp. Type ::= Iden;
 TGen. Type ::= Iden "<" [Type] ">";
 
+separator nonempty Type ",";
+
 EInt. Exp ::= Integer;
+EStr. Exp ::= String;
