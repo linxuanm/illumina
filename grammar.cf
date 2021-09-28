@@ -1,0 +1,14 @@
+entrypoints Program;
+
+Prog. Program ::= [GlobDecl];
+
+[]. [GlobDecl] ::= ;
+(:). [GlobDecl] ::= GlobDecl [GlobDecl];
+
+GVarDecl. GlobDecl ::= [VarDef];
+
+(:[]). [VarDef] ::= VarDef;
+(:). [VarDef] ::= VarDef "," [VarDef];
+
+VNoAsn. VarDef ::= "abc";
+VAsn. VarDef ::= "ca";
