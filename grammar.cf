@@ -1,14 +1,26 @@
 entrypoints Program;
 
+token Iden (letter (letter | digit | '_')*);
+
 Prog. Program ::= [GlobDecl];
 
 []. [GlobDecl] ::= ;
 (:). [GlobDecl] ::= GlobDecl [GlobDecl];
 
-GVarDecl. GlobDecl ::= [VarDef];
-
 (:[]). [VarDef] ::= VarDef;
 (:). [VarDef] ::= VarDef "," [VarDef];
 
-VNoAsn. VarDef ::= "abc";
-VAsn. VarDef ::= "ca";
+(:[]). [Type] ::= Type;
+(:). [Type] ::= Type "," [Type];
+
+GVarDecl. GlobDecl ::= [VarDef] ";";
+
+VNoAsn. VarDef ::= VarSig;
+VAsn. VarDef ::= VarSig "=" Exp;
+
+VSig. VarSig ::= Iden ":" Type;
+
+TSimp. Type ::= Iden;
+TGen. Type ::= Iden "<" [Type] ">";
+
+EInt. Exp ::= Integer;
