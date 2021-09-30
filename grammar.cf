@@ -1,32 +1,49 @@
 entrypoints Program;
 
+
+-- redefinition of certain tokens due to the disparity between
+-- Haskell's identifier rules and Modula's identifier convention
 token Iden (letter (letter | digit | '_')*);
 
+
+-- entry point
 Prog. Program ::= [GlobDecl];
 
-GVarDecl. GlobDecl ::= MVarDef ";";
+
+-- global declarations are coerced under GlobDecl; this includes
+-- functions, global variables, classes, include statements, etc
+GVarDecl. GlobDecl ::= GVarDef ";";
 separator GlobDecl "";
 
+
+-- property construct (occurs before a global definition) that
+-- can be stacked indefinitely before a global declaration
+-- e.g. `[private static]`
 PName. Prop ::= Iden;
 separator nonempty Prop " ";
-
-VNoAsn. VarDef ::= VarSig;
-VAsn. VarDef ::= VarSig "=" Exp;
-
-separator nonempty VarDef ",";
-
 PProp. PropDecl ::= "[" [Prop] "]";
 separator PropDecl "";
 
-MPropVar. MVarDef ::= [PropDecl] [VarDef];
-MJustVar. MVarDef ::= [VarDef];
 
+-- simple variable definitions (the generic kind without global
+-- properties)
 VSig. VarSig ::= Iden ":" Type;
 
+VNoAsn. VarDef ::= VarSig;
+VAsn. VarDef ::= VarSig "=" Exp;
+separator nonempty VarDef ",";
+
+
+-- global variable definitions (with optional properties section)
+MPropVar. GVarDef ::= [PropDecl] [VarDef];
+
+
+-- type structure
 TSimp. Type ::= Iden;
 TGen. Type ::= Iden "<" [Type] ">";
-
 separator nonempty Type ",";
 
+
+-- expressions
 EInt. Exp ::= Integer;
 EStr. Exp ::= String;
