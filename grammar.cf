@@ -16,9 +16,10 @@ VAsn. VarDef ::= VarSig "=" Exp;
 separator nonempty VarDef ",";
 
 PProp. PropDecl ::= "[" [Prop] "]";
-PNil. PropDecl ::= ;
+separator PropDecl "";
 
-MPropVar. MVarDef ::= PropDecl [VarDef];
+MPropVar. MVarDef ::= [PropDecl] [VarDef];
+MJustVar. MVarDef ::= [VarDef];
 
 VSig. VarSig ::= Iden ":" Type;
 
