@@ -41,6 +41,8 @@ MPropVar. GVarDef ::= [PropDecl] [VarDef];
 -- type structure
 TSimp. Type ::= Iden;
 TGen. Type ::= Iden "<" [Type] ">";
+TList. Type ::= "[" Type "]";
+TTup. Type ::= "(" [Type] ")";
 separator nonempty Type ",";
 
 
