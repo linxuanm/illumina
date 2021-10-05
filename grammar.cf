@@ -16,6 +16,12 @@ GVarDecl. GlobDecl ::= GVarDef ";";
 separator GlobDecl "";
 
 
+-- in-class declarations are similar to the global declaration
+-- set apart from the inclusion of class/interface declarations
+CVarDecl. ClassMemDecl ::= GVarDef ";";
+separator ClassMemDecl "";
+
+
 -- property construct (occurs before a global definition) that
 -- can be stacked indefinitely before a global declaration
 -- e.g. `[private static]`
