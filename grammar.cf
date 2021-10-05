@@ -12,7 +12,8 @@ Prog. Program ::= [GlobDecl];
 
 -- global declarations are coerced under GlobDecl; this includes
 -- functions, global variables, classes, include statements, etc
-GVarDecl. GlobDecl ::= GVarDef ";";
+GMemDecl. GlobDecl ::= ClassMemDecl;
+GClassDecl. GlobDecl ::= ClassDecl;
 separator GlobDecl "";
 
 
@@ -20,6 +21,14 @@ separator GlobDecl "";
 -- set apart from the inclusion of class/interface declarations
 CVarDecl. ClassMemDecl ::= GVarDef ";";
 separator ClassMemDecl "";
+
+
+-- class declaration
+CClass. ClassDecl ::= [PropDecl] "class" Iden Inhrt "{" [ClassMemDecl] "}";
+CInter. ClassDecl ::= [PropDecl] "interface" Iden Inhrt "{" [ClassMemDecl] "}";
+
+INoInherit. Inhrt ::= ;
+IInherit. Inhrt ::= ":" [CType];
 
 
 -- property construct (occurs before a global definition) that
@@ -49,6 +58,7 @@ CSimp. CType ::= Iden;
 CGen. CType ::= Iden "<" [Type] ">";
 CList. CType ::= "[" Type "]";
 CTup. CType ::= "(" [Type] ")";
+separator nonempty CType ",";
 
 
 -- maybe type structure (coerces `null` into the type) (does not
