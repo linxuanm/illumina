@@ -44,11 +44,18 @@ separator nonempty VarDef ",";
 MPropVar. GVarDef ::= [PropDecl] [VarDef];
 
 
--- type structure
-TSimp. Type ::= Iden;
-TGen. Type ::= Iden "<" [Type] ">";
-TList. Type ::= "[" Type "]";
-TTup. Type ::= "(" [Type] ")";
+-- `certainly` type structure (no succeeding `?`)
+CSimp. CType ::= Iden;
+CGen. CType ::= Iden "<" [Type] ">";
+CList. CType ::= "[" Type "]";
+CTup. CType ::= "(" [Type] ")";
+
+
+-- maybe type structure (coerces `null` into the type) (does not
+-- work on primitives obviously, but such validation is postponed
+-- until static analysis)
+TMaybe. Type ::= CType "?";
+TPure. Type ::= CType;
 separator nonempty Type ",";
 
 
