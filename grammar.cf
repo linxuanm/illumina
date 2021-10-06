@@ -1,6 +1,9 @@
 entrypoints Program;
 
 
+comment "--";
+
+
 -- redefinition of certain tokens due to the disparity between
 -- Haskell's identifier rules and Modula's identifier convention
 token Iden (letter (letter | digit | '_')*);
@@ -14,7 +17,14 @@ Prog. Program ::= [GlobDecl];
 -- functions, global variables, classes, include statements, etc
 GMemDecl. GlobDecl ::= ClassMemDecl;
 GClassDecl. GlobDecl ::= ClassDecl;
+GImport. GlobDecl ::= ImportDecl;
 separator GlobDecl "";
+
+
+-- import statement declaration
+IImport. ImportDecl ::= "import" [Pack] ";";
+PackName. Pack ::= Iden;
+separator nonempty Pack ".";
 
 
 -- in-class declarations are similar to the global declaration
