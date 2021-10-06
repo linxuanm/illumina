@@ -91,6 +91,7 @@ LStr. Lit ::= String;
 LChr. Lit ::= Char;
 LFlo. Lit ::= Double;
 
+
 -- operators
 Asn. Op ::= "=";
 AddAsn. Op ::= "+=";
@@ -125,6 +126,8 @@ Mul. Op10 ::= "*";
 Div. Op10 ::= "/";
 Mod. Op10 ::= "%";
 Pow. Op11 ::= "**";
+Ref. Op13 ::= ".";
+
 
 -- expressions
 internal EOp. Exp ::= Exp Op Exp;
@@ -142,9 +145,22 @@ opf. Exp8 ::= Exp8 Op8 Exp9;
 opf. Exp9 ::= Exp9 Op9 Exp10;
 opf. Exp10 ::= Exp10 Op10 Exp11;
 opf. Exp11 ::= Exp12 Op11 Exp11;
+opf. Exp13 ::= Exp13 Op13 Exp14;
 
-Elit. Exp12 ::= Lit;
+PreInc. Exp12 ::= "++" Exp13;
+PreDec. Exp12 ::= "--" Exp13;
+Pos. Exp12 ::= "+" Exp13;
+Neg. Exp12 ::= "-" Exp13;
+LogNot. Exp12 ::= "!" Exp13;
+BitNot. Exp12 ::= "~" Exp13;
 
-coercions Exp 12;
---separator Exp ",";
+SufInc. Exp13 ::= Exp14 "++";
+SufDec. Exp13 ::= Exp14 "--";
+ArrIdx. Exp13 ::= Exp14 "[" Exp "]";
+FuncCall. Exp13 ::= Exp14 "(" [Exp] ")";
 
+ELit. Exp14 ::= Lit;
+EIde. Exp14 ::= Iden;
+
+coercions Exp 14;
+separator Exp ",";
