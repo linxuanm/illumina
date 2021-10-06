@@ -24,12 +24,14 @@ separator GlobDecl "";
 -- import statement declaration
 IImport. ImportDecl ::= "import" [Pack] ";";
 PackName. Pack ::= Iden;
+
 separator nonempty Pack ".";
 
 
 -- in-class declarations are similar to the global declaration
 -- set apart from the inclusion of class/interface declarations
 CVarDecl. ClassMemDecl ::= GVarDef ";";
+
 separator ClassMemDecl "";
 
 
@@ -45,8 +47,9 @@ IInherit. Inhrt ::= ":" [CType];
 -- can be stacked indefinitely before a global declaration
 -- e.g. `[private static]`
 PName. Prop ::= Iden;
-separator nonempty Prop " ";
 PProp. PropDecl ::= "[" [Prop] "]";
+
+separator nonempty Prop " ";
 separator PropDecl "";
 
 
@@ -56,6 +59,7 @@ VSig. VarSig ::= Iden ":" Type;
 
 VNoAsn. VarDef ::= VarSig;
 VAsn. VarDef ::= VarSig "=" Exp;
+
 separator nonempty VarDef ",";
 
 
@@ -68,6 +72,7 @@ CSimp. CType ::= Iden;
 CGen. CType ::= Iden "<" [Type] ">";
 CList. CType ::= "[" Type "]";
 CTup. CType ::= "(" [Type] ")";
+
 separator nonempty CType ",";
 
 
@@ -76,9 +81,80 @@ separator nonempty CType ",";
 -- until static analysis)
 TMaybe. Type ::= CType "?";
 TPure. Type ::= CType;
+
 separator nonempty Type ",";
 
 
+-- literals
+LInt. Lit ::= Integer;
+LStr. Lit ::= String;
+LChr. Lit ::= Char;
+LFlo. Lit ::= Double;
+
+-- operators
+Asn. Op ::= "=";
+AddAsn. Op ::= "+=";
+SubAsn. Op ::= "-=";
+MulAsn. Op ::= "*=";
+DivAsn. Op ::= "/=";
+ModAsn. Op ::= "%=";
+AndAsn. Op ::= "&=";
+XorAsn. Op ::= "^=";
+OrAsn. Op ::= "|=";
+ShlAsn. Op ::= "<<=";
+ShrAsn. Op ::= ">>=";
+
+LogOr. Op1 ::= "||";
+LogAnd. Op2 ::= "&&";
+BitOr. Op3 ::= "|";
+BitXor. Op4 ::= "^";
+BitAnd. Op5 ::= "&";
+
+NotEq. Op6 ::= "!=";
+Eq. Op6 ::= "==";
+Lt. Op7 ::= "<";
+Gt. Op7 ::= ">";
+Leq. Op7 ::= "<=";
+Geq. Op7 ::= ">=";
+
+Shl. Op8 ::= "<<";
+Shr. Op8 ::= ">>";
+Add. Op9 ::= "+";
+Sub. Op9 ::= "-";
+Mul. Op10 ::= "*";
+Div. Op10 ::= "/";
+Mod. Op10 ::= "%";
+
+_. Op ::= Op1;
+_. Op ::= Op2;
+_. Op ::= Op3;
+_. Op ::= Op4;
+_. Op ::= Op5;
+_. Op ::= Op6;
+_. Op ::= Op7;
+_. Op ::= Op8;
+_. Op ::= Op9;
+_. Op ::= Op10;
+
+
 -- expressions
-EInt. Exp ::= Integer;
-EStr. Exp ::= String;
+internal EOp. Exp ::= Exp Op Exp;
+define opf a o b = EOp a o b;
+
+opf. Exp ::= Exp Op Exp1;
+opf. Exp1 ::= Exp1 Op1 Exp2;
+--opf. Exp2 ::= Exp2 Op2 Exp3;
+--opf. Exp3 ::= Exp3 Op3 Exp4;
+--opf. Exp4 ::= Exp4 Op4 Exp5;
+--opf. Exp5 ::= Exp5 Op5 Exp6;
+--opf. Exp6 ::= Exp6 Op6 Exp7;
+--opf. Exp7 ::= Exp7 Op7 Exp8;
+--opf. Exp8 ::= Exp8 Op8 Exp9;
+--opf. Exp9 ::= Exp9 Op9 Exp10;
+--opf. Exp10 ::= Exp10 Op10 Exp11;
+
+Elit. Exp2 ::= Lit;
+
+--coercions Exp 2;
+--separator Exp ",";
+
