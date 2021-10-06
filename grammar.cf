@@ -124,18 +124,7 @@ Sub. Op9 ::= "-";
 Mul. Op10 ::= "*";
 Div. Op10 ::= "/";
 Mod. Op10 ::= "%";
-
-_. Op ::= Op1;
-_. Op ::= Op2;
-_. Op ::= Op3;
-_. Op ::= Op4;
-_. Op ::= Op5;
-_. Op ::= Op6;
-_. Op ::= Op7;
-_. Op ::= Op8;
-_. Op ::= Op9;
-_. Op ::= Op10;
-
+Pow. Op11 ::= "**";
 
 -- expressions
 internal EOp. Exp ::= Exp Op Exp;
@@ -143,18 +132,19 @@ define opf a o b = EOp a o b;
 
 opf. Exp ::= Exp Op Exp1;
 opf. Exp1 ::= Exp1 Op1 Exp2;
---opf. Exp2 ::= Exp2 Op2 Exp3;
---opf. Exp3 ::= Exp3 Op3 Exp4;
---opf. Exp4 ::= Exp4 Op4 Exp5;
---opf. Exp5 ::= Exp5 Op5 Exp6;
---opf. Exp6 ::= Exp6 Op6 Exp7;
---opf. Exp7 ::= Exp7 Op7 Exp8;
---opf. Exp8 ::= Exp8 Op8 Exp9;
---opf. Exp9 ::= Exp9 Op9 Exp10;
---opf. Exp10 ::= Exp10 Op10 Exp11;
+opf. Exp2 ::= Exp2 Op2 Exp3;
+opf. Exp3 ::= Exp3 Op3 Exp4;
+opf. Exp4 ::= Exp4 Op4 Exp5;
+opf. Exp5 ::= Exp5 Op5 Exp6;
+opf. Exp6 ::= Exp6 Op6 Exp7;
+opf. Exp7 ::= Exp7 Op7 Exp8;
+opf. Exp8 ::= Exp8 Op8 Exp9;
+opf. Exp9 ::= Exp9 Op9 Exp10;
+opf. Exp10 ::= Exp10 Op10 Exp11;
+opf. Exp11 ::= Exp12 Op11 Exp11;
 
-Elit. Exp2 ::= Lit;
+Elit. Exp12 ::= Lit;
 
---coercions Exp 2;
+coercions Exp 12;
 --separator Exp ",";
 
