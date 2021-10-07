@@ -18,6 +18,7 @@ Prog. Program ::= [GlobDecl];
 GMemDecl. GlobDecl ::= ClassMemDecl;
 GClassDecl. GlobDecl ::= ClassDecl;
 GImport. GlobDecl ::= ImportDecl;
+GNative. GlobDecl ::= NativeDecl;
 separator GlobDecl "";
 
 
@@ -26,6 +27,10 @@ IImport. ImportDecl ::= "import" [Pack] ";";
 PackName. Pack ::= Iden;
 
 separator nonempty Pack ".";
+
+
+-- native library linking
+NNative. NativeDecl ::= "native" [Pack] ";";
 
 
 -- in-class declarations are similar to the global declaration
