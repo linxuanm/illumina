@@ -8,6 +8,8 @@ comment "--";
 -- Haskell's identifier rules and Modula's identifier convention
 token Iden (letter (letter | digit | '_')*);
 
+separator Iden ",";
+
 
 -- entry point
 Prog. Program ::= [GlobDecl];
@@ -60,16 +62,14 @@ separator PropDecl "";
 
 -- simple variable definitions (the generic kind without global
 -- properties)
-VSig. VarSig ::= Iden ":" Type;
+VSig. VarSig ::= [Iden] ":" Type;
 
 VNoAsn. VarDef ::= VarSig;
-VAsn. VarDef ::= VarSig "=" Exp;
-
-separator nonempty VarDef ",";
+VAsn. VarDef ::= VarSig "=" [Exp];
 
 
 -- global variable definitions (with optional properties section)
-MPropVar. GVarDef ::= [PropDecl] [VarDef];
+MPropVar. GVarDef ::= [PropDecl] VarDef;
 
 
 -- `certainly` type structure (no succeeding `?`)
@@ -134,38 +134,58 @@ Pow. Op11 ::= "**";
 Ref. Op13 ::= ".";
 
 
+-- statements
+SExp. Stmt ::= Exp ";";
+SDecl. Stmt ::= VarDef ";";
+SIf. Stmt ::= "if" Exp StmtBlock Else;
+SFor. Stmt ::= "for" Iden "in" Exp StmtBlock;
+SWhile. Stmt ::= "while" Exp StmtBlock;
+
+EEmpty. Else ::= ;
+EElse. Else ::= StmtBlock;
+
+separator Stmt "";
+SStmt. StmtBlock ::= "{" [Stmt] "}";
+
+
 -- expressions
 internal EOp. Exp ::= Exp Op Exp;
 define opf a o b = EOp a o b;
 
-opf. Exp ::= Exp Op Exp1;
-opf. Exp1 ::= Exp1 Op1 Exp2;
-opf. Exp2 ::= Exp2 Op2 Exp3;
-opf. Exp3 ::= Exp3 Op3 Exp4;
-opf. Exp4 ::= Exp4 Op4 Exp5;
-opf. Exp5 ::= Exp5 Op5 Exp6;
-opf. Exp6 ::= Exp6 Op6 Exp7;
-opf. Exp7 ::= Exp7 Op7 Exp8;
-opf. Exp8 ::= Exp8 Op8 Exp9;
-opf. Exp9 ::= Exp9 Op9 Exp10;
-opf. Exp10 ::= Exp10 Op10 Exp11;
-opf. Exp11 ::= Exp12 Op11 Exp11;
-opf. Exp13 ::= Exp13 Op13 Exp14;
+opf. Exp1 ::= Exp1 Op Exp2;
+opf. Exp2 ::= Exp2 Op1 Exp3;
+opf. Exp3 ::= Exp3 Op2 Exp4;
+opf. Exp4 ::= Exp4 Op3 Exp5;
+opf. Exp5 ::= Exp5 Op4 Exp6;
+opf. Exp6 ::= Exp6 Op5 Exp7;
+opf. Exp7 ::= Exp7 Op6 Exp8;
+opf. Exp8 ::= Exp8 Op7 Exp9;
+opf. Exp9 ::= Exp9 Op8 Exp10;
+opf. Exp10 ::= Exp10 Op9 Exp11;
+opf. Exp11 ::= Exp11 Op10 Exp12;
+opf. Exp12 ::= Exp13 Op11 Exp12;
+opf. Exp13 ::= Exp14 Op13 Exp15;
 
-PreInc. Exp12 ::= "++" Exp13;
-PreDec. Exp12 ::= "--" Exp13;
-Pos. Exp12 ::= "+" Exp13;
-Neg. Exp12 ::= "-" Exp13;
-LogNot. Exp12 ::= "!" Exp13;
-BitNot. Exp12 ::= "~" Exp13;
+PreInc. Exp13 ::= "++" Exp14;
+PreDec. Exp13 ::= "--" Exp14;
+Pos. Exp13 ::= "+" Exp14;
+Neg. Exp13 ::= "-" Exp14;
+LogNot. Exp13 ::= "!" Exp14;
+BitNot. Exp13 ::= "~" Exp14;
 
-SufInc. Exp13 ::= Exp14 "++";
-SufDec. Exp13 ::= Exp14 "--";
-ArrIdx. Exp13 ::= Exp14 "[" Exp "]";
-FuncCall. Exp13 ::= Exp14 "(" [Exp] ")";
+SufInc. Exp14 ::= Exp15 "++";
+SufDec. Exp14 ::= Exp15 "--";
+ArrIdx. Exp14 ::= Exp15 "[" Exp "]";
+FuncCall. Exp14 ::= Exp15 "(" [Exp] ")";
 
-ELit. Exp14 ::= Lit;
-EIde. Exp14 ::= Iden;
+ELit. Exp15 ::= Lit;
+EIde. Exp15 ::= Iden;
 
-coercions Exp 14;
+coercions Exp 15;
 separator Exp ",";
+
+ESing. Exp ::= Iden "->" LamBody;
+EMore. Exp ::= "\\" "(" [Iden] ")" "->" LamBody;
+
+LExp. LamBody ::= Exp;
+--LStm. LamBody ::= StmtBlock;
