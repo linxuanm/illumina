@@ -20,19 +20,14 @@ Prog. Program ::= [GlobDecl];
 GMemDecl. GlobDecl ::= ClassMemDecl;
 GClassDecl. GlobDecl ::= ClassDecl;
 GImport. GlobDecl ::= ImportDecl;
-GNative. GlobDecl ::= NativeDecl;
 separator GlobDecl "";
 
 
 -- import statement declaration
-IImport. ImportDecl ::= "import" [Pack] ";";
+IImport. ImportDecl ::= [PropDecl] "import" [Pack] ";";
 PackName. Pack ::= Iden;
 
 separator nonempty Pack ".";
-
-
--- native library linking
-NNative. NativeDecl ::= "native" [Pack] ";";
 
 
 -- in-class declarations are similar to the global declaration
@@ -42,9 +37,20 @@ CVarDecl. ClassMemDecl ::= GVarDef ";";
 separator ClassMemDecl "";
 
 
+-- type parameter declaration
+TSimp. TypeArg ::= Iden;
+TCov. TypeArg ::= Iden ":" Type;
+TContra. TypeArg ::= "contra" Iden ":" Type;
+
+separator nonempty TypeArg ",";
+
+TNil. TArgsDecl ::= ;
+TDecl. TArgsDecl ::= "<" [TypeArg] ">";
+
+
 -- class declaration
-CClass. ClassDecl ::= [PropDecl] "class" Iden Inhrt "{" [ClassMemDecl] "}";
-CInter. ClassDecl ::= [PropDecl] "interface" Iden Inhrt "{" [ClassMemDecl] "}";
+CClass. ClassDecl ::= [PropDecl] "class" Iden TArgsDecl Inhrt "{" [ClassMemDecl] "}";
+CInter. ClassDecl ::= [PropDecl] "interface" TArgsDecl Iden Inhrt "{" [ClassMemDecl] "}";
 
 INoInherit. Inhrt ::= ;
 IInherit. Inhrt ::= ":" [CType];
