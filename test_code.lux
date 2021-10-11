@@ -6,7 +6,7 @@ foo: int; // main.foo (int)
 bar: bool; // main.bar (int)
 box: Box; // main.box (box.Box)
 
-main: void () {
+main(): void {
     test: int = 1;
 }
 
@@ -15,7 +15,7 @@ class BetterBox: Box {
     my_field: char = 'a';
     other_box: Box;
 
-    wrap: int (hello: float) {
+    wrap(hello: float): int {
         foo: int = 10;
         foo = foo + 10;
         return foo;

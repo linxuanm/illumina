@@ -33,6 +33,7 @@ separator nonempty Pack ".";
 -- in-class declarations are similar to the global declaration
 -- set apart from the inclusion of class/interface declarations
 CVarDecl. ClassMemDecl ::= GVarDef ";";
+CFuncDecl. ClassMemDecl ::= FuncDecl;
 
 separator ClassMemDecl "";
 
@@ -46,6 +47,16 @@ separator nonempty TypeArg ",";
 
 TNil. TArgsDecl ::= ;
 TDecl. TArgsDecl ::= "<" [TypeArg] ">";
+
+
+-- function declaration
+FFunc. FuncDecl ::= [PropDecl] Iden TArgsDecl "(" [ParaSig] ")" ":" Type FuncBody;
+
+FAbsBody. FuncBody ::= ;
+FConBody. FuncBody ::= StmtBlock;
+
+PSig. ParaSig ::= Iden ":" Type;
+separator ParaSig ",";
 
 
 -- class declaration
@@ -143,6 +154,11 @@ Ref. Op13 ::= ".";
 -- statements
 SExp. Stmt ::= Exp ";";
 SDecl. Stmt ::= VarDef ";";
+SRetNil. Stmt ::= "return" ";";
+SRet. Stmt ::= "return" Exp ";";
+SBreak. Stmt ::= "break" ";";
+SCont. Stmt ::= "continue" ";";
+
 SIf. Stmt ::= "if" Exp StmtBlock Else;
 SFor. Stmt ::= "for" Iden "in" Exp StmtBlock;
 SWhile. Stmt ::= "while" Exp StmtBlock;
