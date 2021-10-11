@@ -166,17 +166,17 @@ opf. Exp11 ::= Exp11 Op10 Exp12;
 opf. Exp12 ::= Exp13 Op11 Exp12;
 opf. Exp13 ::= Exp14 Op13 Exp15;
 
-PreInc. Exp13 ::= "++" Exp14;
-PreDec. Exp13 ::= "--" Exp14;
-Pos. Exp13 ::= "+" Exp14;
-Neg. Exp13 ::= "-" Exp14;
-LogNot. Exp13 ::= "!" Exp14;
-BitNot. Exp13 ::= "~" Exp14;
+PreInc. Exp13 ::= "++" Exp13;
+PreDec. Exp13 ::= "--" Exp13;
+Pos. Exp13 ::= "+" Exp13;
+Neg. Exp13 ::= "-" Exp13;
+LogNot. Exp13 ::= "!" Exp13;
+BitNot. Exp13 ::= "~" Exp13;
 
-SufInc. Exp14 ::= Exp15 "++";
-SufDec. Exp14 ::= Exp15 "--";
-ArrIdx. Exp14 ::= Exp15 "[" Exp "]";
-FuncCall. Exp14 ::= Exp15 "(" [Exp] ")";
+SufInc. Exp14 ::= Exp14 "++";
+SufDec. Exp14 ::= Exp14 "--";
+ArrIdx. Exp14 ::= Exp14 "[" Exp "]";
+FuncCall. Exp14 ::= Exp14 "(" [Exp] ")";
 
 ELit. Exp15 ::= Lit;
 EIde. Exp15 ::= Iden;
@@ -193,6 +193,8 @@ ETupTwo. Exp ::= "(" Exp "," Exp OptionExp ")";
 
 ONil. OptionExp ::= ;
 OExp. OptionExp ::= "," [Exp];
+
+EList. Exp ::= "[" [Exp] "]";
 
 LExp. LamBody ::= Exp;
 --LStm. LamBody ::= StmtBlock;
