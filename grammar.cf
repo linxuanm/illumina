@@ -180,12 +180,19 @@ FuncCall. Exp14 ::= Exp15 "(" [Exp] ")";
 
 ELit. Exp15 ::= Lit;
 EIde. Exp15 ::= Iden;
+ENil. Exp15 ::= "null";
 
 coercions Exp 15;
 separator Exp ",";
 
 ESing. Exp ::= Iden "->" LamBody;
 EMore. Exp ::= "\\" "(" [Iden] ")" "->" LamBody;
+
+ETupOne. Exp ::= "(" Exp "," ")";
+ETupTwo. Exp ::= "(" Exp "," Exp OptionExp ")";
+
+ONil. OptionExp ::= ;
+OExp. OptionExp ::= "," [Exp];
 
 LExp. LamBody ::= Exp;
 --LStm. LamBody ::= StmtBlock;
