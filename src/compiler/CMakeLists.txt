@@ -1,7 +1,12 @@
 set(COMPILER_HEADERS
+        src/compiler/parsing/generated/Absyn.h
+        src/compiler/parsing/generated/Parser.h
+        src/compiler/parsing/file_parser.h
 )
 
 set(COMPILER_SOURCES
+        src/compiler/parsing/generated/Absyn.c
+        src/compiler/parsing/generated/Parser.c
 )
 
 message("Compiler Headers:")
