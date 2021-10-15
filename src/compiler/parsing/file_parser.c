@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 
+#include "compiler/compiler_state.h"
 #include "common/logging.h"
 
 Program parse_program(char *str) {
@@ -9,7 +10,7 @@ Program parse_program(char *str) {
 
     FILE *input = fopen(str, "r");
     if (!input) {
-        ERROR("Unable to open file %s", str);
+        COMPILER_SET_ERRNO(IO_ERROR, "Unable to open file %s", str);
         return NULL;
     }
 
@@ -18,7 +19,7 @@ Program parse_program(char *str) {
     if (program) {
         DEBUG("Parsed program %s", str);
     } else {
-        ERROR("Parse error in %s", str);
+        COMPILER_SET_ERRNO(SYNTAX_ERROR, "Parse error in %s", str);
         return NULL;
     }
 

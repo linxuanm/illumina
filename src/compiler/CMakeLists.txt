@@ -2,6 +2,8 @@ set(COMPILER_HEADERS
         src/compiler/parsing/generated/Absyn.h
         src/compiler/parsing/generated/Parser.h
         src/compiler/parsing/generated/Buffer.c
+
+        src/compiler/compiler_state.h
         src/compiler/parsing/file_parser.h
 )
 
@@ -10,6 +12,8 @@ set(COMPILER_SOURCES
         src/compiler/parsing/generated/Parser.c
         src/compiler/parsing/generated/Lexer.c
         src/compiler/parsing/generated/Buffer.c
+
+        src/compiler/compiler_state.c
         src/compiler/parsing/file_parser.c
 )
 
