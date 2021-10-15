@@ -159,12 +159,15 @@ SRet. Stmt ::= "return" Exp ";";
 SBreak. Stmt ::= "break" ";";
 SCont. Stmt ::= "continue" ";";
 
-SIf. Stmt ::= "if" Exp StmtBlock Else;
+SIf. Stmt ::= AliasIf;
 SFor. Stmt ::= "for" Iden "in" Exp StmtBlock;
 SWhile. Stmt ::= "while" Exp StmtBlock;
 
 EEmpty. Else ::= ;
-EElse. Else ::= StmtBlock;
+EElse. Else ::= "else" StmtBlock;
+EElif. Else ::= "else" AliasIf;
+
+AIf. AliasIf ::= "if" Exp StmtBlock Else;
 
 separator Stmt "";
 SStmt. StmtBlock ::= "{" [Stmt] "}";
