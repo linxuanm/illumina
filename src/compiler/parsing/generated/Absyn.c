@@ -1250,7 +1250,7 @@ Stmt make_SCont()
 
 /********************   SIf    ********************/
 
-Stmt make_SIf(Exp p1, StmtBlock p2, Else p3)
+Stmt make_SIf(AliasIf p1)
 {
     Stmt tmp = (Stmt) malloc(sizeof(*tmp));
     if (!tmp)
@@ -1259,9 +1259,7 @@ Stmt make_SIf(Exp p1, StmtBlock p2, Else p3)
         exit(1);
     }
     tmp->kind = is_SIf;
-    tmp->u.sif_.exp_ = p1;
-    tmp->u.sif_.stmtblock_ = p2;
-    tmp->u.sif_.else_ = p3;
+    tmp->u.sif_.aliasif_ = p1;
     return tmp;
 }
 
@@ -1324,6 +1322,38 @@ Else make_EElse(StmtBlock p1)
     }
     tmp->kind = is_EElse;
     tmp->u.eelse_.stmtblock_ = p1;
+    return tmp;
+}
+
+/********************   EElif    ********************/
+
+Else make_EElif(AliasIf p1)
+{
+    Else tmp = (Else) malloc(sizeof(*tmp));
+    if (!tmp)
+    {
+        fprintf(stderr, "Error: out of memory when allocating EElif!\n");
+        exit(1);
+    }
+    tmp->kind = is_EElif;
+    tmp->u.eelif_.aliasif_ = p1;
+    return tmp;
+}
+
+/********************   AIf    ********************/
+
+AliasIf make_AIf(Exp p1, StmtBlock p2, Else p3)
+{
+    AliasIf tmp = (AliasIf) malloc(sizeof(*tmp));
+    if (!tmp)
+    {
+        fprintf(stderr, "Error: out of memory when allocating AIf!\n");
+        exit(1);
+    }
+    tmp->kind = is_AIf;
+    tmp->u.aif_.exp_ = p1;
+    tmp->u.aif_.stmtblock_ = p2;
+    tmp->u.aif_.else_ = p3;
     return tmp;
 }
 

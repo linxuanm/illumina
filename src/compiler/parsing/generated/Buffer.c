@@ -24,79 +24,79 @@ static void resizeBuffer(Buffer buffer);
 
 Buffer newBuffer (const unsigned int size) {
 
-  /* The buffer cannot be of size 0. */
-  assert (size >= 1);
+    /* The buffer cannot be of size 0. */
+    assert (size >= 1);
 
-  /* Allocate and initialize a new Buffer structure. */
-  Buffer buffer    = (Buffer) malloc(sizeof(struct buffer));
-  buffer->size     = size;
-  buffer->current  = 0;
-  buffer->chars    = NULL;
-  resizeBuffer(buffer);
-  buffer->chars[0] = 0;
-  return buffer;
+    /* Allocate and initialize a new Buffer structure. */
+    Buffer buffer    = (Buffer) malloc(sizeof(struct buffer));
+    buffer->size     = size;
+    buffer->current  = 0;
+    buffer->chars    = NULL;
+    resizeBuffer(buffer);
+    buffer->chars[0] = 0;
+    return buffer;
 }
 
 /* Deallocate the buffer and its content. */
 
 void freeBuffer (Buffer buffer) {
-  free(buffer->chars);
-  free(buffer);
+    free(buffer->chars);
+    free(buffer);
 }
 
 /* Deallocate the buffer, but return its content as string. */
 
 char* releaseBuffer (Buffer buffer) {
-  char* content = (char*) realloc (buffer->chars, buffer->current + 1);
-  free(buffer);
-  return content;
+    char* content = (char*) realloc (buffer->chars, buffer->current + 1);
+    free(buffer);
+    return content;
 }
 
 /* Clear contents of buffer. */
 
 void resetBuffer (Buffer buffer) {
-  buffer->current = 0;
-  buffer->chars[buffer->current] = 0;
+    buffer->current = 0;
+    buffer->chars[buffer->current] = 0;
 }
 
 /* Append string at the end of the buffer. */
 
 void bufferAppendString (Buffer buffer, const char *s)
 {
-  /* Nothing to do if s is the empty string. */
-  size_t len = strlen(s);
-  if (len) {
+    /* Nothing to do if s is the empty string. */
+    size_t len = strlen(s);
+    if (len) {
 
-    /* Make sure the buffer can hold all of s. */
-    bufferAllocateChars(buffer, len);
+        /* Make sure the buffer can hold all of s. */
+        bufferAllocateChars(buffer, len);
 
-    /* Append s at the end of the buffer. */
-    strncpy(buffer->chars + buffer->current, s, len);
+        /* Append s at the end of the buffer. */
+        strncpy(buffer->chars + buffer->current, s, len);
 
-    /* Terminate with 0. */
-    buffer->current += len;
-    buffer->chars[buffer->current] = 0;
-  }
+        /* Terminate with 0. */
+        buffer->current += len;
+        buffer->chars[buffer->current] = 0;
+    }
 }
 
 /* Append single character at the end of the buffer. */
 
 void bufferAppendChar (Buffer buffer, const char c)
 {
-  /* Make sure the buffer can hold one more character and append it. */
-  bufferAllocateChars(buffer, 1);
-  buffer->chars[buffer->current] = c;
+    /* Make sure the buffer can hold one more character and append it. */
+    bufferAllocateChars(buffer, 1);
+    buffer->chars[buffer->current] = c;
 
-  /* Terminate with 0. */
-  buffer->current++;
-  buffer->chars[buffer->current] = 0;
+    /* Terminate with 0. */
+    buffer->current++;
+    buffer->chars[buffer->current] = 0;
 }
 
 /* Give read-only access to the buffer content.
    Does not survive the destruction of the buffer object. */
 
 const char* bufferContent (Buffer buffer) {
-  return buffer->chars;
+    return buffer->chars;
 }
 
 /* Internal functions. */
@@ -105,33 +105,33 @@ const char* bufferContent (Buffer buffer) {
 /* Make sure the buffer can hold `n` more characters. */
 
 static void bufferAllocateChars (Buffer buffer, const unsigned int n) {
-  /* 1 extra char for terminating 0. */
-  unsigned int requiredSize = buffer->current + 1 + n;
-  if (buffer->size < requiredSize)
-  {
-    do buffer->size *= 2; /* Double the buffer size */
-      while (buffer->size < requiredSize);
-    resizeBuffer(buffer);
-  }
+    /* 1 extra char for terminating 0. */
+    unsigned int requiredSize = buffer->current + 1 + n;
+    if (buffer->size < requiredSize)
+    {
+        do buffer->size *= 2; /* Double the buffer size */
+        while (buffer->size < requiredSize);
+        resizeBuffer(buffer);
+    }
 }
 
 /* Increase the buffer size to the new `size`. */
 
 static void resizeBuffer(Buffer buffer)
 {
-  /* The new size needs to be strictly greater than the currently
-   * used part, otherwise writing to position buffer->current will
-   * be out of bounds.
-   */
-  assert(buffer->size > buffer->current);
+    /* The new size needs to be strictly greater than the currently
+     * used part, otherwise writing to position buffer->current will
+     * be out of bounds.
+     */
+    assert(buffer->size > buffer->current);
 
-  /* Resize (or, the first time allocate) the buffer. */
-  buffer->chars = (char*) realloc(buffer->chars, buffer->size);
+    /* Resize (or, the first time allocate) the buffer. */
+    buffer->chars = (char*) realloc(buffer->chars, buffer->size);
 
-  /* Crash if out-of-memory. */
-  if (! buffer->chars)
-  {
-    fprintf(stderr, "Buffer.c: Error: Out of memory while attempting to grow buffer!\n");
-    exit(1);  /* This seems to be the right exit code for out-of-memory. 137 is only when the OS kills us. */
-  }
+    /* Crash if out-of-memory. */
+    if (! buffer->chars)
+    {
+        fprintf(stderr, "Buffer.c: Error: Out of memory while attempting to grow buffer!\n");
+        exit(1);  /* This seems to be the right exit code for out-of-memory. 137 is only when the OS kills us. */
+    }
 }

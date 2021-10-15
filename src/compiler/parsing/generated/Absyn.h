@@ -119,6 +119,9 @@ typedef struct Stmt_ *Stmt;
 struct Else_;
 typedef struct Else_ *Else;
 
+struct AliasIf_;
+typedef struct AliasIf_ *AliasIf;
+
 struct StmtBlock_;
 typedef struct StmtBlock_ *StmtBlock;
 
@@ -512,7 +515,7 @@ struct Stmt_
         struct { Exp exp_; } sexp_;
         struct { VarDef vardef_; } sdecl_;
         struct { Exp exp_; } sret_;
-        struct { Else else_; Exp exp_; StmtBlock stmtblock_; } sif_;
+        struct { AliasIf aliasif_; } sif_;
         struct { Exp exp_; Iden iden_; StmtBlock stmtblock_; } sfor_;
         struct { Exp exp_; StmtBlock stmtblock_; } swhile_;
     } u;
@@ -524,21 +527,34 @@ Stmt make_SRetNil(void);
 Stmt make_SRet(Exp p0);
 Stmt make_SBreak(void);
 Stmt make_SCont(void);
-Stmt make_SIf(Exp p0, StmtBlock p1, Else p2);
+Stmt make_SIf(AliasIf p0);
 Stmt make_SFor(Iden p0, Exp p1, StmtBlock p2);
 Stmt make_SWhile(Exp p0, StmtBlock p1);
 
 struct Else_
 {
-    enum { is_EEmpty, is_EElse } kind;
+    enum { is_EEmpty, is_EElse, is_EElif } kind;
     union
     {
         struct { StmtBlock stmtblock_; } eelse_;
+        struct { AliasIf aliasif_; } eelif_;
     } u;
 };
 
 Else make_EEmpty(void);
 Else make_EElse(StmtBlock p0);
+Else make_EElif(AliasIf p0);
+
+struct AliasIf_
+{
+    enum { is_AIf } kind;
+    union
+    {
+        struct { Else else_; Exp exp_; StmtBlock stmtblock_; } aif_;
+    } u;
+};
+
+AliasIf make_AIf(Exp p0, StmtBlock p1, Else p2);
 
 struct ListStmt_
 {

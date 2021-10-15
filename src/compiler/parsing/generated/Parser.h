@@ -44,6 +44,7 @@ typedef union
     Op op_;
     Stmt stmt_;
     Else else_;
+    AliasIf aliasif_;
     ListStmt liststmt_;
     StmtBlock stmtblock_;
     Exp exp_;
@@ -114,17 +115,18 @@ typedef struct YYLTYPE
 #define _SYMB_56 309
 #define _SYMB_57 310
 #define _SYMB_58 311
-#define _SYMB_8 312
-#define _SYMB_26 313
-#define _SYMB_21 314
-#define _SYMB_24 315
-#define _SYMB_9 316
-#define _SYMB_44 317
-#define _SYMB_59 318
-#define _STRING_ 319
-#define _CHAR_ 320
-#define _INTEGER_ 321
-#define _DOUBLE_ 322
+#define _SYMB_59 312
+#define _SYMB_8 313
+#define _SYMB_26 314
+#define _SYMB_21 315
+#define _SYMB_24 316
+#define _SYMB_9 317
+#define _SYMB_44 318
+#define _SYMB_60 319
+#define _STRING_ 320
+#define _CHAR_ 321
+#define _INTEGER_ 322
+#define _DOUBLE_ 323
 
 
 extern YYLTYPE yylloc;
