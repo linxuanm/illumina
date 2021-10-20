@@ -4,6 +4,7 @@ set(COMPILER_HEADERS
         src/compiler/parsing/generated/Buffer.c
 
         src/compiler/compiler_state.h
+        src/compiler/parsing/AST.h
         src/compiler/parsing/file_parser.h
 )
 
@@ -14,6 +15,7 @@ set(COMPILER_SOURCES
         src/compiler/parsing/generated/Buffer.c
 
         src/compiler/compiler_state.c
+        src/compiler/parsing/AST.c
         src/compiler/parsing/file_parser.c
 )
 
