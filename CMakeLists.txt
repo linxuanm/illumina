@@ -62,7 +62,12 @@ if(INCLUDE_COMPILER)
     include(${COMPILER_DIR}/CMakeLists.txt)
 endif()
 
+FIND_PACKAGE(PkgConfig REQUIRED)
+PKG_CHECK_MODULES(deps REQUIRED IMPORTED_TARGET glib-2.0)
+
 add_executable(Illumina src/main.c ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
+
+target_link_libraries(Illumina PkgConfig::deps)
 
 add_compile_definitions(DEBUG_MODE)
 
