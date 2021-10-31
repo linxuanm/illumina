@@ -7,6 +7,7 @@ project(Illumina
 )
 
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(INCLUDE_RUNTIME "Include the Illumina runtime" ON)
 option(INCLUDE_COMPILER "Include the Illumina compiler" ON)
@@ -28,7 +29,6 @@ set(ILLUMINA_HEADERS)
 set(ILLUMINA_SOURCES)
 
 add_compile_definitions(DEBUG_MODE)
-enable_testing()
 
 set(COMMON_HEADERS
         src/common/logging.h
@@ -68,10 +68,15 @@ endif()
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(deps REQUIRED IMPORTED_TARGET glib-2.0)
 
-add_executable(Illumina src/main.c ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
-add_subdirectory(test)
+add_library(IlluminaLib ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
+add_executable(IlluminaApp main.c)
 
-target_link_libraries(Illumina PkgConfig::deps)
+target_link_libraries(IlluminaLib PkgConfig::deps)
+target_link_libraries(IlluminaApp Illumina_Lib)
+
+add_subdirectory(test)
+enable_testing()
+add_test(NAME TestParser COMMAND TestParser)
 
 message("\nDone")
 

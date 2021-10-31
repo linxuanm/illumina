@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.13)
 
-set(TEST_HEADERS
+FIND_PACKAGE(Check REQUIRED)
+include_directories(${CHECK_INCLUDE_DIRS})
+link_directories(${CHECK_LIBRARY_DIRS})
+
+set(TEST_SOURCES
         parse_test.c
 )
 
-set(TEST_HEADERS
-        parse_test.h
-)
-
-add_executable(IlluminaTest ${TEST_HEADERS} ${TEST_SOURCES})
+add_executable(IlluminaTest ${TEST_SOURCES})
+target_link_libraries(IlluminaTest IlluminaLib ${CHECK_LIBRARIES})
