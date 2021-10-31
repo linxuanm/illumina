@@ -72,11 +72,10 @@ add_library(IlluminaLib ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
 add_executable(IlluminaApp main.c)
 
 target_link_libraries(IlluminaLib PkgConfig::deps)
-target_link_libraries(IlluminaApp Illumina_Lib)
+target_link_libraries(IlluminaApp IlluminaLib)
 
-add_subdirectory(test)
 enable_testing()
-add_test(NAME TestParser COMMAND TestParser)
+add_subdirectory(test)
 
 message("\nDone")
 

@@ -10,3 +10,5 @@ set(TEST_SOURCES
 
 add_executable(IlluminaTest ${TEST_SOURCES})
 target_link_libraries(IlluminaTest IlluminaLib ${CHECK_LIBRARIES})
+
+add_test(NAME IlluminaTest COMMAND IlluminaTest)
