@@ -27,6 +27,9 @@ set(COMPILER_DIR src/compiler)
 set(ILLUMINA_HEADERS)
 set(ILLUMINA_SOURCES)
 
+add_compile_definitions(DEBUG_MODE)
+enable_testing()
+
 set(COMMON_HEADERS
         src/common/logging.h
         src/common/specs.h
@@ -66,10 +69,9 @@ FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(deps REQUIRED IMPORTED_TARGET glib-2.0)
 
 add_executable(Illumina src/main.c ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
+add_subdirectory(test)
 
 target_link_libraries(Illumina PkgConfig::deps)
-
-add_compile_definitions(DEBUG_MODE)
 
 message("\nDone")
 

@@ -63,7 +63,24 @@ struct _sig_node {
 };
 
 struct _exp_node {
-
+    enum { EXP_BIN, EXP_UN, EXP_VAR, EXP_FUNC } kind;
+    union {
+        char *variable;
+        struct {
+            exp_node_t *a;
+            char *op;
+            exp_node_t *b;
+        } bin_exp;
+        struct {
+            char *op;
+            exp_node_t *value;
+        } un_exp;
+        struct {
+            char *iden;
+            GEN_ARRAY_T(type_node_t) type_params;
+            GEN_ARRAY_T(exp_node_t) params;
+        } func_call;
+    } exp;
 };
 
 struct _mem_node {

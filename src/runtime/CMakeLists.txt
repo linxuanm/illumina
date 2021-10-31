@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.13)
+
 set(RUNTIME_HEADERS
         src/runtime/vm_error.h
         src/runtime/vm.h
