@@ -128,6 +128,9 @@ typedef struct StmtBlock_ *StmtBlock;
 struct Exp_;
 typedef struct Exp_ *Exp;
 
+struct TArgsPass_;
+typedef struct TArgsPass_ *TArgsPass;
+
 struct OptionExp_;
 typedef struct OptionExp_ *OptionExp;
 
@@ -590,7 +593,7 @@ struct Exp_
         struct { Exp exp_; } sufinc_;
         struct { Exp exp_; } sufdec_;
         struct { Exp exp_1, exp_2; } arridx_;
-        struct { Exp exp_; ListExp listexp_; } funccall_;
+        struct { Exp exp_; ListExp listexp_; TArgsPass targspass_; } funccall_;
         struct { Lit lit_; } elit_;
         struct { Iden iden_; } eide_;
         struct { Iden iden_; LamBody lambody_; } esing_;
@@ -611,7 +614,7 @@ Exp make_BitNot(Exp p0);
 Exp make_SufInc(Exp p0);
 Exp make_SufDec(Exp p0);
 Exp make_ArrIdx(Exp p0, Exp p1);
-Exp make_FuncCall(Exp p0, ListExp p1);
+Exp make_FuncCall(Exp p0, TArgsPass p1, ListExp p2);
 Exp make_ELit(Lit p0);
 Exp make_EIde(Iden p0);
 Exp make_ENil(void);
@@ -620,6 +623,18 @@ Exp make_EMore(ListIden p0, LamBody p1);
 Exp make_ETupOne(Exp p0);
 Exp make_ETupTwo(Exp p0, Exp p1, OptionExp p2);
 Exp make_EList(ListExp p0);
+
+struct TArgsPass_
+{
+    enum { is_TPNil, is_TPass } kind;
+    union
+    {
+        struct { ListType listtype_; } tpass_;
+    } u;
+};
+
+TArgsPass make_TPNil(void);
+TArgsPass make_TPass(ListType p0);
 
 struct ListExp_
 {

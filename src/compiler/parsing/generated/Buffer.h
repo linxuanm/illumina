@@ -6,9 +6,9 @@
 #define BUFFER_HEADER
 
 typedef struct buffer {
-  char* chars;           /* Pointer to start of the buffer.        */
-  unsigned int size;     /* Buffer size (>= 1).                    */
-  unsigned int current;  /* Next free character position (< size). */
+    char* chars;           /* Pointer to start of the buffer.        */
+    unsigned int size;     /* Buffer size (>= 1).                    */
+    unsigned int current;  /* Next free character position (< size). */
 } * Buffer;
 
 /* External interface. */

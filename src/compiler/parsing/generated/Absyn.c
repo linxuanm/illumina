@@ -1542,7 +1542,7 @@ Exp make_ArrIdx(Exp p1, Exp p2)
 
 /********************   FuncCall    ********************/
 
-Exp make_FuncCall(Exp p1, ListExp p2)
+Exp make_FuncCall(Exp p1, TArgsPass p2, ListExp p3)
 {
     Exp tmp = (Exp) malloc(sizeof(*tmp));
     if (!tmp)
@@ -1552,7 +1552,8 @@ Exp make_FuncCall(Exp p1, ListExp p2)
     }
     tmp->kind = is_FuncCall;
     tmp->u.funccall_.exp_ = p1;
-    tmp->u.funccall_.listexp_ = p2;
+    tmp->u.funccall_.targspass_ = p2;
+    tmp->u.funccall_.listexp_ = p3;
     return tmp;
 }
 
@@ -1676,6 +1677,35 @@ Exp make_EList(ListExp p1)
     }
     tmp->kind = is_EList;
     tmp->u.elist_.listexp_ = p1;
+    return tmp;
+}
+
+/********************   TPNil    ********************/
+
+TArgsPass make_TPNil()
+{
+    TArgsPass tmp = (TArgsPass) malloc(sizeof(*tmp));
+    if (!tmp)
+    {
+        fprintf(stderr, "Error: out of memory when allocating TPNil!\n");
+        exit(1);
+    }
+    tmp->kind = is_TPNil;
+    return tmp;
+}
+
+/********************   TPass    ********************/
+
+TArgsPass make_TPass(ListType p1)
+{
+    TArgsPass tmp = (TArgsPass) malloc(sizeof(*tmp));
+    if (!tmp)
+    {
+        fprintf(stderr, "Error: out of memory when allocating TPass!\n");
+        exit(1);
+    }
+    tmp->kind = is_TPass;
+    tmp->u.tpass_.listtype_ = p1;
     return tmp;
 }
 

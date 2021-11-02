@@ -48,6 +48,7 @@ typedef union
     ListStmt liststmt_;
     StmtBlock stmtblock_;
     Exp exp_;
+    TArgsPass targspass_;
     ListExp listexp_;
     OptionExp optionexp_;
     LamBody lambody_;
@@ -55,10 +56,10 @@ typedef union
 
 typedef struct YYLTYPE
 {
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
+    int first_line;
+    int first_column;
+    int last_line;
+    int last_column;
 } YYLTYPE;
 
 #define _ERROR_ 258
@@ -81,7 +82,7 @@ typedef struct YYLTYPE
 #define _SYMB_36 275
 #define _SYMB_42 276
 #define _SYMB_15 277
-#define _SYMB_45 278
+#define _SYMB_46 278
 #define _SYMB_2 279
 #define _SYMB_38 280
 #define _SYMB_17 281
@@ -98,12 +99,12 @@ typedef struct YYLTYPE
 #define _SYMB_34 292
 #define _SYMB_23 293
 #define _SYMB_13 294
-#define _SYMB_10 295
-#define _SYMB_46 296
-#define _SYMB_11 297
-#define _SYMB_27 298
-#define _SYMB_20 299
-#define _SYMB_47 300
+#define _SYMB_45 295
+#define _SYMB_10 296
+#define _SYMB_47 297
+#define _SYMB_11 298
+#define _SYMB_27 299
+#define _SYMB_20 300
 #define _SYMB_48 301
 #define _SYMB_49 302
 #define _SYMB_50 303
@@ -116,23 +117,24 @@ typedef struct YYLTYPE
 #define _SYMB_57 310
 #define _SYMB_58 311
 #define _SYMB_59 312
-#define _SYMB_8 313
-#define _SYMB_26 314
-#define _SYMB_21 315
-#define _SYMB_24 316
-#define _SYMB_9 317
-#define _SYMB_44 318
-#define _SYMB_60 319
-#define _STRING_ 320
-#define _CHAR_ 321
-#define _INTEGER_ 322
-#define _DOUBLE_ 323
+#define _SYMB_60 313
+#define _SYMB_8 314
+#define _SYMB_26 315
+#define _SYMB_21 316
+#define _SYMB_24 317
+#define _SYMB_9 318
+#define _SYMB_44 319
+#define _SYMB_61 320
+#define _STRING_ 321
+#define _CHAR_ 322
+#define _INTEGER_ 323
+#define _DOUBLE_ 324
 
 
 extern YYLTYPE yylloc;
 extern YYSTYPE yylval;
 
-Program pProgram(FILE *inp);
+Program  pProgram(FILE *inp);
 Program psProgram(const char *str);
 
 #endif
