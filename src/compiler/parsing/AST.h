@@ -33,6 +33,9 @@ typedef struct _exp_node exp_node_t;
 struct _mem_node;
 typedef struct _mem_node mem_node_t;
 
+struct _lit_node;
+typedef struct _lit_node exp_lit_t;
+
 struct _type_node {
     enum { T_SIMP, T_COMP } kind;
     bool nullable;
@@ -62,8 +65,13 @@ struct _sig_node {
     char *iden;
 };
 
+struct _lit_node {
+    enum { LIT_TUP, LIT_LAM, LIT_INT, LIT_CHR, LIT_STR, LIT_LST } kind;
+    
+};
+
 struct _exp_node {
-    enum { EXP_BIN, EXP_UN, EXP_VAR, EXP_FUNC } kind;
+    enum { EXP_BIN, EXP_UN, EXP_VAR, EXP_FUNC, EXP_LIT } kind;
     union {
         char *variable;
         struct {
@@ -80,6 +88,7 @@ struct _exp_node {
             GEN_ARRAY_T(type_node_t) type_params;
             GEN_ARRAY_T(exp_node_t) params;
         } func_call;
+        exp_lit_t lit;
     } exp;
 };
 
