@@ -658,14 +658,16 @@ OptionExp make_OExp(ListExp p0);
 
 struct LamBody_
 {
-    enum { is_LExp } kind;
+    enum { is_LExp, is_LStm } kind;
     union
     {
         struct { Exp exp_; } lexp_;
+        struct { StmtBlock stmtblock_; } lstm_;
     } u;
 };
 
 LamBody make_LExp(Exp p0);
+LamBody make_LStm(StmtBlock p0);
 
 /********************   Defined Constructors    ***********************/
 

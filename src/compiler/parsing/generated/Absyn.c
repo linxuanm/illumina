@@ -1767,3 +1767,18 @@ LamBody make_LExp(Exp p1)
     tmp->u.lexp_.exp_ = p1;
     return tmp;
 }
+
+/********************   LStm    ********************/
+
+LamBody make_LStm(StmtBlock p1)
+{
+    LamBody tmp = (LamBody) malloc(sizeof(*tmp));
+    if (!tmp)
+    {
+        fprintf(stderr, "Error: out of memory when allocating LStm!\n");
+        exit(1);
+    }
+    tmp->kind = is_LStm;
+    tmp->u.lstm_.stmtblock_ = p1;
+    return tmp;
+}

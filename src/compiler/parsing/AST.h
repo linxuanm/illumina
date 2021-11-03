@@ -66,8 +66,22 @@ struct _sig_node {
 };
 
 struct _lit_node {
-    enum { LIT_TUP, LIT_LAM, LIT_INT, LIT_CHR, LIT_STR, LIT_LST } kind;
-    
+    enum {
+        LIT_TUP, LIT_LAM, LIT_INT, LIT_CHR,
+        LIT_STR, LIT_LST, LIT_NUL, LIT_FLO
+    } kind;
+    union {
+        GEN_ARRAY_T(exp_node_t) lit_tup;
+        struct {
+            GEN_ARRAY_T(char *) params;
+            // GEN_ARRAY_T(stmt_node_t) stmts;
+        } lit_lam;
+        uint64_t lit_int;
+        gunichar lit_chr;
+        char *lit_str;
+        GEN_ARRAY_T(exp_node_t) lit_lst;
+        uint64_t lit_flo;
+    } lit;
 };
 
 struct _exp_node {

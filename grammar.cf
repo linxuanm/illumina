@@ -201,7 +201,10 @@ BitNot. Exp13 ::= "~" Exp13;
 SufInc. Exp14 ::= Exp14 "++";
 SufDec. Exp14 ::= Exp14 "--";
 ArrIdx. Exp14 ::= Exp14 "[" Exp "]";
-FuncCall. Exp14 ::= Exp14 "(" [Exp] ")";
+FuncCall. Exp14 ::= Exp14 TArgsPass "(" [Exp] ")";
+
+TPNil. TArgsPass ::= ;
+TPass. TArgsPass ::= "@" [Type] "@";
 
 ELit. Exp15 ::= Lit;
 EIde. Exp15 ::= Iden;
@@ -222,4 +225,4 @@ OExp. OptionExp ::= "," [Exp];
 EList. Exp ::= "[" [Exp] "]";
 
 LExp. LamBody ::= Exp;
---LStm. LamBody ::= StmtBlock;
+LStm. LamBody ::= StmtBlock;
