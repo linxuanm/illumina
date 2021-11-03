@@ -1,65 +1,63 @@
 #ifndef PARSER_HEADER_FILE
 #define PARSER_HEADER_FILE
 
-#include <stdio.h>
-
 #include "Absyn.h"
 
 typedef union
 {
-    int    _int;
-    char   _char;
-    double _double;
-    char*  _string;
-    ListIden listiden_;
-    Program program_;
-    GlobDecl globdecl_;
-    ListGlobDecl listglobdecl_;
-    ImportDecl importdecl_;
-    Pack pack_;
-    ListPack listpack_;
-    ClassMemDecl classmemdecl_;
-    ListClassMemDecl listclassmemdecl_;
-    TypeArg typearg_;
-    ListTypeArg listtypearg_;
-    TArgsDecl targsdecl_;
-    FuncDecl funcdecl_;
-    FuncBody funcbody_;
-    ParaSig parasig_;
-    ListParaSig listparasig_;
-    ClassDecl classdecl_;
-    Inhrt inhrt_;
-    Prop prop_;
-    PropDecl propdecl_;
-    ListProp listprop_;
-    ListPropDecl listpropdecl_;
-    VarSig varsig_;
-    VarDef vardef_;
-    GVarDef gvardef_;
-    CType ctype_;
-    ListCType listctype_;
-    Type type_;
-    ListType listtype_;
-    Lit lit_;
-    Op op_;
-    Stmt stmt_;
-    Else else_;
-    AliasIf aliasif_;
-    ListStmt liststmt_;
-    StmtBlock stmtblock_;
-    Exp exp_;
-    TArgsPass targspass_;
-    ListExp listexp_;
-    OptionExp optionexp_;
-    LamBody lambody_;
+  int    _int;
+  char   _char;
+  double _double;
+  char*  _string;
+  ListIden listiden_;
+  Program program_;
+  GlobDecl globdecl_;
+  ListGlobDecl listglobdecl_;
+  ImportDecl importdecl_;
+  Pack pack_;
+  ListPack listpack_;
+  ClassMemDecl classmemdecl_;
+  ListClassMemDecl listclassmemdecl_;
+  TypeArg typearg_;
+  ListTypeArg listtypearg_;
+  TArgsDecl targsdecl_;
+  FuncDecl funcdecl_;
+  FuncBody funcbody_;
+  ParaSig parasig_;
+  ListParaSig listparasig_;
+  ClassDecl classdecl_;
+  Inhrt inhrt_;
+  Prop prop_;
+  PropDecl propdecl_;
+  ListProp listprop_;
+  ListPropDecl listpropdecl_;
+  VarSig varsig_;
+  VarDef vardef_;
+  GVarDef gvardef_;
+  CType ctype_;
+  ListCType listctype_;
+  Type type_;
+  ListType listtype_;
+  Lit lit_;
+  Op op_;
+  Stmt stmt_;
+  Else else_;
+  AliasIf aliasif_;
+  ListStmt liststmt_;
+  StmtBlock stmtblock_;
+  Exp exp_;
+  TArgsPass targspass_;
+  ListExp listexp_;
+  OptionExp optionexp_;
+  LamBody lambody_;
 } YYSTYPE;
 
 typedef struct YYLTYPE
 {
-    int first_line;
-    int first_column;
-    int last_line;
-    int last_column;
+  int first_line;
+  int first_column;
+  int last_line;
+  int last_column;
 } YYLTYPE;
 
 #define _ERROR_ 258
