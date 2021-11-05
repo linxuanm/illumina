@@ -15,6 +15,8 @@
 
 #define ATTR_HEADER uint16_t attrs;
 
+#define SYN_OP uint8_t
+
 struct _targ_node;
 typedef struct _targ_node targ_node_t;
 
@@ -26,6 +28,9 @@ typedef struct _decl_node decl_node_t;
 
 struct _sig_node;
 typedef struct _sig_node sig_node_t;
+
+struct _stmt_node;
+typedef struct _stmt_node stmt_node_t;
 
 struct _exp_node;
 typedef struct _exp_node exp_node_t;
@@ -74,7 +79,7 @@ struct _lit_node {
         GEN_ARRAY_T(exp_node_t) lit_tup;
         struct {
             GEN_ARRAY_T(char *) params;
-            // GEN_ARRAY_T(stmt_node_t) stmts;
+            GEN_ARRAY_T(stmt_node_t) stmts;
         } lit_lam;
         uint64_t lit_int;
         gunichar lit_chr;
@@ -104,6 +109,41 @@ struct _exp_node {
         } func_call;
         exp_lit_t lit;
     } exp;
+};
+
+struct _stmt_node {
+    enum {
+        STMT_IFE, STMT_WHL, STMT_FOR,
+        STMT_ASN, STMT_EXP, STMT_VAR,
+        STMT_BRK, STMT_CON, STMT_RET,
+        STMT_RTE
+    } kind;
+    union {
+        struct {
+            exp_node_t cond;
+            GEN_ARRAY_T(stmt_node_t) if_stmt;
+            GEN_ARRAY_T(stmt_node_t) else_stmt;
+        } ife;
+        struct {
+            exp_node_t cond;
+            GEN_ARRAY_T(stmt_node_t) stmt;
+        } whl;
+        struct {
+            char *var;
+            exp_node_t iter;
+            GEN_ARRAY_T(stmt_node_t) stmt;
+        } fr;
+        struct {
+            char *var;
+            SYN_OP op;
+            exp_node_t exp;
+        } asn;
+        exp_node_t exp;
+        struct {
+            GEN_ARRAY_T(sig_node_t) defs;
+        } var_def;
+        exp_node_t ret;
+    } stmt;
 };
 
 struct _mem_node {
