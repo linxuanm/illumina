@@ -160,7 +160,9 @@ struct _mem_node {
 
         struct {
             sig_node_t sig;
+            char *iden;
             exp_node_t exp;
+            bool initized;
         } var_decl;
     } decl;
 };

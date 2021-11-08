@@ -8,6 +8,7 @@ set(COMPILER_HEADERS
         src/compiler/compiler_state.h
         src/compiler/parsing/AST.h
         src/compiler/parsing/file_parser.h
+        src/compiler/parsing/op_lit.h
 )
 
 set(COMPILER_SOURCES
