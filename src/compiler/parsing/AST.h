@@ -6,6 +6,7 @@
 
 #include "common/util/generic_structs.h"
 #include "compiler/parsing/generated/Absyn.h"
+#include "compiler/parsing/op_lit.h"
 
 /*
  * Due to rapid changes in the frontend of the compiler,
@@ -16,171 +17,146 @@
 
 #define ATTR_HEADER uint16_t attrs;
 
-#define SYN_OP uint8_t
+typedef struct _program_node program_t;
 
-struct _targ_node;
-typedef struct _targ_node targ_node_t;
+struct {
 
-struct _type_node;
-typedef struct _type_node type_node_t;
-
-struct _decl_node;
-typedef struct _decl_node decl_node_t;
-
-struct _import_node;
-typedef struct _import_node import_node_t;
-
-struct _sig_node;
-typedef struct _sig_node sig_node_t;
-
-struct _stmt_node;
-typedef struct _stmt_node stmt_node_t;
-
-struct _exp_node;
-typedef struct _exp_node exp_node_t;
-
-struct _mem_node;
-typedef struct _mem_node mem_node_t;
-
-struct _lit_node;
-typedef struct _lit_node exp_lit_t;
-
-typedef struct {
-    GEN_ARRAY_T(import_node_t) imports;
-    GEN_ARRAY_T(decl_node_t) classes;
-    GEN_ARRAY_T(mem_node_t) members;
-} program_t;
-
-struct _import_node {
-    uint32_t attrs;
-    GEN_ARRAY_T(char *) pkgs;
-};
-
-struct _type_node {
-    enum { T_SIMP, T_COMP } kind;
-    bool nullable;
-
-    union {
-        char *simp_iden;
-        struct {
-            char *iden;
-            GEN_ARRAY_T(type_node_t) params;
-        } generic;
-    } type;
-};
-
-struct _targ_node {
-    enum { TARG_SIMP, TARG_COVAR, TARG_CONTRA };
-    union {
-        char *simp_iden;
-        struct {
-            char *iden;
-            type_node_t type_node;
-        } comp;
-    } arg;
-};
-
-struct _sig_node {
-    type_node_t type;
-    char *iden;
-};
-
-struct _lit_node {
     enum {
+        PROGRAM, IMPORT,
+        T_SIMP, T_COMP,
+        TARG_SIMP, TARG_COVAR, TARG_CONTRA,
+
         LIT_TUP, LIT_LAM, LIT_INT, LIT_CHR,
-        LIT_STR, LIT_LST, LIT_NUL, LIT_FLO
+        LIT_STR, LIT_LST, LIT_NUL, LIT_FLO,
+
+        EXP_BIN, EXP_UN, EXP_VAR, EXP_FUNC, EXP_LIT,
+
+        STMT_IFE, STMT_WHL, STMT_FOR, STMT_ASN,
+        STMT_EXP, STMT_VAR, STMT_BRK, STMT_CON,
+        STMT_RET, STMT_RTE,
+
+        MEM_FUNC, MEM_VAR
     } kind;
+
     union {
-        GEN_ARRAY_T(exp_node_t) lit_tup;
+        struct {
+            GEN_ARRAY_T(program_t) imports;
+            GEN_ARRAY_T(program_t) classes;
+            GEN_ARRAY_T(program_t) members;
+        } program;
+
+        struct {
+            uint32_t attrs;
+            GEN_ARRAY_T(char *) pkgs;
+        } import;
+
+        struct {
+            bool nullable;
+            char *iden;
+        } type_simp;
+
+        struct {
+            char *iden;
+            GEN_ARRAY_T(program_t) params;
+        } type_comp;
+
+        char *targ_simp;
+
+        struct {
+            char *iden;
+            program_t *type_node;
+        } targ_comp;
+
+        struct {
+            program_t *type;
+            char *iden;
+        } var_sig;
+
+        GEN_ARRAY_T(program_t) lit_tup;
+
         struct {
             GEN_ARRAY_T(char *) params;
-            GEN_ARRAY_T(stmt_node_t) stmts;
+            GEN_ARRAY_T(program_t) stmts;
         } lit_lam;
+
         uint64_t lit_int;
+
         gunichar lit_chr;
+
         char *lit_str;
-        GEN_ARRAY_T(exp_node_t) lit_lst;
+
+        GEN_ARRAY_T(program_t) lit_lst;
+
         uint64_t lit_flo;
-    } lit;
-};
 
-struct _exp_node {
-    enum { EXP_BIN, EXP_UN, EXP_VAR, EXP_FUNC, EXP_LIT } kind;
-    union {
-        char *variable;
+        char *exp_var;
+
         struct {
-            exp_node_t *a;
+            program_t *a;
             char *op;
-            exp_node_t *b;
-        } bin_exp;
+            program_t *b;
+        } exp_binop;
+
         struct {
             char *op;
-            exp_node_t *value;
-        } un_exp;
+            program_t *value;
+        } exp_unop;
+
         struct {
             char *iden;
-            GEN_ARRAY_T(type_node_t) type_params;
-            GEN_ARRAY_T(exp_node_t) params;
-        } func_call;
-        exp_lit_t lit;
-    } exp;
-};
+            GEN_ARRAY_T(program_t) type_params;
+            GEN_ARRAY_T(program_t) params;
+        } exp_call;
 
-struct _stmt_node {
-    enum {
-        STMT_IFE, STMT_WHL, STMT_FOR,
-        STMT_ASN, STMT_EXP, STMT_VAR,
-        STMT_BRK, STMT_CON, STMT_RET,
-        STMT_RTE
-    } kind;
-    union {
+        program_t *exp_lit;
+
         struct {
-            exp_node_t cond;
-            GEN_ARRAY_T(stmt_node_t) if_stmt;
-            GEN_ARRAY_T(stmt_node_t) else_stmt;
-        } ife;
+            program_t *cond;
+            GEN_ARRAY_T(program_t) if_stmt;
+            GEN_ARRAY_T(program_t) else_stmt;
+        } stmt_ife;
+
         struct {
-            exp_node_t cond;
-            GEN_ARRAY_T(stmt_node_t) stmt;
-        } whl;
+            program_t *cond;
+            GEN_ARRAY_T(program_t) stmt;
+        } stmt_whl;
+
         struct {
             char *var;
-            exp_node_t iter;
-            GEN_ARRAY_T(stmt_node_t) stmt;
-        } fr;
+            program_t *iter;
+            GEN_ARRAY_T(program_t) stmt;
+        } stmt_for;
+
         struct {
             char *var;
-            SYN_OP op;
-            exp_node_t exp;
-        } asn;
-        exp_node_t exp;
+            op_t op;
+            program_t *exp;
+        } stmt_asn;
+
+        program_t *stmt_exp;
+
         struct {
-            GEN_ARRAY_T(sig_node_t) defs;
+            GEN_ARRAY_T(program_t) defs;
         } var_def;
-        exp_node_t ret;
-    } stmt;
-};
 
-struct _mem_node {
-    enum { MEM_FUNC, MEM_VAR } kind;
-    uint32_t attrs;
-
-    union {
-        struct {
-            char *iden;
-            type_node_t ret_type;
-            GEN_ARRAY_T(sig_node_t) param_sig;
-            GEN_ARRAY_T(targ_node_t) generic;
-        } func_decl;
+        program_t *stmt_ret;
 
         struct {
-            sig_node_t sig;
             char *iden;
-            exp_node_t exp;
+            program_t *ret_type;
+            GEN_ARRAY_T(program_t) param_sig;
+            GEN_ARRAY_T(program_t) generic;
+        } decl_func;
+
+        struct {
+            program_t *sig;
+            char *iden;
+            program_t *exp;
             bool initized;
-        } var_decl;
-    } decl;
-};
+        } decl_var;
+    };
+
+} _program_node;
 
 void gen_ast(Program, program_t *);
 

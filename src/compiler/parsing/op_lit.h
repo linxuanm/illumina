@@ -13,6 +13,6 @@ typedef enum {
 
     UN_PREINC, UN_PREDEC, UN_POS, UN_NEG, UN_LOGIC_NOT, UN_NOT,
     UN_POSINC, UN_POSDEC
-} op;
+} op_t;
 
 #endif //ILLUMINA_OP_LIT_H
