@@ -5,6 +5,8 @@
 #include "common/logging.h"
 #include "common/util/assert.h"
 #include "common/util/stream.h"
+#include "compiler/parsing/generated/Absyn.h"
+#include "compiler/parsing/file_parser.h"
 
 void print_bits(int const size, void const * const ptr) {
     unsigned char *b = (unsigned char *) ptr;
@@ -21,7 +23,6 @@ void print_bits(int const size, void const * const ptr) {
 }
 
 int main() {
-    uint8_t *code;
-    FILE_SIZE_T length = read_from_file(&code, "test_code.lux");
-    printf("%s", code);
+    Program raw = parse_program("test_code.lux");
+
 }

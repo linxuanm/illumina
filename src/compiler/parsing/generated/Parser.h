@@ -1,6 +1,8 @@
 #ifndef PARSER_HEADER_FILE
 #define PARSER_HEADER_FILE
 
+#include "stdio.h"
+
 #include "Absyn.h"
 
 typedef union

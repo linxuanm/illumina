@@ -17,9 +17,7 @@
 
 #define ATTR_HEADER uint16_t attrs;
 
-typedef struct _program_node program_t;
-
-struct {
+typedef struct program_t {
 
     enum {
         PROGRAM, IMPORT,
@@ -40,9 +38,9 @@ struct {
 
     union {
         struct {
-            GEN_ARRAY_T(program_t) imports;
-            GEN_ARRAY_T(program_t) classes;
-            GEN_ARRAY_T(program_t) members;
+            GEN_ARRAY_T(struct program_t) imports;
+            GEN_ARRAY_T(struct program_t) classes;
+            GEN_ARRAY_T(struct program_t) members;
         } program;
 
         struct {
@@ -57,26 +55,26 @@ struct {
 
         struct {
             char *iden;
-            GEN_ARRAY_T(program_t) params;
+            GEN_ARRAY_T(struct program_t) params;
         } type_comp;
 
         char *targ_simp;
 
         struct {
             char *iden;
-            program_t *type_node;
+            struct program_t *type_node;
         } targ_comp;
 
         struct {
-            program_t *type;
+            struct program_t *type;
             char *iden;
         } var_sig;
 
-        GEN_ARRAY_T(program_t) lit_tup;
+        GEN_ARRAY_T(struct program_t) lit_tup;
 
         struct {
             GEN_ARRAY_T(char *) params;
-            GEN_ARRAY_T(program_t) stmts;
+            GEN_ARRAY_T(struct program_t) stmts;
         } lit_lam;
 
         uint64_t lit_int;
@@ -85,79 +83,80 @@ struct {
 
         char *lit_str;
 
-        GEN_ARRAY_T(program_t) lit_lst;
+        GEN_ARRAY_T(struct program_t) lit_lst;
 
         uint64_t lit_flo;
 
         char *exp_var;
 
         struct {
-            program_t *a;
+            struct program_t *a;
             char *op;
-            program_t *b;
+            struct program_t *b;
         } exp_binop;
 
         struct {
             char *op;
-            program_t *value;
+            struct program_t *value;
         } exp_unop;
 
         struct {
             char *iden;
-            GEN_ARRAY_T(program_t) type_params;
-            GEN_ARRAY_T(program_t) params;
+            GEN_ARRAY_T(struct program_t) type_params;
+            GEN_ARRAY_T(struct program_t) params;
         } exp_call;
 
-        program_t *exp_lit;
+        struct program_t *exp_lit;
 
         struct {
-            program_t *cond;
-            GEN_ARRAY_T(program_t) if_stmt;
-            GEN_ARRAY_T(program_t) else_stmt;
+            struct program_t *cond;
+            GEN_ARRAY_T(struct program_t) if_stmt;
+            GEN_ARRAY_T(struct program_t) else_stmt;
         } stmt_ife;
 
         struct {
-            program_t *cond;
-            GEN_ARRAY_T(program_t) stmt;
+            struct program_t *cond;
+            GEN_ARRAY_T(struct program_t) stmt;
         } stmt_whl;
 
         struct {
             char *var;
-            program_t *iter;
-            GEN_ARRAY_T(program_t) stmt;
+            struct program_t *iter;
+            GEN_ARRAY_T(struct program_t) stmt;
         } stmt_for;
 
         struct {
-            char *var;
+            struct program_t *var;
             op_t op;
-            program_t *exp;
+            struct program_t *exp;
         } stmt_asn;
 
-        program_t *stmt_exp;
+        struct program_t *stmt_exp;
 
         struct {
-            GEN_ARRAY_T(program_t) defs;
+            GEN_ARRAY_T(struct program_t) defs;
         } var_def;
 
-        program_t *stmt_ret;
+        struct program_t *stmt_ret;
 
         struct {
             char *iden;
-            program_t *ret_type;
-            GEN_ARRAY_T(program_t) param_sig;
-            GEN_ARRAY_T(program_t) generic;
+            struct program_t *ret_type;
+            GEN_ARRAY_T(struct program_t) param_sig;
+            GEN_ARRAY_T(struct program_t) generic;
         } decl_func;
 
         struct {
-            program_t *sig;
+            struct program_t *sig;
             char *iden;
-            program_t *exp;
+            struct program_t *exp;
             bool initized;
         } decl_var;
     };
 
-} _program_node;
+} program_t;
 
-void gen_ast(Program, program_t *);
+program_t *gen_ast(Program);
+program_t *gen_exp(Exp);
 
 #endif //ILLUMINA_AST_H
