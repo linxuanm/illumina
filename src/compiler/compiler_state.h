@@ -16,6 +16,7 @@ extern __thread char compiler_err_msg[512];
             compiler_errno = (x);\
             snprintf(compiler_err_msg, 512, msg, ##args);\
         }\
+        ERROR(msg, ##args);\
     } while (0)
 
 #endif //ILLUMINA_COMPILER_STATE_H

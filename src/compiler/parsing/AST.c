@@ -31,7 +31,14 @@ AST_TRANS(gen_ast(Program program), {
     GEN_ARRAY_T(GlobDecl) decls;
     UNLIST(
         &decls, program->u.prog_.listglobdecl_, ListGlobDecl,
-        globdecl_, GlobDecl, listglobdecl_);
+        globdecl_, GlobDecl, listglobdecl_
+    );
+
+
+})
+
+AST_TRANS(gen_import(ImportDecl decl), {
+
 })
 
 AST_TRANS(gen_exp(Exp exp), {

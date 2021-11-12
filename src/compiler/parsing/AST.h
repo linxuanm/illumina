@@ -17,6 +17,8 @@
 
 #define ATTR_HEADER uint16_t attrs;
 
+#define AST_TRANS_DECL(header) program_t *(header)
+
 typedef struct program_t {
 
     enum {
@@ -156,7 +158,8 @@ typedef struct program_t {
 
 } program_t;
 
-program_t *gen_ast(Program);
-program_t *gen_exp(Exp);
+AST_TRANS_DECL(gen_ast(Program));
+AST_TRANS_DECL(gen_exp(Exp));
+AST_TRANS_DECL(gen_import(ImportDecl));
 
 #endif //ILLUMINA_AST_H

@@ -29,7 +29,3 @@ FILE_SIZE_T read_from_file(uint8_t **target, const char *path) {
 
     return 0;
 }
-
-/*char **split_str(const char *str, const char *delim) {
-
-}*/
