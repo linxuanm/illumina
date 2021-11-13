@@ -12,20 +12,14 @@
     }
 
 /*
- * 'out': ptr to array ptr
+ * 'out': (initialized) output array ptr
  */
 #define UNLIST(out, lst, lst_type, elem_field, elem_type, nxt_field)\
     do {\
         uint32_t len = 0;\
         lst_type curr = (lst);\
         while (curr != NULL) {\
-            ++len;\
-            curr = curr->nxt_field;\
-        }\
-        *(out) = g_array_sized_new(FALSE, FALSE, sizeof(elem_type *), len);\
-        curr = (lst);\
-        for (uint32_t i = 0; i < len; ++i) {\
-            g_array_insert_val(*(out), i, curr);\
+            g_array_append_val(out, curr->elem_field);\
             curr = curr->nxt_field;\
         }\
     } while (0)
@@ -45,18 +39,30 @@ AST_TRANS(gen_ast(Program program), {
                 break;
             case is_GClassDecl:
                 break;
-            case is_GImport:
+            case is_GImport: {
+                program_t *import = gen_import(decl->u.gimport_.importdecl_);
+                g_array_append_val(node->val.program.imports, import);
                 break;
+            }
             default:
                 COMPILER_SET_ERRNO(SANITY_CHECK, "Inexhausive enum switch");
         }
 
         curr = curr->listglobdecl_;
     }
+
+    //program_t *fst = g_array_index(node->val.program.imports, program_t *, 0);
+    //printf("%s", g_array_index(fst->val.import.pkgs, char *, 0));
 })
 
 AST_TRANS(gen_import(ImportDecl decl), {
+    node->kind = IMPORT;
 
+    GArray *pkgs = g_array_new(FALSE, FALSE, sizeof(Pack));
+    UNLIST(
+        pkgs, decl->u.iimport_.listpack_,
+        ListPack, pack_, Pack, listpack_
+    );
 })
 
 AST_TRANS(gen_class_decl(ClassDecl decl), {
