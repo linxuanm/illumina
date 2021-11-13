@@ -4,6 +4,12 @@
 #include <inttypes.h>
 #include <stdio.h>
 
+/*
+ * should never happen; only used for sanity
+ * check in dev mode.
+ */
+#define SANITY_CHECK 0
+
 #define IO_ERROR 1
 #define SYNTAX_ERROR 2
 

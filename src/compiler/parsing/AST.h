@@ -40,14 +40,15 @@ typedef struct program_t {
 
     union {
         struct {
-            GEN_ARRAY_T(struct program_t) imports;
-            GEN_ARRAY_T(struct program_t) classes;
-            GEN_ARRAY_T(struct program_t) members;
+            GArray *imports; // <program_t>
+            GArray *classes; // <program_t>
+            GArray *funcs; // <program_t>
+            GArray *vars;
         } program;
 
         struct {
             uint32_t attrs;
-            GEN_ARRAY_T(char *) pkgs;
+            GArray *pkgs; // <string>
         } import;
 
         struct {
@@ -57,7 +58,7 @@ typedef struct program_t {
 
         struct {
             char *iden;
-            GEN_ARRAY_T(struct program_t) params;
+            GArray *params;
         } type_comp;
 
         char *targ_simp;
@@ -72,11 +73,11 @@ typedef struct program_t {
             char *iden;
         } var_sig;
 
-        GEN_ARRAY_T(struct program_t) lit_tup;
+        GArray *lit_tup; // <program_t>
 
         struct {
-            GEN_ARRAY_T(char *) params;
-            GEN_ARRAY_T(struct program_t) stmts;
+            GArray *params; // <string>
+            GArray *stmts; // <program_t>
         } lit_lam;
 
         uint64_t lit_int;
@@ -85,7 +86,7 @@ typedef struct program_t {
 
         char *lit_str;
 
-        GEN_ARRAY_T(struct program_t) lit_lst;
+        GArray *lit_lst; // <program_t>
 
         uint64_t lit_flo;
 
@@ -104,27 +105,27 @@ typedef struct program_t {
 
         struct {
             char *iden;
-            GEN_ARRAY_T(struct program_t) type_params;
-            GEN_ARRAY_T(struct program_t) params;
+            GArray *type_params; // <program_t>
+            GArray *params; // <program_t>
         } exp_call;
 
         struct program_t *exp_lit;
 
         struct {
             struct program_t *cond;
-            GEN_ARRAY_T(struct program_t) if_stmt;
-            GEN_ARRAY_T(struct program_t) else_stmt;
+            GArray *if_stmt; // <program_t>
+            GArray *else_stmt; // <program_t>
         } stmt_ife;
 
         struct {
             struct program_t *cond;
-            GEN_ARRAY_T(struct program_t) stmt;
+            GArray *stmt; // <program_t>
         } stmt_whl;
 
         struct {
             char *var;
             struct program_t *iter;
-            GEN_ARRAY_T(struct program_t) stmt;
+            GArray *stmt; // <program_t>
         } stmt_for;
 
         struct {
@@ -136,7 +137,7 @@ typedef struct program_t {
         struct program_t *stmt_exp;
 
         struct {
-            GEN_ARRAY_T(struct program_t) defs;
+            GArray *defs; // <program_t>
         } var_def;
 
         struct program_t *stmt_ret;
@@ -144,8 +145,8 @@ typedef struct program_t {
         struct {
             char *iden;
             struct program_t *ret_type;
-            GEN_ARRAY_T(struct program_t) param_sig;
-            GEN_ARRAY_T(struct program_t) generic;
+            GArray *param_sig; // <program_t>
+            GArray *generic; // <program_t>
         } decl_func;
 
         struct {
@@ -154,7 +155,7 @@ typedef struct program_t {
             struct program_t *exp;
             bool initized;
         } decl_var;
-    };
+    } val;
 
 } program_t;
 
