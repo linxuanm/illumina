@@ -51,18 +51,27 @@ AST_TRANS(gen_ast(Program program), {
         curr = curr->listglobdecl_;
     }
 
-    //program_t *fst = g_array_index(node->val.program.imports, program_t *, 0);
-    //printf("%s", g_array_index(fst->val.import.pkgs, char *, 0));
+    program_t *fst = g_array_index(node->val.program.imports, program_t *, 0);
+    printf("%s", g_array_index(fst->val.import.pkgs, char *, 0));
 })
 
 AST_TRANS(gen_import(ImportDecl decl), {
     node->kind = IMPORT;
+    node->val.import.attrs = 0;
+    node->val.import.pkgs = g_array_new(FALSE, FALSE, sizeof(char *));
 
     GArray *pkgs = g_array_new(FALSE, FALSE, sizeof(Pack));
     UNLIST(
         pkgs, decl->u.iimport_.listpack_,
         ListPack, pack_, Pack, listpack_
     );
+
+    for (uint32_t i = 0; i < pkgs->len; ++i) {
+        Pack iden = g_array_index(pkgs, Pack, i);
+        g_array_append_val(node->val.import.pkgs, iden->u.packname_.iden_);
+    }
+
+    g_array_free(pkgs, FALSE);
 })
 
 AST_TRANS(gen_class_decl(ClassDecl decl), {
