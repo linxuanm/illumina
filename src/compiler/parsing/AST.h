@@ -35,7 +35,7 @@ typedef struct program_t {
         STMT_EXP, STMT_VAR, STMT_BRK, STMT_CON,
         STMT_RET, STMT_RTE,
 
-        MEM_FUNC, MEM_VAR
+        MEM_FUNC, MEM_VAR, DECL_CLASS
     } kind;
 
     union {
@@ -155,6 +155,15 @@ typedef struct program_t {
             struct program_t *exp;
             bool initized;
         } decl_var;
+
+        struct {
+            uint32_t attrs;
+            char *iden;
+            GArray *t_args; // <program_t>
+            GArray *vars; // <program_t>
+            GArray *funcs; // <program_t>
+
+        } decl_class;
     } val;
 
 } program_t;
