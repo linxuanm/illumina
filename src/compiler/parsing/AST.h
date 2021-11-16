@@ -25,6 +25,7 @@ typedef struct program_t {
         PROGRAM, IMPORT,
         T_SIMP, T_COMP,
         TARG_SIMP, TARG_COVAR, TARG_CONTRA,
+        TARG_DECL,
 
         LIT_TUP, LIT_LAM, LIT_INT, LIT_CHR,
         LIT_STR, LIT_LST, LIT_NUL, LIT_FLO,
@@ -35,7 +36,7 @@ typedef struct program_t {
         STMT_EXP, STMT_VAR, STMT_BRK, STMT_CON,
         STMT_RET, STMT_RTE,
 
-        MEM_FUNC, MEM_VAR, DECL_CLASS
+        DECL_FUNC, DECL_GVAR, DECL_CLASS
     } kind;
 
     union {
@@ -67,6 +68,8 @@ typedef struct program_t {
             char *iden;
             struct program_t *type_node;
         } targ_comp;
+
+        char *decl_targ;
 
         struct {
             struct program_t *type;
@@ -159,7 +162,7 @@ typedef struct program_t {
         struct {
             uint32_t attrs;
             char *iden;
-            GArray *t_args; // <program_t>
+            GArray *targs; // <program_t>
             GArray *vars; // <program_t>
             GArray *funcs; // <program_t>
 
@@ -167,6 +170,8 @@ typedef struct program_t {
     } val;
 
 } program_t;
+
+void ast_free_node(program_t *);
 
 AST_TRANS_DECL(gen_ast(Program));
 AST_TRANS_DECL(gen_exp(Exp));

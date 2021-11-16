@@ -3,6 +3,14 @@
 #include "common/util/assert.h"
 #include "compiler/compiler_state.h"
 
+typedef struct {
+    Iden iden_;
+    Inhrt inhrt_;
+    ListClassMemDecl listclassmemdecl_;
+    ListPropDecl listpropdecl_;
+    TArgsDecl targsdecl_;
+} raw_class_t;
+
 #define AST_TRANS(header, cont)\
     program_t *(header) {\
         program_t *node = malloc(sizeof(program_t));\
@@ -25,7 +33,12 @@
         }\
     } while (0)
 
-#define UN_IDEN(x) ((x)->u.packname_.iden_)
+#define ERR_BAD_ENUM COMPILER_SET_ERRNO(SANITY_CHECK, "Inexhausive enum switch")
+#define UN_IDEN(x) (strdup((x)->u.packname_.iden_))
+
+void ast_free_node(program_t *node) {
+
+}
 
 AST_TRANS(gen_ast(Program program), {
     node->kind = PROGRAM;
@@ -48,7 +61,9 @@ AST_TRANS(gen_ast(Program program), {
                 break;
             }
             default:
-                COMPILER_SET_ERRNO(SANITY_CHECK, "Inexhausive enum switch");
+                ERR_BAD_ENUM;
+                ast_free_node(node);
+                return NULL;
         }
 
         curr = curr->listglobdecl_;
@@ -68,14 +83,38 @@ AST_TRANS(gen_import(ImportDecl decl), {
 
 AST_TRANS(gen_class_decl(ClassDecl decl), {
     node->kind = DECL_CLASS;
+    node->val.decl_class.targs = g_array_new(FALSE, FALSE, sizeof(program_t *));
+    node->val.decl_class.vars = g_array_new(FALSE, FALSE, sizeof(program_t *));
+    node->val.decl_class.funcs = g_array_new(FALSE, FALSE, sizeof(program_t *));
+
+    raw_class_t *data;
+    switch (decl->kind) {
+        case is_CClass:
+            data = (raw_class_t *) &decl->u.cclass_;
+            break;
+        case is_CInter:
+            node->val.decl_class.attrs |= 1;
+            data = (raw_class_t *) &decl->u.cinter_;
+            break;
+        default:
+            ERR_BAD_ENUM;
+            ast_free_node(node);
+            return NULL;
+    }
+
+    node->val.decl_class.iden = strdup(data->iden_);
+})
+
+AST_TRANS(gen_targs_decl(TArgsDecl decl), {
+    
 })
 
 AST_TRANS(gen_func_decl(FuncDecl decl), {
-
+    node->kind = DECL_FUNC;
 })
 
 AST_TRANS(gen_gval_decl(GVarDef decl), {
-
+    node->kind = DECL_GVAR;
 })
 
 AST_TRANS(gen_exp(Exp exp), {
