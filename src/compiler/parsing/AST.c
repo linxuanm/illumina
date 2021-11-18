@@ -109,21 +109,38 @@ AST_TRANS(gen_class_decl(ClassDecl decl), {
     }
 
     node->val.decl_class.iden = strdup(data->iden_);
+    if (data->inhrt_->kind == is_IInherit) {
+        UNLIST(
+            node->val.decl_class.inhrt, data->inhrt_->u.iinherit_.listctype_,
+            ListCType, ctype_, listctype_, gen_ctype_just
+        );
+    }
+
+    if (data->targsdecl_->kind == is_TDecl) {
+        UNLIST(
+            node->val.decl_class.targs, data->targsdecl_->u.tdecl_.listtypearg_,
+            ListTypeArg, typearg_, listtypearg_, gen_targs_decl
+        );
+    }
 })
 
 program_t *gen_type(Type decl) {
     switch (decl->kind) {
         case is_TMaybe:
-            return gen_type_con(decl->u.tmaybe_.ctype_, TRUE);
+            return gen_ctype_maybe(decl->u.tmaybe_.ctype_, TRUE);
         case is_TPure:
-            return gen_type_con(decl->u.tpure_.ctype_, FALSE);
+            return gen_ctype_just(decl->u.tpure_.ctype_);
         default:
             ERR_BAD_ENUM;
             return NULL;
     }
 }
 
-AST_TRANS(gen_type_con(CType decl, bool nullable), {
+program_t *gen_ctype_just(CType decl) {
+    return gen_ctype_maybe(decl, FALSE);
+};
+
+AST_TRANS(gen_ctype_maybe(CType decl, bool nullable), {
     switch (decl->kind) {
         case is_CSimp:
             node->kind = T_SIMP;
@@ -165,8 +182,27 @@ AST_TRANS(gen_type_con(CType decl, bool nullable), {
     }
 })
 
-AST_TRANS(gen_targs_decl(TArgsDecl decl), {
-
+AST_TRANS(gen_targs_decl(TypeArg decl), {
+    switch (decl->kind) {
+        case is_TSimp:
+            node->kind = TARG_SIMP;
+            node->val.targ_simp = strdup(decl->u.tsimp_.iden_);
+            break;
+        case is_TCov:
+            node->kind = TARG_COVAR;
+            node->val.targ_comp.iden = strdup(decl->u.tcov_.iden_);
+            node->val.targ_comp.type_node = gen_type(decl->u.tcov_.type_);
+            break;
+        case is_TContra:
+            node->kind = TARG_CONTRA;
+            node->val.targ_comp.iden = strdup(decl->u.tcontra_.iden_);
+            node->val.targ_comp.type_node = gen_type(decl->u.tcov_.type_);
+            break;
+        default:
+            ERR_BAD_ENUM;
+            ast_free_node(node);
+            return NULL;
+    }
 })
 
 AST_TRANS(gen_func_decl(FuncDecl decl), {
