@@ -1,0 +1,7 @@
+#ifndef ILLUMINA_PRELUDE_TYPE_PATH_H
+#define ILLUMINA_PRELUDE_TYPE_PATH_H
+
+#define TPATH_LIST "prelude.List"
+#define TPATH_TUPLE "prelude.Tuple"
+
+#endif //ILLUMINA_PRELUDE_TYPE_PATH_H

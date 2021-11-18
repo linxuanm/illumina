@@ -37,6 +37,7 @@ set(COMMON_HEADERS
         src/common/util/assert.h
         src/common/util/generic_structs.h
         src/common/util/io_string.h
+        src/common/prelude/prelude_type_path.h
     )
 
 set(COMMON_SOURCES

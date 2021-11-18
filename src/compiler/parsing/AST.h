@@ -58,8 +58,9 @@ typedef struct program_t {
         } type_simp;
 
         struct {
+            bool nullable;
             char *iden;
-            GArray *params;
+            GArray *params; // <program_t>
         } type_comp;
 
         char *targ_simp;
@@ -162,10 +163,10 @@ typedef struct program_t {
         struct {
             uint32_t attrs;
             char *iden;
+            GArray *inhrt;
             GArray *targs; // <program_t>
             GArray *vars; // <program_t>
             GArray *funcs; // <program_t>
-
         } decl_class;
     } val;
 
@@ -174,7 +175,13 @@ typedef struct program_t {
 void ast_free_node(program_t *);
 
 AST_TRANS_DECL(gen_ast(Program));
-AST_TRANS_DECL(gen_exp(Exp));
 AST_TRANS_DECL(gen_import(ImportDecl));
+AST_TRANS_DECL(gen_class_decl(ClassDecl));
+program_t *gen_type(Type);
+AST_TRANS_DECL(gen_type_con(CType, bool));
+AST_TRANS_DECL(gen_targs_decl(TArgsDecl));
+AST_TRANS_DECL(gen_func_decl(FuncDecl));
+AST_TRANS_DECL(gen_gval_decl(GVarDef));
+AST_TRANS_DECL(gen_exp(Exp));
 
 #endif //ILLUMINA_AST_H
