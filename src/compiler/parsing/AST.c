@@ -85,7 +85,6 @@ AST_TRANS(gen_import(ImportDecl decl), {
     );
 })
 
-// TODO
 AST_TRANS(gen_class_decl(ClassDecl decl), {
     node->kind = DECL_CLASS;
     node->val.decl_class.inhrt = NEW_NODE_ARRAY;
@@ -121,6 +120,30 @@ AST_TRANS(gen_class_decl(ClassDecl decl), {
             node->val.decl_class.targs, data->targsdecl_->u.tdecl_.listtypearg_,
             ListTypeArg, typearg_, listtypearg_, gen_targs_decl
         );
+    }
+
+    ListClassMemDecl list = data->listclassmemdecl_;
+    while (list != NULL) {
+        ClassMemDecl mem = list->classmemdecl_;
+
+        switch (mem->kind) {
+            case is_CVarDecl: {
+                program_t *var = gen_gval_decl(mem->u.cvardecl_.gvardef_);
+                g_array_append_val(node->val.decl_class.vars, var);
+                break;
+            }
+            case is_CFuncDecl: {
+                program_t *func = gen_func_decl(mem->u.cfuncdecl_.funcdecl_);
+                g_array_append_val(node->val.decl_class.funcs, func);
+                break;
+            }
+            default:
+                ERR_BAD_ENUM;
+                ast_free_node(node);
+                return NULL;
+        }
+
+        list = list->listclassmemdecl_;
     }
 })
 
@@ -211,6 +234,35 @@ AST_TRANS(gen_func_decl(FuncDecl decl), {
 
 AST_TRANS(gen_gval_decl(GVarDef decl), {
     node->kind = DECL_GVAR;
+    node->val.decl_var.sig = g_array_new(FALSE, FALSE, sizeof(program_t *));
+    node->val.decl_var.exp = g_array_new(FALSE, FALSE, sizeof(program_t *));
+    VarDef def = decl->u.mpropvar_.vardef_;
+
+    VarSig sig;
+    switch (decl->u.mpropvar_.vardef_->kind) {
+        case is_VNoAsn:
+            node->val.decl_var.initialized = FALSE;
+            sig = def->u.vnoasn_.varsig_;
+            break;
+        case is_VAsn:
+            node->val.decl_var.initialized = TRUE;
+            sig = def->u.vasn_.varsig_;
+            UNLIST(
+                node->val.decl_var.exp, def->u.vasn_.listexp_, ListExp, exp_,
+                listexp_, gen_exp
+            );
+            break;
+        default:
+            ERR_BAD_ENUM;
+            ast_free_node(node);
+            return NULL;
+    }
+
+    node->val.decl_var.type = gen_type(sig->u.vsig_.type_);
+    UNLIST(
+        node->val.decl_var.sig, sig->u.vsig_.listiden_, ListIden, iden_,
+        listiden_, strdup
+    );
 })
 
 AST_TRANS(gen_exp(Exp exp), {
