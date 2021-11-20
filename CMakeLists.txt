@@ -69,6 +69,8 @@ endif()
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(deps REQUIRED IMPORTED_TARGET glib-2.0)
 
+include_directories(${GLIB_INCLUDE_DIRS})
+
 add_library(IlluminaLib ${ILLUMINA_HEADERS} ${ILLUMINA_SOURCES})
 add_executable(IlluminaApp main.c)
 
