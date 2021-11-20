@@ -27,4 +27,5 @@ void print_bits(int const size, void const * const ptr) {
 int main() {
     Program raw = parse_program("test_code.lux");
     program_t *node = gen_ast(raw);
+    
 }

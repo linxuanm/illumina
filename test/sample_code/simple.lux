@@ -1,0 +1,6 @@
+foo: int;
+
+main(): void {
+    test: int = 1;
+    foo = 10;
+}

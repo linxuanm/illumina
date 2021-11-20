@@ -25,3 +25,8 @@ Program parse_program(char *str) {
 
     return program;
 }
+
+program_t *conv_program(Program prog) {
+    Program raw = parse_program("test_code.lux");
+    return gen_ast(raw);
+}
