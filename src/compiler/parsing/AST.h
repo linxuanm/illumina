@@ -2,6 +2,7 @@
 #define ILLUMINA_AST_H
 
 #include <glib.h>
+#include <inttypes.h>
 #include <stdbool.h>
 
 #include "common/util/generic_structs.h"

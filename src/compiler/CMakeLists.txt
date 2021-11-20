@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.13)
 set(COMPILER_HEADERS
         src/compiler/parsing/generated/Absyn.h
         src/compiler/parsing/generated/Parser.h
-        src/compiler/parsing/generated/Buffer.c
+        src/compiler/parsing/generated/Buffer.h
+        src/compiler/parsing/generated/Bison.h
 
         src/compiler/compiler_state.h
         src/compiler/parsing/AST.h

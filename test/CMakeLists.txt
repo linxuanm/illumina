@@ -13,11 +13,13 @@ set(COMPILER_TEST_SOURCES
         cases.c
 )
 
-add_executable(CompilerTest ${COMPILER_TEST_SOURCES})
+add_library(CompilerTestLib ${COMPILER_TEST_HEADERS} ${COMPILER_TEST_SOURCES})
+
+add_executable(CompilerTest parse_test.c)
 target_link_libraries(CompilerTest
         IlluminaLib
+        CompilerTestLib
         ${CHECK_LIBRARIES}
-        ${COMPILER_TEST_HEADERS}
 )
 
 add_test(NAME CompilerTest COMMAND CompilerTest)
