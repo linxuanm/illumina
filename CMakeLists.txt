@@ -37,12 +37,14 @@ set(COMMON_HEADERS
         src/common/util/assert.h
         src/common/util/generic_structs.h
         src/common/util/io_string.h
+        src/common/util/struct_util.h
         src/common/prelude/prelude_type_path.h
     )
 
 set(COMMON_SOURCES
         src/common/util/stream.c
         src/common/util/io_string.c
+        src/common/util/struct_util.c
 )
 
 message("\nIncluded Common Library")

@@ -268,3 +268,16 @@ AST_TRANS(gen_gval_decl(GVarDef decl), {
 AST_TRANS(gen_exp(Exp exp), {
 
 })
+
+bool ast_equal(program_t *a, program_t *b) {
+    if (a->kind != b->kind) return false;
+
+    switch (a->kind) {
+        case PROGRAM:
+            
+
+        default:
+            ERR_BAD_ENUM;
+            return FALSE;
+    }
+}

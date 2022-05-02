@@ -175,6 +175,7 @@ typedef struct program_t {
 } program_t;
 
 void ast_free_node(program_t *);
+bool ast_equal(program_t *, program_t *);
 
 AST_TRANS_DECL(gen_ast(Program));
 AST_TRANS_DECL(gen_import(ImportDecl));
