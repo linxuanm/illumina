@@ -1,14 +1,14 @@
 <template>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <EditorView />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import EditorView from '@/views/EditorView.vue';
 
 export default {
     name: 'App',
     components: {
-        HelloWorld
+        EditorView
     }
-}
+};
 </script>
