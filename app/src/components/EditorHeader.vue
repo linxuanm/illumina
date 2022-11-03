@@ -24,6 +24,14 @@
     </div>
 </template>
 
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+    name: 'EditorHeader'
+});
+</script>
+
 <style scoped>
 a {
     color: var(--bs-black);
