@@ -11,6 +11,16 @@
                 </a>
             </div>
         </div>
+        <div class="row">
+            <nav class="p-0 navbar navbar-expand my-3 bg-light">
+                <ul class="navbar-nav">
+                    <li class="nav-item">Files</li>
+                    <li class="nav-item">Edit</li>
+                    <li class="nav-item">View</li>
+                    <li class="nav-item">Run</li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </template>
 
@@ -18,6 +28,16 @@
 a {
     color: var(--bs-black);
     transition: 0.25s;
+}
+
+li {
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+li:hover {
+    background-color: var(--bs-secondary);
 }
 
 .lux-red {
