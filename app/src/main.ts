@@ -17,3 +17,4 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import '@/assets/styles/global.css';
 import '@/assets/styles/din-font.css';
+import '@/assets/styles/fira-font.css';
