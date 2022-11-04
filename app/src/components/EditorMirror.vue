@@ -1,5 +1,5 @@
 <template>
-    <div class="container p-0 mt-3">
+    <div class="container p-0 my-3">
         <div id="mirror"></div>
     </div>
 </template>
