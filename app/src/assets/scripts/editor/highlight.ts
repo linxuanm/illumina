@@ -17,7 +17,7 @@ const langTokens: TokenMap = {
 interface KeywordSet { [key: string]: Set<string> }
 const keywordSets: KeywordSet = {
     controlKeyword: new Set([
-        'adt', 'type', 'where', 'interface'
+        'adt', 'type', 'where', 'interface', 'import', 'from'
     ]),
     bool: new Set(['True', 'False'])
 };
