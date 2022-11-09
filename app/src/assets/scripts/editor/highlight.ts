@@ -1,31 +1,59 @@
 import { HighlightStyle, StreamLanguage } from "@codemirror/language";
 import { tags } from '@lezer/highlight';
 
-const langTokens = {
+interface TokenMap { [key: string]: RegExp }
+const langTokens: TokenMap = {
     comment: /--.*/,
-    annotation: /@[a-zA-Z_]+/,
-    name: /[a-zA-Z_][a-zA-Z0-9_]*/,
+    annotation: /@[a-z]+/,
+    docComment: /:((print)|(plot))/,
+    name: /[a-z][a-zA-Z0-9_]*/,
+    typeName: /[A-Z][a-zA-Z0-9_]*/,
     number: /[0-9]+(\.[0-9]+)?/,
-    string: /(".*?")|('.*?')/,
-    operator: /(==)|(!=)|(>=)|(<=)|>|<|[+\-*%=!]/,
-    punctuation: /[.,()\[\]]/,
+    string: /("[^\\"]*(\\"[^\\"]*)*")|('[^\\']*(\\'[^\\']*)*')/,
+    operator: /[!#$%&*+./<=>?@^|-~]+/,
+    punctuation: /[,()[]]/
 };
 
-const language = StreamLanguage.define({
+interface KeywordSet { [key: string]: Set<string> }
+const keywordSets: KeywordSet = {
+    controlKeyword: new Set([
+        'adt', 'type', 'where', 'interface'
+    ]),
+    bool: new Set(['True', 'False'])
+};
+
+export const language = StreamLanguage.define({
     token: (stream, state) => {
+        stream.eatSpace();
+
+        for (const i in langTokens) {
+            const match = stream.match(langTokens[i]);
+            if (match != null) {
+                const value = (<RegExpMatchArray>match)[0];
+
+                if (i === 'name') {
+                    for (const tok in keywordSets) {
+                        if (keywordSets[tok].has(value)) {
+                            return tok;
+                        }
+                    }
+                }
+
+                return i;
+            }
+        }
+
+        stream.next();
         return '';
     }
 });
 
 export const highlightStyle = HighlightStyle.define([
-    {tag: tags.controlKeyword, color: '#00C0FF'},
-    {tag: tags.keyword, color: '#00CDAF'},
-    {tag: tags.null, color: '#DBDDA4'},
-    {tag: tags.bool, color: '#DBDDA4'},
-    {tag: tags.operatorKeyword, color: '#D081C4'},
-    {tag: tags.string, color: '#DBDDA4'},
-    {tag: tags.number, color: '#D081C4'},
-    {tag: tags.name, color: '#8ADDFF'},
-    {tag: tags.comment, color: '#8A8A8A'},
-    {tag: tags.annotation, color: '#FF3843'}
+    {tag: tags.comment, color: '#787B80'},
+    {tag: tags.string, color: '#86B300'},
+    {tag: tags.controlKeyword, color: '#EA7D2E'},
+    {tag: tags.typeName, color: '#1FB894'},
+    {tag: tags.number, color: '#22A4E6'},
+    {tag: tags.docComment, color: '#F02121'},
+    {tag: tags.annotation, color: '#55B4D4'}
 ]);
