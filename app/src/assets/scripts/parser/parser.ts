@@ -5,6 +5,14 @@ function oneStr(arr: string[]) {
     return P.alt(...arr.map(e => P.string(e)));
 }
 
+function between<T>(a: P.Parser<any>, b: P.Parser<any>, p: P.Parser<T>) {
+    return P.seqMap(a, p, b, (_, res, __) => res);
+}
+
+function betweenS<T>(a: string, b: string, p: P.Parser<T>) {
+    return between(P.string(a), P.string(b), p);
+}
+
 // Atoms
 const reservedStr = [
     'if', 'else', 'import', 'in', 'from',
@@ -23,9 +31,6 @@ const tyvar = varid; // Type variable
 const tycon = conid; // Type constructor
 const inter = conid; // Interface
 const modid = conid; // Module name
-
-// Types
-
 
 // Whitespaces
 const comment = P.string('--')
@@ -56,4 +61,17 @@ const string = P.seqMap(
 
 const language = (indent: number) => P.createLanguage({
 
+    // Types
+    atype: r => P.alt(
+        tycon, tyvar,
+        betweenS('[', ']', r.type.trim(_)),
+        betweenS('(', ')', r.type.trim(_))
+    ),
+    btype: r => r.atype.atLeast(1),
+    type: r => P.seqMap(
+        r.btype, P.seqObj<P.Language, string>(
+            _, P.string('->'), _, ["type", r.type]
+        ).map(({ type }) => type).many(),
+        (fun, args) => [fun, ...args]
+    )
 });
