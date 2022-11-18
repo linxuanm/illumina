@@ -1,9 +1,18 @@
 import P from 'parsimmon';
 
-const comment = P.string('--').then(P.regexp(/[^\n]*/));
+// Whitespaces
+const comment = P.string('--')
+                 .then(P.takeWhile(s => s !== '\n'))
+                 .then(P.end);
 const _ = P.regexp(/( |\t)*/);
 const __ = P.regexp(/( |\t)+/);
-const _br = P.alt(P.whitespace, comment).many();
-const __br = P.alt(P.whitespace, comment).atLeast(1);
 
-const anno = P.regexp(/@[a-zA-Z0-9]+/);
+// Numbers
+const decimal = P.digits;
+const hexadecimal = P.regexp(/0[xX][0-9a-fA-F]+/);
+const integer = P.alt(decimal, hexadecimal);
+const float = decimal.then(P.string('.')).then(decimal);
+
+const language = (indent: number) => P.createLanguage({
+
+});
