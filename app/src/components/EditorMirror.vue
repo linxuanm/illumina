@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { luxMirror } from '@/assets/scripts/editor/mirror';
-import { IS_MAC } from '@/assets/scripts/util/platform';
+import { luxMirror } from '@script/editor/mirror';
+import { IS_MAC } from '@script/util/platform';
 
 import { defineComponent } from 'vue';
 
@@ -17,7 +17,13 @@ export default defineComponent({
         document.addEventListener('keydown', e => {
             if ((IS_MAC ? e.metaKey : e.ctrlKey) && e.key === 'e') {
                 e.preventDefault();
-                console.log('Run Code');
+                this.$store.dispatch('runCode', { code: 'abc' });
+            }
+        });
+        document.addEventListener('keydown', e => {
+            if ((IS_MAC ? e.metaKey : e.ctrlKey) && e.key === 'i') {
+                e.preventDefault();
+                this.$store.dispatch('interruptCode');
             }
         });
     }

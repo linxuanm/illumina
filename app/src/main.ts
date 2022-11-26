@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
-import App from './App.vue';
+import App from '@/App.vue';
+import state from '@/assets/scripts/util/state';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -9,6 +10,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 library.add(faFireAlt, faGithub);
 
 const app = createApp(App);
+app.use(state);
 
 app.component('font-awesome-icon', FontAwesomeIcon);
 app.mount('#app');
