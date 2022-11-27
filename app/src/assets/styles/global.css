@@ -8,3 +8,9 @@
         max-width: 1040px;
     }
 }
+
+@media (max-width: 576px) {
+    .container{
+        max-width: calc(100% - 140px);
+    }
+}

@@ -17,9 +17,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
+
 import IconButton from '@/components/IconButton.vue';
 
-export default {
+export default defineComponent({
     name: 'EditorSidebar',
     components: {
         IconButton
@@ -34,10 +36,10 @@ export default {
     },
     computed: {
         running: function() {
-            return this.$store.state.running
+            return this.$store.state.running;
         }
     }
-};
+});
 </script>
 
 <style scoped>
