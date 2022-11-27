@@ -1,5 +1,6 @@
 :root {
     --lux-red: rgb(255, 0, 0);
+    --lux-orange: rgb(255, 75, 0);
 }
 
 @media (min-width: 1200px) {

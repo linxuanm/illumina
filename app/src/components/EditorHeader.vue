@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row py-4 align-items-center btm-border">
-            <div class="col-3 text-secondary">Idle: program.lux</div>
+            <div class="col-3 text-secondary">{{ status }}: program.lux</div>
             <div class="col-6 lux-red font-din text-center title">
                 <font-awesome-icon icon="fa-solid fa-fire-alt" size="sm"/> Illumina
             </div>
@@ -28,7 +28,17 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'EditorHeader'
+    name: 'EditorHeader',
+    computed: {
+        status: function() {
+            if (this.$store.state.running) return 'Running';
+
+            // TODO: add saving status
+            // TODO: italics when not saved
+
+            return 'Idle';
+        }
+    }
 });
 </script>
 
