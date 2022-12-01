@@ -3,14 +3,32 @@
     --lux-orange: rgb(255, 75, 0);
 }
 
-@media (min-width: 1200px) {
+@media (max-width: calc(576px + 100px)) {
     .container{
-        max-width: 1040px;
+        max-width: calc(100% - 140px);
     }
 }
 
-@media (max-width: 576px) {
+@media (min-width: calc(576px + 100px)) {
     .container{
-        max-width: calc(100% - 140px);
+        max-width: 540px;
+    }
+}
+
+@media (min-width: calc(768px + 100px)) {
+    .container{
+        max-width: 720px;
+    }
+}
+
+@media (min-width: calc(992px + 100px)) {
+    .container{
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 1040px;
     }
 }
